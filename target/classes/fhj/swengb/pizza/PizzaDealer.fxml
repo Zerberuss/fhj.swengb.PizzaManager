@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="100.0" minWidth="600.0" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
+<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="100.0" minWidth="600.0" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
     <children>
         <AnchorPane fx:id="menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" styleClass="root" stylesheets="@PizzaDealer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="50.0" prefHeight="74.0" prefWidth="585.0" text="Tic Tac Toe" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="50.0" prefHeight="74.0" prefWidth="585.0" text="Pizza Dealer" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                     <font>
                         <Font name="DejaVu Serif Bold" size="64.0" />
                     </font>
@@ -28,7 +28,7 @@
                   <Font size="30.0" />
                </font>
             </Button>
-            <Button layoutX="220.0" layoutY="446.0" mnemonicParsing="false" onAction="#mpStartMenu" prefHeight="70.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Multi-Player" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
+            <Button layoutX="220.0" layoutY="446.0" mnemonicParsing="false" onAction="#mpStartMenu" prefHeight="70.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Highscores" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
                <font>
                   <Font size="30.0" />
                </font>
@@ -43,6 +43,7 @@
                   <Font size="37.0" />
                </font>
             </Label>
+            <ProgressBar fx:id="timeLineCust1" layoutX="193.0" layoutY="149.0" prefHeight="60.0" prefWidth="315.0" progress="0.0" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="mpMenu" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">

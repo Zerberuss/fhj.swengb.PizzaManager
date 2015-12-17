@@ -4,6 +4,7 @@ import javafx.animation._
 import javafx.application.Application
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene._
+import javafx.scene.control.ProgressBar
 import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
@@ -66,6 +67,8 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var headline: control.Label = _
   @FXML var winPane: AnchorPane = _
   @FXML var winStatus: control.Label = _
+
+  @FXML var timeLineCust1: ProgressBar = _
 
 
 
@@ -185,6 +188,5 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
-
-  def exit(): Unit = System.exit(1)
+  def exit(): Unit = timeLineCust1.setProgress(timeLineCust1.getProgress+0.1)
 }
