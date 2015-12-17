@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.net.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
@@ -14,6 +15,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="100.0" minWidth="600.0" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizzamanager.pizzamanagerController">
-
+<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="100.0" minWidth="600.0" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizzamanager.pizzamanagerController">
+   <children>
+      <AnchorPane layoutX="221.0" layoutY="104.0" prefHeight="200.0" prefWidth="200.0" styleClass="userinfo" stylesheets="@pizzamanger.css">
+         <children>
+            <Rectangle fx:id="progressBar" arcHeight="5.0" arcWidth="5.0" fill="#ff21218d" height="23.0" layoutX="88.0" layoutY="216.0" stroke="BLACK" strokeType="INSIDE" width="161.0" />
+            <ProgressBar layoutX="90.0" layoutY="171.0" prefWidth="200.0" progress="0.35" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

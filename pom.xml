@@ -10,8 +10,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>fhj.swengb.assignments</groupId>
-    <artifactId>ttt</artifactId>
+    <groupId>fhj.swengb</groupId>
+    <artifactId>pizzamanager</artifactId>
     <name>fhj.swengb.PizzaManager</name>
 
     <dependencies>
