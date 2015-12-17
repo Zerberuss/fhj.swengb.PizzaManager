@@ -1,4 +1,4 @@
-package fhj.swengb.assignments.ttt.aschneider
+package fhj.swengb.pizza
 
 import javafx.animation._
 import javafx.application.Application
@@ -13,14 +13,14 @@ import javafx.util.Duration
 import scala.util.control.NonFatal
 
 
-object TicTacToeApp {
+object PizzaDealerApp {
   def main(args: Array[String]) {
-    Application.launch(classOf[TicTacToeApp], args: _*)
+    Application.launch(classOf[PizzaDealerApp], args: _*)
   }
 }
 
 
-class TicTacToeApp extends javafx.application.Application {
+class PizzaDealerApp extends javafx.application.Application {
 
 
   val Css = "/fhj/swengb/pizza/PizzaDealer.css"
@@ -31,7 +31,7 @@ class TicTacToeApp extends javafx.application.Application {
 
   override def start(stage: Stage): Unit =
     try {
-      stage.setTitle("TicTacJoe")
+      stage.setTitle("Pizza Dealer")
       loader.load[Parent]() // side effect
       val scene = new Scene(loader.getRoot[Parent]) //loads the default scene
       stage.setScene(scene)
@@ -43,7 +43,7 @@ class TicTacToeApp extends javafx.application.Application {
 }
 
 //controller contains the description of the functionality of the application
-class TicTacToeAppController extends TicTacToeApp {
+class PizzaDealerAppController extends PizzaDealerApp {
   //attributes are being initialized (everything with an ID)
   @FXML var menu: AnchorPane = _
   //Main Pane
