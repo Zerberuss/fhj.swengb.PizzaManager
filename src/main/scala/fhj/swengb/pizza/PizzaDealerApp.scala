@@ -50,11 +50,13 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //Main Pane
   @FXML var menu: AnchorPane = _
   //Settings Pane for Muliplayer
-  @FXML var highscoresPane: AnchorPane = _
+  @FXML var highscoresMenu: AnchorPane = _
   //Settings Pane for SinglePlayer
   @FXML var gameMenu: AnchorPane = _
   //game Pane where the game is played (both mp and sp)
   @FXML var gamePane: AnchorPane = _
+  //Highscores Pane
+  @FXML var highscoresPane: AnchorPane = _
 
 
   @FXML var highscoreAvatar: ImageView = _
@@ -77,16 +79,16 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //initialize function executes the commands at startup for the main scene
 
   //animation for Menue slide ins and outs
-  def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 300, yMitte: Int = 400): Unit = {
+  def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 400, yMitte: Int = 720/2): Unit = {  //1280/2
 
-    var xEnde = 1200
+    var xEnde = 1300
     var path: Path = new Path()
 
     if (slideRight) {
       path.getElements.add(new MoveTo(xMitte, yMitte))
-      path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xMitte + xEnde, yMitte))
+      path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xEnde+xMitte, yMitte))
     } else {
-      path.getElements.add(new MoveTo(xMitte + xEnde, yMitte))
+      path.getElements.add(new MoveTo(xEnde+xMitte, yMitte))
       path.getElements().add(new CubicCurveTo(xMitte + 200, yMitte, xMitte + 50, yMitte, xMitte, yMitte))
     }
 
@@ -104,8 +106,8 @@ class PizzaDealerAppController extends PizzaDealerApp {
   def startHighscoresPane(): Boolean = {
 
 
-    animMenuPanes(gameMenu, true, 300)
-    animMenuPanes(gamePane, false, 356)
+    animMenuPanes(highscoresPane, false, 1280/2+5)
+    animMenuPanes(highscoresMenu, true)
 
   true
   }
@@ -117,19 +119,19 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
     status.setText("Play against the bot:")
 
-    animMenuPanes(gameMenu, true, 300)
-    animMenuPanes(gamePane, false, 356)
+    animMenuPanes(gameMenu, true)
+    animMenuPanes(gamePane, false, 1280/2+5)
     true
   }
 
 
 
-  def highscoresMenuBack(): Unit = animMenuPanes(highscoresPane, true)
+  def highscoresMenuBack(): Unit = animMenuPanes(highscoresMenu, true)
 
   //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
   def gameMenuBack(): Unit = animMenuPanes(gameMenu, true)
 
-  def highscoresMenuStart(): Unit = animMenuPanes(highscoresPane, false)
+  def highscoresMenuStart(): Unit = animMenuPanes(highscoresMenu, false)
 
   def gameMenuStart(): Unit = animMenuPanes(gameMenu, false)
 

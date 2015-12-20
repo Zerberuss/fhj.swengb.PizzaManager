@@ -14,26 +14,26 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="100.0" minWidth="600.0" prefHeight="800.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
+<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
     <children>
-        <AnchorPane fx:id="menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" styleClass="root" stylesheets="@PizzaDealer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="root" stylesheets="@PizzaDealer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="50.0" prefHeight="74.0" prefWidth="585.0" text="Pizza Dealer" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                     <font>
                         <Font name="DejaVu Serif Bold" size="64.0" />
                     </font>
                 </Label>
-            <Button layoutX="220.0" layoutY="326.0" mnemonicParsing="false" onAction="#gameMenuStart" prefHeight="70.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Single-Player" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
+            <Button layoutX="496.0" layoutY="325.0" mnemonicParsing="false" onAction="#gameMenuStart" prefHeight="70.0" prefWidth="324.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Start Game" AnchorPane.leftAnchor="476.0" AnchorPane.rightAnchor="480.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Button>
-            <Button layoutX="220.0" layoutY="446.0" mnemonicParsing="false" onAction="#highscoresMenuStart" prefHeight="70.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Highscores" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
+            <Button layoutX="500.0" layoutY="449.0" mnemonicParsing="false" onAction="#highscoresMenuStart" prefHeight="70.0" prefWidth="315.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Highscores" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="485.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Button>
-            <Button layoutX="240.0" layoutY="664.0" mnemonicParsing="false" onAction="#exit" prefHeight="70.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Exit" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
+            <Button layoutX="555.0" layoutY="611.0" mnemonicParsing="false" onAction="#exit" prefHeight="70.0" prefWidth="210.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Exit" AnchorPane.leftAnchor="555.0" AnchorPane.rightAnchor="555.0">
                <font>
                   <Font size="30.0" />
                </font>
@@ -43,92 +43,55 @@
                   <Font size="37.0" />
                </font>
             </Label>
-            <ProgressBar fx:id="progressBarTest" layoutX="193.0" layoutY="149.0" prefHeight="60.0" prefWidth="315.0" progress="0.0" />
+            <ProgressBar fx:id="progressBarTest" layoutX="859.0" layoutY="601.0" prefHeight="60.0" prefWidth="315.0" progress="0.0" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="highscoresPane" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+        <AnchorPane fx:id="highscoresMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="500.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="70.0">
             <children>
-                <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <GridPane alignment="CENTER" layoutX="93.0" layoutY="51.0" prefHeight="732.0" prefWidth="639.0" AnchorPane.bottomAnchor="-48.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="-14.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="211.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="135.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="127.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="227.0" minHeight="10.0" prefHeight="176.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="135.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="127.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#highscoresMenuBack" prefHeight="50.0" prefWidth="100.0" styleClass="grid-pane" text="back" GridPane.valignment="TOP">
+                        <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#highscoresMenuBack" prefHeight="47.0" prefWidth="106.0" styleClass="grid-pane" text="back" textAlignment="CENTER" GridPane.valignment="TOP">
                             <GridPane.margin>
-                                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                                <Insets bottom="25.0" left="25.0" right="25.0" top="40.0" />
                             </GridPane.margin></Button>
                         <ImageView fx:id="highscoreAvatar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="avatar" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                             <cursor>
                                 <Cursor fx:constant="DEFAULT" />
                             </cursor>
                         </ImageView>
-                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="label-text-userinfo" text="What's your Name?" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Button alignment="CENTER" layoutX="320.0" layoutY="555.0" mnemonicParsing="false" onAction="#highscoresStart" prefHeight="55.0" prefWidth="292.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Global Highscores" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
                      <font>
-                        <Font size="21.0" />
-                     </font></Label>
-                  <TextField fx:id="mpName1" alignment="CENTER" maxHeight="60.0" maxWidth="400.0" prefHeight="63.0" prefWidth="278.0" text="Andi" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <font>
-                        <Font size="27.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets top="30.0" />
-                     </GridPane.margin></TextField>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="89.0" layoutY="261.0" styleClass="label-text-userinfo" text="What's your Name?" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="137.0" layoutY="270.0" styleClass="label-text-userinfo" text="Player 1:" textAlignment="CENTER" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="29.0" />
-                     </font>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="140.0" layoutY="288.0" styleClass="label-text-userinfo" text="   Player 2:" textAlignment="CENTER" GridPane.rowIndex="5">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="mpName2" alignment="CENTER" layoutX="45.0" layoutY="335.0" maxHeight="60.0" maxWidth="400.0" prefHeight="60.0" prefWidth="400.0" text="Andi" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <font>
-                        <Font size="27.0" />
+                        <Font size="36.0" />
                      </font>
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
-                  </TextField>
-                  <Button mnemonicParsing="false" onAction="#highscoresStart" prefHeight="52.0" prefWidth="110.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Start" GridPane.halignment="RIGHT" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
-                     <GridPane.margin>
-                        <Insets bottom="20.0" right="50.0" />
-                     </GridPane.margin>
+                  </Button>
+                  <Button alignment="CENTER" layoutX="63.0" layoutY="396.0" mnemonicParsing="false" onAction="#highscoresStart" prefHeight="55.0" prefWidth="292.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="My Highscores" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Button>
+                  <Label GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="gameMenu" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="600.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane fx:id="gameMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="685.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="70.0">
          <children>
             <GridPane alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columnConstraints>
@@ -161,7 +124,7 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="playerName" alignment="CENTER" maxHeight="60.0" maxWidth="400.0" prefHeight="63.0" prefWidth="278.0" text="Andi" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  <TextField fx:id="playerName" alignment="CENTER" maxHeight="60.0" maxWidth="439.0" prefHeight="57.0" prefWidth="439.0" text="Andi" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -192,14 +155,14 @@
             </GridPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="700.0" styleClass="root" stylesheets="@PizzaDealer.css" translateX="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="highscoresPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@PizzaDealer.css" translateX="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="headline" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="18.0" prefHeight="50.0" prefWidth="620.0" text="Tic Tac Toe -  Multiplayer" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="8.0">
+            <Label fx:id="headline" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="18.0" prefHeight="50.0" prefWidth="620.0" text="Highscores" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="8.0">
                <font>
                   <Font name="Arial Bold" size="29.0" />
                </font>
             </Label>
-            <Button layoutX="489.0" layoutY="703.0" mnemonicParsing="false" onAction="#restart" prefHeight="70.0" prefWidth="189.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Restart" AnchorPane.leftAnchor="469.0" AnchorPane.rightAnchor="42.0">
+            <Button layoutX="996.0" layoutY="618.0" mnemonicParsing="false" onAction="#restart" prefHeight="70.0" prefWidth="233.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Restart" AnchorPane.leftAnchor="976.0" AnchorPane.rightAnchor="71.0">
                <font>
                   <Font size="30.0" />
                </font>
@@ -209,23 +172,47 @@
                   <Font size="30.0" />
                </font>
             </Button>
-            <Label fx:id="status" layoutX="60.0" layoutY="88.0" prefHeight="54.0" prefWidth="424.0" text="Player 1 playing:" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="256.0">
+            <Label fx:id="status" layoutX="60.0" layoutY="88.0" prefHeight="54.0" prefWidth="424.0" text="loading ..." textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="256.0">
                <font>
                   <Font size="27.0" />
                </font>
             </Label>
-            <AnchorPane fx:id="winPane" layoutX="-22.0" prefHeight="97.0" prefWidth="719.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="800.0">
-               <children>
-                  <Label fx:id="winStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="71.0" layoutY="215.0" prefHeight="183.0" prefWidth="591.0" scaleShape="false" text="PLAYER1 WON THE GAME" textAlignment="CENTER" textFill="#ff8000" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-                     <font>
-                        <Font name="System Bold" size="36.0" />
-                     </font>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Label>
-               </children>
-            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="winPane" layoutX="285.0" layoutY="14.0" prefHeight="97.0" prefWidth="719.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="1300.0">
+         <children>
+            <Label fx:id="winStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="71.0" layoutY="215.0" prefHeight="183.0" prefWidth="591.0" scaleShape="false" text="PLAYER1 WON THE GAME" textAlignment="CENTER" textFill="#ff8000" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@PizzaDealer.css" translateX="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="headline1" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="18.0" prefHeight="50.0" prefWidth="620.0" text="Game" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="8.0">
+               <font>
+                  <Font name="Arial Bold" size="29.0" />
+               </font>
+            </Label>
+            <Button layoutX="1044.0" layoutY="633.0" mnemonicParsing="false" onAction="#restart" prefHeight="70.0" prefWidth="210.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Restart" AnchorPane.leftAnchor="1024.0" AnchorPane.rightAnchor="46.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+            <Button layoutX="36.0" layoutY="703.0" mnemonicParsing="false" onAction="#backToMainMenu" opacity="0.0" prefHeight="70.0" prefWidth="132.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Menu" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="552.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Button>
+            <Label fx:id="status1" layoutX="60.0" layoutY="88.0" prefHeight="54.0" prefWidth="424.0" text="loading ..." textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="256.0">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
     </children>
