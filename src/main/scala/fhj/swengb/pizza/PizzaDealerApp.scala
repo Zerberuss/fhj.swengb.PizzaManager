@@ -46,21 +46,21 @@ class PizzaDealerApp extends javafx.application.Application {
 //controller contains the description of the functionality of the application
 class PizzaDealerAppController extends PizzaDealerApp {
   //attributes are being initialized (everything with an ID)
-  @FXML var menu: AnchorPane = _
+
   //Main Pane
-  @FXML var mpMenu: AnchorPane = _
+  @FXML var menu: AnchorPane = _
   //Settings Pane for Muliplayer
-  @FXML var spMenu: AnchorPane = _
+  @FXML var highscoresPane: AnchorPane = _
   //Settings Pane for SinglePlayer
-  @FXML var gamePane: AnchorPane = _
+  @FXML var gameMenu: AnchorPane = _
   //game Pane where the game is played (both mp and sp)
-  @FXML var mpAvatar: ImageView = _
+  @FXML var gamePane: AnchorPane = _
 
-  @FXML var spAvatar: ImageView = _
 
-  @FXML var mpName1: control.TextField = _
-  @FXML var mpName2: control.TextField = _
-  @FXML var spName: control.TextField = _
+  @FXML var highscoreAvatar: ImageView = _
+  @FXML var playerAvatar: ImageView = _
+
+  @FXML var playerName: control.TextField = _
 
 
   @FXML var status: control.Label = _
@@ -68,27 +68,16 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var winPane: AnchorPane = _
   @FXML var winStatus: control.Label = _
 
-  @FXML var timeLineCust1: ProgressBar = _
+  @FXML var progressBarTest: ProgressBar = _
 
-
-
-
-
-  var playingInSpMode: Boolean = true
-  var CPUplaying:Boolean = false
-
-  var playerAPlaying:Boolean = true
-
-
-
-  
 
 
 
 
   //initialize function executes the commands at startup for the main scene
 
-  def anim(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 300, yMitte: Int = 400): Unit = {
+  //animation for Menue slide ins and outs
+  def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 300, yMitte: Int = 400): Unit = {
 
     var xEnde = 1200
     var path: Path = new Path()
@@ -112,72 +101,44 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
-  def startMultiPlayer(playerName1: String, playerName2: String): Boolean = {
+  def startHighscoresPane(): Boolean = {
 
-    playingInSpMode=false
 
-    var player1IsStarting: Boolean = false
-    if(false){
-      player1IsStarting = true
-      status.setText("It's " + playerName1 + "'s turn:")
-    }
-    else {
-      player1IsStarting = false
-      status.setText("It's " + playerName2 + "'s turn:")
-    }
-    anim(mpMenu, true, 300)
-    anim(gamePane, false, 356)
+    animMenuPanes(gameMenu, true, 300)
+    animMenuPanes(gamePane, false, 356)
 
-    if (player1IsStarting)
-       true
-    else
-       false
+  true
   }
 
 
 
   def startSinglePlayer(playerName: String): Boolean = {
 
-    playingInSpMode = true
 
-    var playerIsStarting: Boolean = false
-    if (scala.util.Random.nextInt(100) >= 50) {
-      playerIsStarting = true
-    }
-    else {
-      playerIsStarting = false
-    }
     status.setText("Play against the bot:")
-    mpName2.setText(spName.getText())
-    mpName1.setText("Angry Bot")
 
-    anim(spMenu, true, 300)
-    anim(gamePane, false, 356)
-    if (playerIsStarting)
-       true
-    else
-       false
+    animMenuPanes(gameMenu, true, 300)
+    animMenuPanes(gamePane, false, 356)
+    true
   }
 
 
 
-  def mpMenuBack(): Unit = anim(mpMenu, true)
+  def highscoresMenuBack(): Unit = animMenuPanes(highscoresPane, true)
 
   //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
-  def spMenuBack(): Unit = anim(spMenu, true)
+  def gameMenuBack(): Unit = animMenuPanes(gameMenu, true)
 
-  def mpStartMenu(): Unit = anim(mpMenu, false)
+  def highscoresMenuStart(): Unit = animMenuPanes(highscoresPane, false)
 
-  def spStartMenu(): Unit = anim(spMenu, false)
+  def gameMenuStart(): Unit = animMenuPanes(gameMenu, false)
 
-  def mpStart(): Unit = {
-    startMultiPlayer(mpName1.getCharacters.toString, mpName2.getCharacters.toString)
-
+  def highscoresStart(): Unit = {
+    startHighscoresPane()
   }
 
-  def spStart(): Unit = {
-
-    playerAPlaying = startSinglePlayer(spName.getCharacters.toString)
+  def gameStart(): Unit = {
+      startSinglePlayer(playerName.getText)
   }
 
   def backToMainMenu(): Unit = ???
@@ -188,5 +149,5 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
-  def exit(): Unit = timeLineCust1.setProgress(timeLineCust1.getProgress+0.1)
+  def exit(): Unit = progressBarTest.setProgress(progressBarTest.getProgress+0.1)
 }
