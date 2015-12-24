@@ -5,7 +5,7 @@ import javafx.application.Application
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene._
 import javafx.scene.control.ProgressBar
-import javafx.scene.image.ImageView
+import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.stage.Stage
@@ -71,6 +71,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var winStatus: control.Label = _
 
   @FXML var progressBarTest: ProgressBar = _
+  @FXML var logoAnimationImageView: ImageView = _
 
 
 
@@ -103,8 +104,16 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
-  def startHighscoresPane(): Boolean = {
 
+  def animLogoTest(obj: ImageView = logoAnimationImageView): Unit ={
+    var anim:ImageViewSprite =  new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+    anim.start()
+  }
+
+
+
+
+  def startHighscoresPane(): Boolean = {
 
     animMenuPanes(highscoresPane, false, 1280/2+5)
     animMenuPanes(highscoresMenu, true)
@@ -151,5 +160,9 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
-  def exit(): Unit = progressBarTest.setProgress(progressBarTest.getProgress+0.1)
+  def exit(): Unit = {progressBarTest.setProgress(progressBarTest.getProgress+0.1)
+    if(progressBarTest.getProgress>1)  System.exit(1) else animLogoTest()
+  }
+
+
 }
