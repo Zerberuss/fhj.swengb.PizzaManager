@@ -7,7 +7,7 @@ import javafx.scene._
 import javafx.scene.control.ProgressBar
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout.AnchorPane
-import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
+import javafx.scene.shape.{Circle, CubicCurveTo, MoveTo, Path}
 import javafx.stage.Stage
 import javafx.util.Duration
 
@@ -38,6 +38,9 @@ class PizzaDealerApp extends javafx.application.Application {
       stage.setScene(scene)
       stage.setResizable(false) //window cannot be rescaled
       stage.show()
+
+
+
     } catch {
       case NonFatal(e) => e.printStackTrace()
     }
@@ -73,6 +76,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
 
+  var circles: Seq[Circle] = null
 
 
 
@@ -100,7 +104,6 @@ class PizzaDealerAppController extends PizzaDealerApp {
     pathTrans.setAutoReverse(false)
     pathTrans.play()
   }
-
 
 
 
