@@ -21,6 +21,37 @@ object PizzaDealerApp {
 }
 
 
+case class CircleAnimation(obj : ImageView, startPane:AnchorPane) extends ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10) {
+
+  override def handle(now: Long): Unit = {
+    super.handle(now)
+    if (AnimationParams.i == 0) {
+      startPane.setTranslateX(startPane.getTranslateX - 100)
+      if (startPane.getTranslateX < 400) {
+        AnimationParams.i = 1
+      }
+    } else {
+      startPane.setTranslateX(startPane.getTranslateX + 100)
+      if (startPane.getTranslateX > 1300) {
+        AnimationParams.i = 0
+      }
+    }
+
+
+
+    //print("Test X: " + startPane.getTranslateX)
+  }
+
+
+}
+
+
+object AnimationParams {
+  var i: Int = 0
+}
+
+
+
 class PizzaDealerApp extends javafx.application.Application {
 
 
@@ -38,9 +69,6 @@ class PizzaDealerApp extends javafx.application.Application {
       stage.setScene(scene)
       stage.setResizable(false) //window cannot be rescaled
       stage.show()
-
-
-
     } catch {
       case NonFatal(e) => e.printStackTrace()
     }
@@ -163,8 +191,13 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
+  lazy val testCircleAnim:CircleAnimation = new CircleAnimation(logoAnimationImageView, gameMenu)
+
   def exit(): Unit = {progressBarTest.setProgress(progressBarTest.getProgress+0.1)
-    if(progressBarTest.getProgress>1)  System.exit(1) else animLogoTest()
+    if(progressBarTest.getProgress>1)  System.exit(1)
+    else if(progressBarTest.getProgress%0.2 < 0.1) testCircleAnim.stop()
+    else testCircleAnim.start();
+    print(progressBarTest.getProgress%0.2 + "\n")
   }
 
 
