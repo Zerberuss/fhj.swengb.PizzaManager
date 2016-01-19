@@ -65,6 +65,7 @@ public class ImageViewSprite extends AnimationTimer {
             }
 
             imageView.setViewport(new Rectangle2D(currentCol * frameWidth, currentRow * frameHeight, frameWidth, frameHeight));
+
         }
     }
 }

@@ -1,0 +1,13 @@
+diff a/.idea/vcs.xml b/.idea/vcs.xml	(rejected hunks)
+@@ -1,10 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+-<<<<<<< HEAD
+-    <mapping directory="" vcs="Git" />
+-=======
+     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+->>>>>>> LadiAnim
+   </component>
+ </project>
+\ No newline at end of file

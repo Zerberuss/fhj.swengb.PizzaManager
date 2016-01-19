@@ -21,19 +21,27 @@ object PizzaDealerApp {
 }
 
 
-case class CircleAnimation(obj : ImageView, startPane:AnchorPane) extends ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10) {
+case class GameLoop(obj : ImageView, startPane:AnchorPane) extends ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10) {
 
   override def handle(now: Long): Unit = {
     super.handle(now)
-    if (AnimationParams.i == 0) {
-      startPane.setTranslateX(startPane.getTranslateX - 100)
-      if (startPane.getTranslateX < 400) {
-        AnimationParams.i = 1
-      }
-    } else {
-      startPane.setTranslateX(startPane.getTranslateX + 100)
-      if (startPane.getTranslateX > 1300) {
-        AnimationParams.i = 0
+
+    val frameJump: Int = Math.floor((now - AnimationParams.lastFrame) / (1000000000 / AnimationParams.fps)).toInt
+
+    if (frameJump>1) {
+      AnimationParams.lastFrame = now
+      if (AnimationParams.i != 3) {
+        if (AnimationParams.i == 0) {
+          obj.setTranslateX(obj.getTranslateX - 50)
+          if (obj.getTranslateX < -400) {
+            AnimationParams.i = 1
+          }
+        } else {
+          obj.setTranslateX(obj.getTranslateX + 50)
+          if (obj.getTranslateX > 400) {
+            AnimationParams.i = 0
+          }
+        }
       }
     }
 
@@ -48,6 +56,9 @@ case class CircleAnimation(obj : ImageView, startPane:AnchorPane) extends ImageV
 
 object AnimationParams {
   var i: Int = 0
+  var fps = 100
+
+  var lastFrame = System.nanoTime
 }
 
 
@@ -191,7 +202,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 
-  lazy val testCircleAnim:CircleAnimation = new CircleAnimation(logoAnimationImageView, gameMenu)
+  lazy val testCircleAnim:GameLoop = new GameLoop(logoAnimationImageView, gameMenu)
 
   def exit(): Unit = {progressBarTest.setProgress(progressBarTest.getProgress+0.1)
     if(progressBarTest.getProgress>1)  System.exit(1)

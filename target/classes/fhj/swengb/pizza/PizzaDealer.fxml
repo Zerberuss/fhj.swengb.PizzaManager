@@ -36,7 +36,7 @@
                   <Font size="30.0" />
                </font>
             </Button>
-            <Button layoutX="80.0" layoutY="619.0" mnemonicParsing="false" onAction="#exit" prefHeight="70.0" prefWidth="159.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Exit" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="1061.0">
+            <Button layoutX="80.0" layoutY="619.0" mnemonicParsing="false" onAction="#exit" prefHeight="70.0" prefWidth="159.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Test" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="1061.0">
                <font>
                   <Font size="30.0" />
                </font>
