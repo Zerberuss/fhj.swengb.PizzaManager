@@ -25,30 +25,38 @@ object PizzaDealerApp {
 
 case class GameLoop(obj : ImageView, startPane:AnchorPane) extends AnimationTimer{
 
-  var dealerAnim: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-  var happyCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-  var waitingCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-  var angryCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+  //var dealerAnim: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+  var fadetransition: FadeTransition = new FadeTransition(Duration.millis(5000),obj)
+
+  var happyCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/customer1_sprite.png"), 3, 2, 6, 200, 400, 10)
 
 
+  //var waitingCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+  //var angryCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
 
-    menuDealerAnim.set(obj)
+  var fps = 100
+  var lastFrame = System.nanoTime
+
+  menuDealerAnim.set(obj)
 
   override def handle(now: Long): Unit = {
-    val frameJump: Int = Math.floor((now - gameLoopParam.lastFrame) / (1000000000 / gameLoopParam.fps)).toInt
-    if (frameJump > 1) {
-      gameLoopParam.lastFrame = now
+    val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt       //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
+    if (frameJump > 1) {                                                                //neuen Frame berechnen
+      lastFrame = now
+      //dealerAnim.handle(now)
+      happyCostumer.handle(now)
+      menuDealerAnim.animate()
+    }
+    if (frameJump > 10) {
+      fadetransition.setFromValue(0)
+      fadetransition.setToValue(1)
+      fadetransition.playFromStart()
 
-      dealerAnim.handle(now)
-      menuDealerAnim.animate
     }
   }
 }
 
-object gameLoopParam {
-  var fps = 100
-  var lastFrame = System.nanoTime
-}
+
 
 
 
@@ -61,7 +69,7 @@ object menuDealerAnim {
     status = 0
   }
 
-  def animate = {
+  def animate() = {
     if (status != 3) {
       if (status == 0) {
         obj.setTranslateX(obj.getTranslateX - 5)
