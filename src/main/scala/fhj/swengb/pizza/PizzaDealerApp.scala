@@ -23,42 +23,47 @@ object PizzaDealerApp {
 
 case class GameLoop(obj : ImageView, startPane:AnchorPane) extends ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10) {
 
+  menuDealerAnim.set(obj)
+
   override def handle(now: Long): Unit = {
     super.handle(now)
 
-    val frameJump: Int = Math.floor((now - AnimationParams.lastFrame) / (1000000000 / AnimationParams.fps)).toInt
+    val frameJump: Int = Math.floor((now - gameLoopParam.lastFrame) / (1000000000 / gameLoopParam.fps)).toInt
+    if (frameJump > 1) {
+      gameLoopParam.lastFrame = now
 
-    if (frameJump>1) {
-      AnimationParams.lastFrame = now
-      if (AnimationParams.i != 3) {
-        if (AnimationParams.i == 0) {
-          obj.setTranslateX(obj.getTranslateX - 50)
-          if (obj.getTranslateX < -400) {
-            AnimationParams.i = 1
-          }
-        } else {
-          obj.setTranslateX(obj.getTranslateX + 50)
-          if (obj.getTranslateX > 400) {
-            AnimationParams.i = 0
-          }
-        }
-      }
+      menuDealerAnim.animate
     }
-
-
-
-    //print("Test X: " + startPane.getTranslateX)
   }
+}
 
-
+object gameLoopParam {
+  var fps = 100
+  var lastFrame = System.nanoTime
 }
 
 
-object AnimationParams {
-  var i: Int = 0
-  var fps = 100
 
-  var lastFrame = System.nanoTime
+object menuDealerAnim {
+  var status: Int = 0
+  var obj:ImageView = new ImageView()
+
+  def set(dealer: ImageView) = {
+    obj = dealer
+    status = 0
+  }
+
+  def animate = {
+    if (status != 3) {
+      if (status == 0) {
+        obj.setTranslateX(obj.getTranslateX - 20)
+        if (obj.getTranslateX < -150) status = 1
+      } else {
+        obj.setTranslateX(obj.getTranslateX + 20)
+        if (obj.getTranslateX > 150)  status = 0
+      }
+    }
+  }
 }
 
 
@@ -145,16 +150,6 @@ class PizzaDealerAppController extends PizzaDealerApp {
   }
 
 
-
-
-  def animLogoTest(obj: ImageView = logoAnimationImageView): Unit ={
-    var anim:ImageViewSprite =  new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-    anim.start()
-  }
-
-
-
-
   def startHighscoresPane(): Boolean = {
 
     animMenuPanes(highscoresPane, false, 1280/2+5)
@@ -204,12 +199,11 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
   lazy val testCircleAnim:GameLoop = new GameLoop(logoAnimationImageView, gameMenu)
 
-  def exit(): Unit = {progressBarTest.setProgress(progressBarTest.getProgress+0.1)
-    if(progressBarTest.getProgress>1)  System.exit(1)
-    else if(progressBarTest.getProgress%0.2 < 0.1) testCircleAnim.stop()
+  def exit(): Unit = {
+    progressBarTest.setProgress(progressBarTest.getProgress + 0.1)
+    if (progressBarTest.getProgress > 1) System.exit(1)
+    else if (progressBarTest.getProgress % 0.2 < 0.1) testCircleAnim.stop()
     else testCircleAnim.start();
-    print(progressBarTest.getProgress%0.2 + "\n")
+    print(progressBarTest.getProgress % 0.2 + "\n")
   }
-
-
 }
