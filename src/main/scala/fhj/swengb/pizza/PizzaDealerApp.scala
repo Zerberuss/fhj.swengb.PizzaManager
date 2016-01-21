@@ -89,6 +89,7 @@ class PizzaDealerApp extends javafx.application.Application {
 class PizzaDealerAppController extends PizzaDealerApp {
   //attributes are being initialized (everything with an ID)
 
+  lazy val testCircleAnim: GameLoop = new GameLoop(logoAnimationImageView, gameMenu)
   //Main Pane
   @FXML var menu: AnchorPane = _
   //Settings Pane for Muliplayer
@@ -99,40 +100,44 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var gamePane: AnchorPane = _
   //Highscores Pane
   @FXML var highscoresPane: AnchorPane = _
-
-
   @FXML var highscoreAvatar: ImageView = _
   @FXML var playerAvatar: ImageView = _
-
   @FXML var playerName: control.TextField = _
-
-
   @FXML var status: control.Label = _
   @FXML var headline: control.Label = _
   @FXML var winPane: AnchorPane = _
   @FXML var winStatus: control.Label = _
-
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
-
-  var circles: Seq[Circle] = null
 
 
 
 
   //initialize function executes the commands at startup for the main scene
+  var circles: Seq[Circle] = null
+
+  def animLogoTest(obj: ImageView = logoAnimationImageView): Unit ={
+    var anim:ImageViewSprite =  new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+    anim.start()
+  }
+
+  def highscoresMenuBack(): Unit = animMenuPanes(highscoresMenu, true)
+
+  //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
+  def gameMenuBack(): Unit = animMenuPanes(gameMenu, true)
 
   //animation for Menue slide ins and outs
-  def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 400, yMitte: Int = 720/2): Unit = {  //1280/2
+  def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 400, yMitte: Int = 720 / 2): Unit = {
+    //1280/2
 
     var xEnde = 1300
     var path: Path = new Path()
 
     if (slideRight) {
       path.getElements.add(new MoveTo(xMitte, yMitte))
-      path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xEnde+xMitte, yMitte))
+      path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xEnde + xMitte, yMitte))
     } else {
-      path.getElements.add(new MoveTo(xEnde+xMitte, yMitte))
+      path.getElements.add(new MoveTo(xEnde + xMitte, yMitte))
       path.getElements().add(new CubicCurveTo(xMitte + 200, yMitte, xMitte + 50, yMitte, xMitte, yMitte))
     }
 
@@ -144,44 +149,6 @@ class PizzaDealerAppController extends PizzaDealerApp {
     pathTrans.play()
   }
 
-
-
-
-  def animLogoTest(obj: ImageView = logoAnimationImageView): Unit ={
-    var anim:ImageViewSprite =  new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-    anim.start()
-  }
-
-
-
-
-  def startHighscoresPane(): Boolean = {
-
-    animMenuPanes(highscoresPane, false, 1280/2+5)
-    animMenuPanes(highscoresMenu, true)
-
-  true
-  }
-
-
-
-  def startSinglePlayer(playerName: String): Boolean = {
-
-
-    status.setText("Play against the bot:")
-
-    animMenuPanes(gameMenu, true)
-    animMenuPanes(gamePane, false, 1280/2+5)
-    true
-  }
-
-
-
-  def highscoresMenuBack(): Unit = animMenuPanes(highscoresMenu, true)
-
-  //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
-  def gameMenuBack(): Unit = animMenuPanes(gameMenu, true)
-
   def highscoresMenuStart(): Unit = animMenuPanes(highscoresMenu, false)
 
   def gameMenuStart(): Unit = animMenuPanes(gameMenu, false)
@@ -190,8 +157,26 @@ class PizzaDealerAppController extends PizzaDealerApp {
     startHighscoresPane()
   }
 
+  def startHighscoresPane(): Boolean = {
+
+    animMenuPanes(highscoresPane, false, 1280 / 2 + 5)
+    animMenuPanes(highscoresMenu, true)
+
+    true
+  }
+
   def gameStart(): Unit = {
-      startSinglePlayer(playerName.getText)
+    startSinglePlayer(playerName.getText)
+  }
+
+  def startSinglePlayer(playerName: String): Boolean = {
+
+
+    status.setText("Play against the bot:")
+
+    animMenuPanes(gameMenu, true)
+    animMenuPanes(gamePane, false, 1280 / 2 + 5)
+    true
   }
 
   def backToMainMenu(): Unit = ???
@@ -199,10 +184,6 @@ class PizzaDealerAppController extends PizzaDealerApp {
   def restart(): Unit = {
     menu.getScene().getWindow().hide(); start(new Stage)
   }
-
-
-
-  lazy val testCircleAnim:GameLoop = new GameLoop(logoAnimationImageView, gameMenu)
 
   def exit(): Unit = {progressBarTest.setProgress(progressBarTest.getProgress+0.1)
     if(progressBarTest.getProgress>1)  System.exit(1)
