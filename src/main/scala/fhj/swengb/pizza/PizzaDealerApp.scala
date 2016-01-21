@@ -26,7 +26,13 @@ object PizzaDealerApp {
 case class GameLoop(obj : ImageView, startPane:AnchorPane) extends AnimationTimer{
 
   var dealerAnim: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-  menuDealerAnim.set(obj)
+  var happyCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+  var waitingCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+  var angryCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+
+
+
+    menuDealerAnim.set(obj)
 
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - gameLoopParam.lastFrame) / (1000000000 / gameLoopParam.fps)).toInt
