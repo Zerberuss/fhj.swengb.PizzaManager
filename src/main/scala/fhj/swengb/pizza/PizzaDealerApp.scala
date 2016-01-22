@@ -21,14 +21,40 @@ object PizzaDealerApp {
 }
 
 
+case class CustomerAnim(obj:ImageView){
+  val customerImageList = List("/fhj/swengb/pizza/customer/customer1_angry.png","/fhj/swengb/pizza/customer/customer1_angry_glow.png","/fhj/swengb/pizza/customer/customer1_happy_glow.png","/fhj/swengb/pizza/customer/customer1_neutral.png","/fhj/swengb/pizza/customer/customer1_neutral_glow.png")
+
+  var dealerObj:ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+
+  def setDealer() {
+    dealerObj = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
+  }
+
+  def setAngry() {
+    dealerObj = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 200, 400, 1)
+  }
+  def setHappy() {
+    dealerObj = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 200, 400, 1)
+  }
+
+  def setNeutral() {
+    dealerObj = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 200, 400, 1)
+  }
+
+  def getAnimation():ImageViewSprite = {
+    dealerObj
+  }
+}
 
 
 case class GameLoop(obj : ImageView, startPane:AnchorPane) extends AnimationTimer{
 
-  //var dealerAnim: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-  var fadetransition: FadeTransition = new FadeTransition(Duration.millis(5000),obj)
 
-  var happyCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/customer1_sprite.png"), 3, 2, 6, 200, 400, 10)
+  var customer = new CustomerAnim(obj)
+
+  var fadetransition: FadeTransition = new FadeTransition(Duration.millis(500),obj)
+
+  //var happyCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/customer1_sprite.png"), 3, 2, 6, 200, 400, 10)
 
 
   //var waitingCostumer: ImageViewSprite = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
@@ -36,23 +62,47 @@ case class GameLoop(obj : ImageView, startPane:AnchorPane) extends AnimationTime
 
   var fps = 100
   var lastFrame = System.nanoTime
+  var lastLogicFrame = 0
 
   menuDealerAnim.set(obj)
+
+  customer
 
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt       //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
     if (frameJump > 1) {                                                                //neuen Frame berechnen
       lastFrame = now
-      //dealerAnim.handle(now)
-      happyCostumer.handle(now)
+      lastLogicFrame += 1
+      customer.getAnimation().handle(now)
       menuDealerAnim.animate()
     }
-    if (frameJump > 10) {
+
+
+    //Nur zum testen:
+    if (lastLogicFrame == 50) {
+
       fadetransition.setFromValue(0)
       fadetransition.setToValue(1)
       fadetransition.playFromStart()
+      customer.setAngry()
 
+    }else  if (lastLogicFrame == 100) {
+
+      fadetransition.setFromValue(0)
+      fadetransition.setToValue(1)
+      fadetransition.playFromStart()
+      customer.setHappy()
+
+    }else if (lastLogicFrame > 150){
+
+      fadetransition.setFromValue(0)
+      fadetransition.setToValue(1)
+      fadetransition.playFromStart()
+      customer.setNeutral()
+
+      lastLogicFrame=0
     }
+
   }
 }
 
