@@ -37,7 +37,7 @@ case class CustomerAnim(){
                                   "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral_glow.png")
     this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)),1, 1, 1, 100, 200, 1)
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(1000), obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
@@ -61,58 +61,78 @@ case class CustomerAnim(){
 
 
 object Cashier extends AnimationTimer{
-  val xMitte = 0
-  val yMitte = 0
-
-
-  var GoingTo: String = ""
+  val frameWidth = 280
+  val frameHeight = 280
 
   var dealer: ImageView = _
   var dealerSpriteAnim:ImageViewSprite = _
-  var status = 0
   var pathTrans: PathTransition = _
+  var lastPosition = (1:Double,1:Double)
+  var lastGoTo = ""
+  var isStanding=false
+  var speed = 1000
 
-  def set(obj: ImageView) = {
+  def set(obj: ImageView,speed:Int = 1000) = {
+    this.speed = speed
     this.dealer = obj
-    this.dealerSpriteAnim = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, 280, 280, 10)
-    this.status = 0
+    this.dealerSpriteAnim = new ImageViewSprite(obj, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, frameWidth, frameHeight, 10)
     pathTrans = new PathTransition()
-    pathTrans.setDuration(new Duration(200))
-    pathTrans.setNode(obj)
-    pathTrans.setAutoReverse(true)
+    pathTrans.setDuration(new Duration(speed))
+    pathTrans.setNode(this.dealer)
+    pathTrans.setAutoReverse(false)
+    lastPosition = (dealer.getTranslateX,dealer.getTranslateY)
+  }
+
+  private def createPath(pathToTarget: (Int,Int)): Path ={
+    var path: Path = new Path()
+    //    path.getElements.add(new MoveTo(this.dealer.getTranslateX+frameWidth/2, this.dealer.getTranslateY+frameHeight/2))
+    //    path.getElements.add(new CubicCurveTo(this.dealer.getTranslateX+frameWidth/2, this.dealer.getTranslateY+frameHeight/2, xTarget, yTarget, xTarget, yTarget))
+
+    path.getElements.add(new MoveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2))
+    path.getElements.add(new CubicCurveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2, pathToTarget._1, pathToTarget._2, pathToTarget._1, pathToTarget._2))
+    path
   }
 
   def goTo(GoToName:String){
 
+    if (GoToName!=lastGoTo) {   //Neue Animation nu dann auführen, wenn sich das Ziel ändert
 
-/*
-  if (goingDown) {
-    path.getElements.add(new MoveTo(xMitte, yMitte))
-    path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xEnde+xMitte, yMitte))
-  } else {
-    path.getElements.add(new MoveTo(xEnde+xMitte, yMitte))
-    path.getElements().add(new CubicCurveTo(xMitte + 200, yMitte, xMitte + 50, yMitte, xMitte, yMitte))
+      var targetPos = (0,0)
+      GoToName match {
+        case "Customer1"    => targetPos =(400,0)
+        case "Customer2"    => targetPos =(-400,0)
+        case "Customer3"    => targetPos =(500,300)
+        case "Customer4"    => targetPos =(-500,-300)
 
-    pathTrans.playFromStart()
-    */
+        case "Pilze"        => targetPos =(100,200)
+        case "Tomatensoße"  => targetPos =(100,200)
+        case "Käse"         => targetPos =(100,200)
+        case "Paprika"      => targetPos =(100,200)
+        case "Salami"       => targetPos =(100,200)
+        case "Schinken"     => targetPos =(100,200)
+        case "Thunfisch"    => targetPos =(100,200)
+        case "Zwiebel"      => targetPos =(100,200)
+        case "Teig"         => targetPos =(100,200)
+      }
+      pathTrans.setPath(createPath(targetPos))
+      pathTrans.playFromStart()
+      lastGoTo=GoToName
+    }
   }
-
 
 
   override def handle(now: Long): Unit = {
-    /*this.dealer.handle(now)
-    if (status != 3) {
-      if (status == 0) {
-        obj.setTranslateX(obj.getTranslateX - 5)
-        if (obj.getTranslateX < -150) status = 1
-      } else {
-        obj.setTranslateX(obj.getTranslateX + 5)
-        if (obj.getTranslateX > 150)  status = 0
-      }
-    }*/
-      Some
+    if(lastPosition != (dealer.getTranslateX,dealer.getTranslateY)){
+      this.dealerSpriteAnim.handle(now)
+      lastPosition = (dealer.getTranslateX,dealer.getTranslateY)
+      isStanding=false
+    }else {
+      if (!isStanding){       //nur einmal auf stehend zurücksetzen -> Ressourcen sparen, wenn er sich nicht bewegt
+        dealerSpriteAnim = new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, frameWidth, frameHeight, 10)
+        isStanding= true
+        }
+    }
   }
-
 }
 
 
@@ -138,7 +158,6 @@ case class GameLoop(obj : ImageView) extends AnimationTimer{
       //menuDealerLogoAnim.handle(now)
     }
 
-
     //Nur zum testen:
     if (lastLogicFrame == 50) {
       customer.setAngry()
@@ -153,9 +172,6 @@ case class GameLoop(obj : ImageView) extends AnimationTimer{
     }
   }
 }
-
-
-
 
 
 object menuDealerLogoAnim extends AnimationTimer{
@@ -181,7 +197,6 @@ object menuDealerLogoAnim extends AnimationTimer{
       }
     }
   }
-
 }
 
 
@@ -289,16 +304,17 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
   def gameMenuBack(): Unit = animMenuPanes(gameMenu, true)
 
-  def highscoresMenuStart(): Unit = animMenuPanes(highscoresMenu, false)
+  def highscoresMenuStart(): Unit = logoAnim.goTo("Customer3") //animMenuPanes(highscoresMenu, false)
 
-  def gameMenuStart(): Unit = animMenuPanes(gameMenu, false)
+  def gameMenuStart(): Unit = logoAnim.goTo("Customer2") //animMenuPanes(gameMenu, false)
 
   def highscoresStart(): Unit = {
     startHighscoresPane()
   }
 
   def gameStart(): Unit = {
-      startSinglePlayer(playerName.getText)
+
+     startSinglePlayer(playerName.getText)
   }
 
   def backToMainMenu(): Unit = ???
@@ -310,15 +326,16 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 //Test um bei begin Animation auszuführen-> FAIL .. reality hits you hard bro!
   //lazy val logoSet = menuDealerLogoAnim.set(logoAnimationImageView)
-  lazy val logoSet = new GameLoop(logoAnimationImageView)
+  //lazy val logoSet = new GameLoop(logoAnimationImageView)
+  lazy val logoSet = Cashier
   //lazy val logoAnim = menuDealerLogoAnim
   lazy val logoAnim = logoSet
 
   def exit(): Unit = {
-    logoSet
+    logoSet.set(logoAnimationImageView)
     progressBarTest.setProgress(progressBarTest.getProgress + 0.1)
     if (progressBarTest.getProgress > 1) System.exit(1)
-    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.stop()
+    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.goTo("Customer1")
     else  logoAnim.start()
     print(progressBarTest.getProgress % 0.2 + "\n")
   }

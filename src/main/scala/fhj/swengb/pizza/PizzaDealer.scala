@@ -5,6 +5,40 @@ import scala.util.Random.nextInt
 
 object PizzaDealer {
 
+
+  var level: Int = 1
+  //wird nach Bedienung der 4 Kunden um 1 erhöht
+  val levelMax: Int = 8
+  //max level
+  val lives: Int = 3
+  //wird um 1 verringert falls ein fehler gemacht wird
+  val timeStatisch: Int = 16
+  // in sec
+  var i: Int = 1
+  // falls maxlevel erreicht ist wird die übrige Zeit ZUSÄTZLICH noch um diesen wert verringert     der wert erhöht sich dannach
+  var timeLeft: Int = 0
+
+
+  def timeAndLevel(): Int = {
+    //returns time for timer
+
+    if (level == levelMax) {
+      timeLeft = timeStatisch - level - i
+      i = i + 1
+      if(timeLeft<=0) return 1
+    } else {
+      timeLeft = timeStatisch - level
+      level = level + 1
+
+    }
+    timeLeft
+  }
+
+
+
+
+
+
   class Pizza(n: Int) {
     //n = number of ingridients
     val ingridients = List("Pilze", "Tomatensoße", "Käse", "Paprika", "Salami", "Schinken", "Thunfisch", "Zwiebel")
@@ -24,9 +58,7 @@ object PizzaDealer {
       intList
     }
 
-    def getIngridients(): List[String] = {
-      finalIngridients
-    }
+    def getIngridients(): List[String] = finalIngridients
 
 
   }
@@ -37,17 +69,11 @@ object PizzaDealer {
     val order = new Pizza(level)
     val workingbench = new CraftingBench
 
-
-    def setOrder(order: Pizza) = {
-      this.order.setPizzaObject()
-      //sprechblase setzen
-    }
+    def setOrder(order: Pizza) = this.order.setPizzaObject() //+sprechblase setzen
 
     def getOrder(): Pizza = order
 
-
     def addIngriedientToBench(ingriedientToAdd: String) {
-
       if (order.getIngridients contains ingriedientToAdd) {
         workingbench.addIngridientToCraftingBench(ingriedientToAdd)
         true
@@ -56,8 +82,6 @@ object PizzaDealer {
         false //evt negative rückmeldung an den spieler
       }
     }
-
-
     setOrder(order)
   }
 
@@ -71,7 +95,7 @@ object PizzaDealer {
       ingridientsAdded
     }
 
-    def getAddedIngridients(): List[String] = ingridientsAdded
+    def getAddedIngridients: List[String] = ingridientsAdded
 
     //add Zutat   getZutaten
 
@@ -84,16 +108,23 @@ object PizzaDealer {
 
   }
 
+  class Cashier {
 
-  class level {
 
   }
 
+  class Player  {
 
+  }
+
+  /*
+    class Highscore(s:Int) {
+
+
+      def setHighscore
+      def getHighscore
+      def addtohighscorelist
+      def increaseHighscore
+    }
+  */
 }
-
-
-
-
-
-
