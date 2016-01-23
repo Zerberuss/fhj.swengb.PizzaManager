@@ -5,10 +5,8 @@
 
 package fhj.swengb.pizza
 
-import java.sql.DriverManager
-import java.sql.Connection
-import scala.collection.mutable
-import scala.collection.mutable.ListMap
+import java.sql.{Connection, DriverManager}
+
 import scala.collection.mutable.Map
 
 /**
@@ -37,6 +35,18 @@ object ScalaJdbcSQL extends PizzaDealerApp {
     }
   }
 
+  def getHighscoresForUser(username: String): (String,Int) = {
+    val highscoresMap = getHighscores
+    try {
+      //falls user nicht gefunden wurde
+      val valueFromUser:Int = highscoresMap(username.trim)
+      (username,valueFromUser)
+    } catch {
+      case e:Exception => e.printStackTrace
+        ("User requested was not found",0)
+    }
+  }
+
   def getHighscores: Map[String, Int] = {
     val highscoresMap = Map[String, Int]()
     try {
@@ -58,36 +68,18 @@ object ScalaJdbcSQL extends PizzaDealerApp {
 
   }
 
-  def getHighscoresForUser(username: String): Map[String, Int] = {
-    val userhighscore = Map[String, Int]()
-    val highscoresMap = getHighscores
-    try {
-      //falls user nicht gefunden wurde
-      val valueFromUser = highscoresMap.getOrElse(this.username, 0)
-      valueFromUser.toInt
-      userhighscore += this.username -> valueFromUser
-
-      userhighscore
-    } catch
-      {
-        case e => println("Du homo der is net in da DB")
-          val randomMap = Map("xoxo faggot"->0)
-          randomMap
-      }
-  }
-
   def setHighscoreList(username: String, score: Int) = {
-    try{
+    try {
       val statement = connection.prepareStatement("INSERT INTO highscore (username,highscore_number) VALUES(?,?)") //insert befehl
       println("bis daher gehts")
-      statement.setString(1,username)
-      statement.setInt(2,score)
+      statement.setString(1, username)
+      statement.setInt(2, score)
       println("do gehts a no\n")
       statement.executeUpdate()
       print("HEYYYYYYYYYYYYYYYYYY BROTHER")
     }
     catch {
-      case x => x.printStackTrace
+      case x:Exception => x.printStackTrace
     }
   }
 

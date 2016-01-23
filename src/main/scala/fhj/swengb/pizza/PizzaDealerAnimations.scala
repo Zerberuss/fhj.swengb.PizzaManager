@@ -38,7 +38,7 @@ case class CustomerSpeechBubbleAnim(){
   def setOrder(ingredients:List[String]): Unit ={
     ingredientsObj.foreach(obj=>obj.setVisible(false))
     ingredients.indices.foreach(index => {
-      ingredientsObj(index).setImage(new Image("/fhj/swengb/pizza/ingredients/" + ingredients(index) + ".png"))
+      ingredientsObj(index).setImage(new Image("/fhj/swengb/pizza/images/ingredients/" + ingredients(index) + ".png"))
 
       val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
       fadetransition.setFromValue(0)
