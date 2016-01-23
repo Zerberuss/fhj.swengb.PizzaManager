@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
+<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
     <children>
         <AnchorPane fx:id="menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="root" stylesheets="@PizzaDealer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -182,38 +182,313 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="winPane" layoutX="285.0" layoutY="14.0" prefHeight="97.0" prefWidth="719.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="1300.0">
-         <children>
-            <Label fx:id="winStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="71.0" layoutY="215.0" prefHeight="183.0" prefWidth="591.0" scaleShape="false" text="PLAYER1 WON THE GAME" textAlignment="CENTER" textFill="#ff8000" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Label>
-         </children>
-      </AnchorPane>
       <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@PizzaDealer.css" translateX="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="headline1" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="18.0" prefHeight="50.0" prefWidth="620.0" text="Game" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="8.0">
-               <font>
-                  <Font name="Arial Bold" size="29.0" />
-               </font>
-            </Label>
-            <Button layoutX="1044.0" layoutY="633.0" mnemonicParsing="false" onAction="#restart" prefHeight="70.0" prefWidth="210.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Restart" AnchorPane.leftAnchor="1024.0" AnchorPane.rightAnchor="46.0">
+            <ImageView fx:id="imgvw_background" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/gamePane_layer1.png" />
+               </image>
+            </ImageView>
+            <AnchorPane fx:id="customers" layoutX="275.0" layoutY="181.0">
+               <children>
+                  <ImageView fx:id="imgvw_customer1" fitHeight="200.0" fitWidth="100.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@sprites/customer1_neutral.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgvw_customer2" fitHeight="200.0" fitWidth="100.0" layoutX="200.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@sprites/customer2_neutral.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgvw_customer3" fitHeight="200.0" fitWidth="100.0" layoutX="400.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@sprites/customer3_neutral.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgvw_customer4" fitHeight="200.0" fitWidth="100.0" layoutX="600.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@sprites/customer2_neutral.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <ImageView fx:id="imgvw_customertable" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/gamePane_layer3.png" />
+               </image>
+            </ImageView>
+            <AnchorPane fx:id="pizzas" layoutX="264.0" layoutY="314.0">
+               <children>
+                  <AnchorPane fx:id="pizza1">
+                     <children>
+                        <ImageView fx:id="imgvw_pizza1" fitHeight="70.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/gamePane_pizza.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza1_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="18.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza1_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="68.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza1_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="15.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza1_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="65.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pizza2" layoutX="200.0">
+                     <children>
+                        <ImageView fx:id="imgvw_pizza2" fitHeight="70.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/gamePane_pizza.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza2_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="18.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza2_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="68.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza2_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="15.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza2_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="65.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pizza3" layoutX="400.0">
+                     <children>
+                        <ImageView fx:id="imgvw_pizza3" fitHeight="70.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/gamePane_pizza.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza3_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="18.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza3_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="68.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza3_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="15.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza3_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="65.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pizza4" layoutX="600.0">
+                     <children>
+                        <ImageView fx:id="imgvw_pizza4" fitHeight="70.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/gamePane_pizza.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza4_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="18.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza4_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="68.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza4_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="15.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_pizza4_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="65.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <ImageView fx:id="imgvw_cashier" fitHeight="200.0" fitWidth="100.0" layoutX="570.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@sprites/cashier_up_neutral.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgvw_ingredientstable" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/gamePane_layer6.png" />
+               </image>
+            </ImageView>
+            <AnchorPane fx:id="speechbubbles" layoutX="242.0" layoutY="82.0">
+               <children>
+                  <AnchorPane fx:id="speechbubble1">
+                     <children>
+                        <ImageView fx:id="imgvw_speechbubble1" fitHeight="110.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/speechbubble.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble1_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble1_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble1_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble1_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="speechbubble2" layoutX="200.0">
+                     <children>
+                        <ImageView fx:id="imgvw_speechbubble2" fitHeight="110.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/speechbubble.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble2_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble2_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble2_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble2_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="speechbubble3" layoutX="400.0">
+                     <children>
+                        <ImageView fx:id="imgvw_speechbubble3" fitHeight="110.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/speechbubble.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble3_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble3_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble3_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble3_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="speechbubble4" layoutX="600.0">
+                     <children>
+                        <ImageView fx:id="imgvw_speechbubble4" fitHeight="110.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/speechbubble.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble4_ing1" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble4_ing2" fitHeight="25.0" fitWidth="45.0" layoutX="20.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble4_ing3" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgvw_speechbubble4_ing4" fitHeight="25.0" fitWidth="45.0" layoutX="96.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/ingredients/salami.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="ingredients" layoutY="542.0">
+               <children>
+                  <ImageView fx:id="imgvw_salami" fitHeight="70.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_paprika" fitHeight="70.0" fitWidth="160.0" layoutX="160.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_champignon" fitHeight="70.0" fitWidth="160.0" layoutX="320.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_cheese" fitHeight="70.0" fitWidth="160.0" layoutX="480.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_onion" fitHeight="70.0" fitWidth="160.0" layoutX="640.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_tomato" fitHeight="70.0" fitWidth="160.0" layoutX="800.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_ham" fitHeight="70.0" fitWidth="160.0" layoutX="960.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgvw_tuna" fitHeight="70.0" fitWidth="160.0" layoutX="1120.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <Button fx:id="btn_restartGame" layoutX="12.0" layoutY="10.0" mnemonicParsing="false" onAction="#restart" prefHeight="52.0" prefWidth="150.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Restart" AnchorPane.leftAnchor="-8.0" AnchorPane.rightAnchor="1138.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Button>
-            <Button layoutX="36.0" layoutY="703.0" mnemonicParsing="false" onAction="#backToMainMenu" opacity="0.0" prefHeight="70.0" prefWidth="132.0" styleClass="grid-pane" stylesheets="@PizzaDealer.css" text="Menu" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="552.0">
+            <ProgressBar fx:id="progressBar_game" layoutX="264.0" layoutY="10.0" prefHeight="50.0" prefWidth="665.0" progress="0.69" />
+            <Label fx:id="lbl_highscore" layoutX="968.0" layoutY="10.0" prefHeight="52.0" prefWidth="280.0" text="highscore: 0" textFill="WHITE">
                <font>
-                  <Font size="30.0" />
-               </font>
-            </Button>
-            <Label fx:id="status1" layoutX="60.0" layoutY="88.0" prefHeight="54.0" prefWidth="424.0" text="loading ..." textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="256.0">
-               <font>
-                  <Font size="27.0" />
+                  <Font name="Berlin Sans FB" size="38.0" />
                </font>
             </Label>
          </children>

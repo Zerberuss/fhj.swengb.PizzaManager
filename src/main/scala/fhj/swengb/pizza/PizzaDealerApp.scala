@@ -4,7 +4,7 @@ import javafx.animation._
 import javafx.application.Application
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene._
-import javafx.scene.control.ProgressBar
+import javafx.scene.control.{Label, Button, ProgressBar}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.layout.AnchorPane
 import javafx.scene.shape.{Circle, CubicCurveTo, MoveTo, Path}
@@ -55,6 +55,82 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var gameMenu: AnchorPane = _
   //game Pane where the game is played (both mp and sp)
   @FXML var gamePane: AnchorPane = _
+
+  @FXML var imgvw_background: ImageView = _
+  @FXML var customers: AnchorPane = _
+  @FXML var imgvw_customer1: ImageView = _
+  @FXML var imgvw_customer2: ImageView = _
+  @FXML var imgvw_customer3: ImageView = _
+  @FXML var imgvw_customer4: ImageView = _
+  @FXML var imgvw_customertable: ImageView = _
+  @FXML var pizzas: AnchorPane = _
+  @FXML var pizza1: AnchorPane = _
+  @FXML var pizza2: AnchorPane = _
+  @FXML var pizza3: AnchorPane = _
+  @FXML var pizza4: AnchorPane = _
+  @FXML var imgvw_pizza1: ImageView = _
+  @FXML var imgvw_pizza1_ing1: ImageView = _
+  @FXML var imgvw_pizza1_ing2: ImageView = _
+  @FXML var imgvw_pizza1_ing3: ImageView = _
+  @FXML var imgvw_pizza1_ing4: ImageView = _
+  @FXML var imgvw_pizza2: ImageView = _
+  @FXML var imgvw_pizza2_ing1: ImageView = _
+  @FXML var imgvw_pizza2_ing2: ImageView = _
+  @FXML var imgvw_pizza2_ing3: ImageView = _
+  @FXML var imgvw_pizza2_ing4: ImageView = _
+  @FXML var imgvw_pizza3: ImageView = _
+  @FXML var imgvw_pizza3_ing1: ImageView = _
+  @FXML var imgvw_pizza3_ing2: ImageView = _
+  @FXML var imgvw_pizza3_ing3: ImageView = _
+  @FXML var imgvw_pizza3_ing4: ImageView = _
+  @FXML var imgvw_pizza4: ImageView = _
+  @FXML var imgvw_pizza4_ing1: ImageView = _
+  @FXML var imgvw_pizza4_ing2: ImageView = _
+  @FXML var imgvw_pizza4_ing3: ImageView = _
+  @FXML var imgvw_pizza4_ing4: ImageView = _
+  @FXML var imgvw_cashier: ImageView = _
+  @FXML var imgvw_ingredientstable: ImageView = _
+  @FXML var speechbubbles: AnchorPane = _
+  @FXML var speechbubble1: AnchorPane = _
+  @FXML var speechbubble2: AnchorPane = _
+  @FXML var speechbubble3: AnchorPane = _
+  @FXML var speechbubble4: AnchorPane = _
+  @FXML var imgvw_speechbubble1: ImageView = _
+  @FXML var imgvw_speechbubble1_ing1: ImageView = _
+  @FXML var imgvw_speechbubble1_ing2: ImageView = _
+  @FXML var imgvw_speechbubble1_ing3: ImageView = _
+  @FXML var imgvw_speechbubble1_ing4: ImageView = _
+  @FXML var imgvw_speechbubble2: ImageView = _
+  @FXML var imgvw_speechbubble2_ing1: ImageView = _
+  @FXML var imgvw_speechbubble2_ing2: ImageView = _
+  @FXML var imgvw_speechbubble2_ing3: ImageView = _
+  @FXML var imgvw_speechbubble2_ing4: ImageView = _
+  @FXML var imgvw_speechbubble3: ImageView = _
+  @FXML var imgvw_speechbubble3_ing1: ImageView = _
+  @FXML var imgvw_speechbubble3_ing2: ImageView = _
+  @FXML var imgvw_speechbubble3_ing3: ImageView = _
+  @FXML var imgvw_speechbubble3_ing4: ImageView = _
+  @FXML var imgvw_speechbubble4: ImageView = _
+  @FXML var imgvw_speechbubble4_ing1: ImageView = _
+  @FXML var imgvw_speechbubble4_ing2: ImageView = _
+  @FXML var imgvw_speechbubble4_ing3: ImageView = _
+  @FXML var imgvw_speechbubble4_ing4: ImageView = _
+  @FXML var ingredients: AnchorPane = _
+  @FXML var imgvw_salami: ImageView = _
+  @FXML var imgvw_paprika: ImageView = _
+  @FXML var imgvw_champignon: ImageView = _
+  @FXML var imgvw_cheese: ImageView = _
+  @FXML var imgvw_onion: ImageView = _
+  @FXML var imgvw_tomato: ImageView = _
+  @FXML var imgvw_ham: ImageView = _
+  @FXML var imgvw_tuna: ImageView = _
+  @FXML var btn_restartGame: Button = _
+  @FXML var progressBar_game: ProgressBar = _
+  @FXML var lbl_highscore: Label = _
+
+
+
+
   //Highscores Pane
   @FXML var highscoresPane: AnchorPane = _
 
@@ -73,7 +149,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
 
-  
+
   //initialize function executes the commands at startup for the main scene
 
   //animation for Menue slide ins and outs
