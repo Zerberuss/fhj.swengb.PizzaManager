@@ -2,33 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6df9ea5f-ee0f-47a4-bcad-0677cad15e0e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/sprites/cashier_down.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/sprites/cashier_up.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CustomerPersonAnim$.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CustomerPersonAnim.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CustomerSpeechBalloonAnim$.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CustomerSpeechBalloonAnim.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/sprites/cashier_down.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/sprites/cashier_up.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/sprites/pizza-dealer2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CustomerAnim$.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CustomerAnim.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/sprites/pizza-dealer2.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CashierAnim$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/CashierAnim$.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Cashier.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Cashier.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$CraftingBench.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$CraftingBench.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Customer.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Customer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$CustomerDisplay.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$CustomerDisplay.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Pizza$$anonfun$1.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Pizza$$anonfun$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Pizza.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Pizza.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Player.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Player.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerApp$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerApp$.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerApp.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerApp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerAppController.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerAppController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/menuDealerLogoAnim$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/menuDealerLogoAnim$.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" />
     </list>
@@ -52,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="PizzaDealerApp.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PizzaDealerApp.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-33.63889">
-              <caret line="148" column="35" selection-start-line="148" selection-start-column="35" selection-end-line="148" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.09485714">
+              <caret line="75" column="2" selection-start-line="75" selection-start-column="2" selection-end-line="75" selection-end-column="2" />
               <folding>
                 <element signature="e#26#51#0" expanded="true" />
               </folding>
@@ -64,15 +38,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PizzaDealerAnimations.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PizzaDealerAnimations.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43468717">
-              <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
               <folding>
                 <element signature="e#75#147#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cashier_down.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/sprites/cashier_down.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -139,8 +120,8 @@
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.sc" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/package.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" />
       </list>
     </option>
   </component>
@@ -1118,11 +1099,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/sprites/cashier_down.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1133,22 +1109,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.63889">
-          <caret line="148" column="35" selection-start-line="148" selection-start-column="35" selection-end-line="148" selection-end-column="35" />
-          <folding>
-            <element signature="e#26#51#0" expanded="true" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/sprites/cashier_down.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43468717">
-          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="34" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
           <folding>
             <element signature="e#75#147#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09485714">
+          <caret line="75" column="2" selection-start-line="75" selection-start-column="2" selection-end-line="75" selection-end-column="2" />
+          <folding>
+            <element signature="e#26#51#0" expanded="true" />
           </folding>
         </state>
       </provider>

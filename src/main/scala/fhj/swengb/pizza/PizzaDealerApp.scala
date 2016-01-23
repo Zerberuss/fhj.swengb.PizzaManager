@@ -73,12 +73,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
 
-  var circles: Seq[Circle] = null
-
-
-
-
-
+  
   //initialize function executes the commands at startup for the main scene
 
   //animation for Menue slide ins and outs

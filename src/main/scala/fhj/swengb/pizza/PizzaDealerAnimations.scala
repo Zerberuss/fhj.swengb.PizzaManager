@@ -12,7 +12,13 @@ import javafx.util.Duration
 
 import fhj.swengb.pizza.PizzaDealer.Pizza
 
-
+/** Sprechblasen animieren
+  *
+  * Setzt die Ingredients, des Orders, in die Sprechblase des Customers
+  *
+  * set -> Sprechblase erstellen
+  * setOrder -> Sprechblase befüllen -> Ingredients als list(String) übergeben
+  */
 case class CustomerSpeechBubbleAnim(){
   var obj:ImageView = _
   var ingredientsObj:List[ImageView] = List()
@@ -43,7 +49,13 @@ case class CustomerSpeechBubbleAnim(){
   }
 }
 
-
+/**Animation der Customer
+  *
+  * set: Neuen Customer erstellen
+  *       obj: ImageView aus der FXML
+  *       customerPos: (x,y) Koordinate des Customers
+  *       customerNr: welches aussehen hat der Customer
+  */
 case class CustomerPersonAnim(){
   var customerNr = 1
   var obj:ImageView = _
@@ -89,8 +101,14 @@ case class CustomerPersonAnim(){
 }
 
 
-
-
+/**Animation des Cashiers
+  *
+  * Lässt den Cashier herumlaufen
+  *
+  * set:  erstellen des Cashiers
+  * setGoTo : lässt ihn zu einem Ziel laufen
+  * handle: -> animation ausführen
+  */
 object CashierAnim {
   val frameWidth = 100
   val frameHeight = 200
@@ -144,6 +162,7 @@ object CashierAnim {
         case "tomato"       => targetPos =(100,200)
         case "ham"          => targetPos =(100,200)
         case "tuna"         => targetPos =(100,200)
+        case _              => targetPos =(570,360)
       }
       if(targetPos._2 >= lastPosition._2) { dealerSpriteAnim = getSpriteAnimation(true) }  //Sprite Animation ändern, falls sich die laufrichtung ändert -> isGoingDown true
       else{ dealerSpriteAnim = getSpriteAnimation(false)}
@@ -161,7 +180,7 @@ object CashierAnim {
       isStanding=false
     }else {
       if (!isStanding){       //nur einmal auf stehend zurücksetzen -> Ressourcen sparen, wenn er sich nicht bewegt
-        dealerSpriteAnim = new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, frameWidth, frameHeight, 10)
+        dealerSpriteAnim = new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier-down.png"), 4, 2, 8, frameWidth, frameHeight, 10)
         isStanding= true
       }
     }
