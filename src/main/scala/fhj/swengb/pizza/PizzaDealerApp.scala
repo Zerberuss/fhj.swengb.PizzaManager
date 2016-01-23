@@ -21,8 +21,6 @@ object PizzaDealerApp {
 }
 
 
-
-
 class PizzaDealerApp extends javafx.application.Application {
   val Css = "/fhj/swengb/pizza/PizzaDealer.css"
   val Fxml = "/fhj/swengb/pizza/PizzaDealer.fxml"
@@ -135,7 +133,6 @@ class PizzaDealerAppController extends PizzaDealerApp {
   }
 
   def gameStart(): Unit = {
-
      startSinglePlayer(playerName.getText)
   }
 

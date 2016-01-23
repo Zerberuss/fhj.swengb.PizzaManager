@@ -68,8 +68,6 @@ case class GameLoop() extends AnimationTimer{
 
 
 object PizzaDealer {
-
-
   var level: Int = 1
   //wird nach Bedienung der 4 Kunden um 1 erhöht
   val levelMax: Int = 8

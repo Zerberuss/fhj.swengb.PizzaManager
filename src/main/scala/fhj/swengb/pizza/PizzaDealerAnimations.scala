@@ -6,18 +6,51 @@ package fhj.swengb.pizza
   */
 
 import javafx.animation.{PathTransition, AnimationTimer, FadeTransition}
-import javafx.scene.image.{Image, ImageView}
+import javafx.scene.image.{ImageView, Image}
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.util.Duration
 
+import fhj.swengb.pizza.PizzaDealer.Pizza
 
-case class CustomerAnim(){
+
+case class CustomerSpeechBubbleAnim(){
+  var obj:ImageView = _
+  var ingredientsObj:List[ImageView] = List()
+  //val centerOfIngredients = (100,100)
+
+  def set(bubbleObj:ImageView,ingredientsObj:List[ImageView],customerPos:(Int,Int)): Unit = {
+    this.obj=bubbleObj
+    this.obj.setImage(new Image("/fhj/swengb/pizza/customer/bubble.png"))
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    fadetransition.setFromValue(0)
+    fadetransition.setToValue(1)
+    fadetransition.playFromStart()
+
+    this.ingredientsObj = ingredientsObj
+  }
+
+  def setOrder(ingredients:List[String]): Unit ={
+    ingredientsObj.foreach(obj=>obj.setVisible(false))
+    ingredients.indices.foreach(index => {
+      ingredientsObj(index).setImage(new Image("/fhj/swengb/pizza/ingredients/" + ingredients(index) + ".png"))
+
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+      fadetransition.setFromValue(0)
+      fadetransition.setToValue(1)
+      fadetransition.playFromStart()
+      ingredientsObj(index).setVisible(true)
+    })
+  }
+}
+
+
+case class CustomerPersonAnim(){
   var customerNr = 1
   var obj:ImageView = _
   var customerImageList = List("")
   var customerAnim:ImageViewSprite = _
 
-  def set(obj:ImageView, customerNr:Int) {
+  def set(obj:ImageView, customerPos:(Int,Int), customerNr:Int) {
     this.obj = obj
     this.customerNr = customerNr
     this.customerImageList = List("/fhj/swengb/pizza/customer/customer"+customerNr+"_angry.png",
@@ -26,8 +59,9 @@ case class CustomerAnim(){
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral.png",
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral_glow.png")
 
-    this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)),1, 1, 1, 100, 200, 1)
-
+    this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)),1, 1, 1, 100, 200, 1)
+    this.obj.setTranslateX(customerPos._1)
+    this.obj.setTranslateY(customerPos._2)
     val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
@@ -37,11 +71,17 @@ case class CustomerAnim(){
   def setAngry() {
     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
   }
-  def setHappy() {
+  def setAngryGlowing() {
+    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
+  }
+  def setHappyGlowing() {
     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
   }
   def setNeutral() {
     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
+  }
+  def setNeutralGlowing() {
+    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)), 1, 1, 1, 100, 200, 1)
   }
   def handle(now: Long) = {
     customerAnim.handle(now)
@@ -52,8 +92,8 @@ case class CustomerAnim(){
 
 
 object CashierAnim {
-  val frameWidth = 280
-  val frameHeight = 280
+  val frameWidth = 100
+  val frameHeight = 200
 
   var dealer: ImageView = _
   var dealerSpriteAnim:ImageViewSprite = _
@@ -75,8 +115,8 @@ object CashierAnim {
   }
 
   private def getSpriteAnimation(goingDown:Boolean):ImageViewSprite  = {
-    if(goingDown)  new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/pizza-dealer.png"), 4, 2, 8, frameWidth, frameHeight, 10)
-    else new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/pizza-dealer2.png"), 4, 2, 8, frameWidth, frameHeight, 10)
+    if(goingDown)  new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_down.png"), 3, 1, 3, frameWidth, frameHeight, 6)
+    else new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_up.png"), 3, 1, 3, frameWidth, frameHeight, 6)
   }
 
   private def createPath(pathToTarget: (Int,Int)): Path ={
@@ -96,15 +136,14 @@ object CashierAnim {
         case "Customer3"    => targetPos =(500,300)
         case "Customer4"    => targetPos =(-500,-300)
 
-        case "Pilze"        => targetPos =(100,200)
-        case "Tomatensoße"  => targetPos =(100,200)
-        case "Käse"         => targetPos =(100,200)
-        case "Paprika"      => targetPos =(100,200)
-        case "Salami"       => targetPos =(100,200)
-        case "Schinken"     => targetPos =(100,200)
-        case "Thunfisch"    => targetPos =(100,200)
-        case "Zwiebel"      => targetPos =(100,200)
-        case "Teig"         => targetPos =(100,200)
+        case "salami"       => targetPos =(100,200)
+        case "paprika"      => targetPos =(100,200)
+        case "champignon"   => targetPos =(100,200)
+        case "cheese"       => targetPos =(100,200)
+        case "onion"        => targetPos =(100,200)
+        case "tomato"       => targetPos =(100,200)
+        case "ham"          => targetPos =(100,200)
+        case "tuna"         => targetPos =(100,200)
       }
       if(targetPos._2 >= lastPosition._2) { dealerSpriteAnim = getSpriteAnimation(true) }  //Sprite Animation ändern, falls sich die laufrichtung ändert -> isGoingDown true
       else{ dealerSpriteAnim = getSpriteAnimation(false)}
