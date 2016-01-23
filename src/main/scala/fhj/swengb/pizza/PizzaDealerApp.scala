@@ -157,7 +157,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
     logoSet.set(logoAnimationImageView)
     progressBarTest.setProgress(progressBarTest.getProgress + 0.1)
     if (progressBarTest.getProgress > 1) System.exit(1)
-    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.goTo("Customer1")
+    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.setGoTo("Customer1")
     else  logoAnim.start()
     print(progressBarTest.getProgress % 0.2 + "\n")
   }

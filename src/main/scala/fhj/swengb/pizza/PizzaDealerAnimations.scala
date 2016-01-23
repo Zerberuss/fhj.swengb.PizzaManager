@@ -43,7 +43,7 @@ case class CustomerAnim(){
   def setNeutral() {
     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
   }
-  def animate(now: Long) = {
+  def handle(now: Long) = {
     customerAnim.handle(now)
   }
 }
@@ -86,7 +86,7 @@ object Cashier extends AnimationTimer{
     path
   }
 
-  def goTo(GoToName:String){
+  def setGoTo(GoToName:String){
 
     if (GoToName!=lastGoTo) {   //Neue Pfad Animation nur dann ausführen, wenn sich das Ziel geändert hat
     var targetPos = (0,0)
@@ -129,40 +129,6 @@ object Cashier extends AnimationTimer{
   }
 }
 
-
-case class GameLoop(obj : ImageView) extends AnimationTimer{
-  var customer = new CustomerAnim()
-  customer.set(obj,2)
-
-  var fps = 100
-  var lastFrame = System.nanoTime
-  var lastLogicFrame = 0
-
-
-
-  override def handle(now: Long): Unit = {
-    val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt       //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
-    if (frameJump > 1) {                                                                //neuen Frame berechnen
-      lastFrame = now
-      lastLogicFrame += 1
-      customer.animate(now)
-      //menuDealerLogoAnim.handle(now)
-    }
-
-    //Nur zum testen:
-    if (lastLogicFrame == 50) {
-      customer.setAngry()
-
-    }else  if (lastLogicFrame == 100) {
-      customer.setHappy()
-
-    }else if (lastLogicFrame > 150){
-      customer.setNeutral()
-
-      lastLogicFrame=0
-    }
-  }
-}
 
 
 object menuDealerLogoAnim extends AnimationTimer{
