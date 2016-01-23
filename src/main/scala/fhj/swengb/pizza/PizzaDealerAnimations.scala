@@ -51,7 +51,7 @@ case class CustomerAnim(){
 
 
 
-object Cashier extends AnimationTimer{
+object CashierAnim {
   val frameWidth = 280
   val frameHeight = 280
 
@@ -115,7 +115,7 @@ object Cashier extends AnimationTimer{
   }
 
 
-  override def handle(now: Long): Unit = {
+  def handle(now: Long): Unit = {
     if(lastPosition != (dealer.getTranslateX,dealer.getTranslateY)){
       this.dealerSpriteAnim.handle(now)
       lastPosition = (dealer.getTranslateX,dealer.getTranslateY)

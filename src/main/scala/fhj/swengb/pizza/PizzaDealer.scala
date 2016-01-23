@@ -8,27 +8,48 @@ import scala.util.Random.nextInt
 
 
 
-case class GameLoop(obj : ImageView) extends AnimationTimer{
+case class GameLoop() extends AnimationTimer{
 
   //nur als beispiel wie man einen Customer erstellt
-  var customer = new CustomerAnim()
-  customer.set(obj,2)
+    //var customer = new CustomerAnim()
+    //customer.set(obj,2)
+  //cashier erzeugen
+  var cashier = CashierAnim
 
+  var obj : ImageView = _
   var fps = 100
   var lastFrame = System.nanoTime
   var lastLogicFrame = 0
 
-
+  def set(obj:ImageView, fps:Int = 100) {
+    this.obj = obj
+    this.fps = fps
+    CashierAnim.set(obj)
+  }
 
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt       //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
     if (frameJump > 1) {                                                                //neuen Frame berechnen
       lastFrame = now
       lastLogicFrame += 1
-      customer.handle(now)
-      //menuDealerLogoAnim.handle(now)
+      //customer.handle(now)
+      cashier.handle(now)
     }
 
+
+    //Nur zum testen des Cashiers:
+    if (lastLogicFrame == 50) {
+      cashier.setGoTo("Customer1")
+
+    }else  if (lastLogicFrame == 100) {
+      cashier.setGoTo("Customer4")
+
+    }else if (lastLogicFrame > 150){
+      cashier.setGoTo("Käse")
+
+      lastLogicFrame=0
+    }
+    /*
     //Nur zum testen des Customers:
     if (lastLogicFrame == 50) {
       customer.setAngry()
@@ -41,6 +62,7 @@ case class GameLoop(obj : ImageView) extends AnimationTimer{
 
       lastLogicFrame=0
     }
+    */
   }
 }
 

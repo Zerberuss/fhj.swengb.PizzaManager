@@ -147,17 +147,18 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
 //Test um bei begin Animation auszuführen-> FAIL .. reality hits you hard bro!
-  //lazy val logoSet = menuDealerLogoAnim.set(logoAnimationImageView)
-  //lazy val logoSet = new GameLoop(logoAnimationImageView)
-  lazy val logoSet = Cashier
+  //lazy val logoAnim = menuDealerLogoAnim.set(logoAnimationImageView)
+  //lazy val logoAnim = new GameLoop(logoAnimationImageView)
+  //lazy val logoAnim = CashierAnim
   //lazy val logoAnim = menuDealerLogoAnim
-  lazy val logoAnim = logoSet
+  //lazy val logoAnim = logoSet
+  lazy val logoAnim = GameLoop()
 
   def exit(): Unit = {
-    logoSet.set(logoAnimationImageView)
+    logoAnim.set(logoAnimationImageView)
     progressBarTest.setProgress(progressBarTest.getProgress + 0.1)
     if (progressBarTest.getProgress > 1) System.exit(1)
-    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.setGoTo("Customer1")
+    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.stop()
     else  logoAnim.start()
     print(progressBarTest.getProgress % 0.2 + "\n")
   }
