@@ -180,7 +180,7 @@ object CashierAnim {
       isStanding=false
     }else {
       if (!isStanding){       //nur einmal auf stehend zurücksetzen -> Ressourcen sparen, wenn er sich nicht bewegt
-        dealerSpriteAnim = new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier-down.png"), 4, 2, 8, frameWidth, frameHeight, 10)
+        dealerSpriteAnim = new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_down.png"), 3, 1, 3, frameWidth, frameHeight, 6)
         isStanding= true
       }
     }
@@ -188,7 +188,10 @@ object CashierAnim {
 }
 
 
-
+/**Logo Animation
+  *
+  *
+  */
 object menuDealerLogoAnim extends AnimationTimer{
   var dealer: ImageViewSprite = _
   var status: Int = 0

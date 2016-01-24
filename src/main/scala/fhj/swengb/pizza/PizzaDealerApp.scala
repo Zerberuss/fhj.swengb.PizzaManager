@@ -129,6 +129,20 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var lbl_highscore: Label = _
 
 
+  //Buttons
+  @FXML var salamibtn:Button = _
+  @FXML var paprikabtn:Button = _
+  @FXML var champignon:Button = _
+  @FXML var cheesebtn:Button = _
+  @FXML var onionbtn:Button = _
+  @FXML var tomatobtn:Button = _
+  @FXML var hambtn:Button = _
+  @FXML var tunabtn:Button = _
+
+  @FXML var customer1:Button = _
+  @FXML var customer2:Button = _
+  @FXML var customer3:Button = _
+  @FXML var customer4:Button = _
 
 
   //Highscores Pane
@@ -148,6 +162,24 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
+
+
+
+  def callSalamibtn():Unit = GameLoop.ingridientsButton(1,GameLoop.selectedCustomer)
+  def callPaprikabtn():Unit = GameLoop.ingridientsButton(2,GameLoop.selectedCustomer)
+  def callChampignonbtn():Unit = GameLoop.ingridientsButton(3,GameLoop.selectedCustomer)
+  def callCheesebtn():Unit = GameLoop.ingridientsButton(4,GameLoop.selectedCustomer)
+  def callOnionbtn():Unit = GameLoop.ingridientsButton(5,GameLoop.selectedCustomer)
+  def callTomatobtn():Unit = GameLoop.ingridientsButton(6,GameLoop.selectedCustomer)
+  def callHambtn():Unit = GameLoop.ingridientsButton(7,GameLoop.selectedCustomer)
+  def callTunabtn():Unit = GameLoop.ingridientsButton(8,GameLoop.selectedCustomer)
+
+  def callCustomer1():Unit = GameLoop.customerSelected(1)
+  def callCustomer2():Unit = GameLoop.customerSelected(2)
+  def callCustomer3():Unit = GameLoop.customerSelected(3)
+  def callCustomer4():Unit = GameLoop.customerSelected(4)
+
+
 
 
   //initialize function executes the commands at startup for the main scene
@@ -220,14 +252,119 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //lazy val logoAnim = CashierAnim
   //lazy val logoAnim = menuDealerLogoAnim
   //lazy val logoAnim = logoSet
-  lazy val logoAnim = GameLoop()
+
+
+  /** Erstellt ein neues Game und setzt die Variablen der FXML Datei
+    *
+    *gesetzt wird:
+    *
+    *
+    *
+    * @return  neues Gameloop object
+    */
+  def setNewGame():Unit = {
+
+
+    val pizzaList1 = (
+      imgvw_pizza1,
+      List (
+       imgvw_pizza1_ing1,
+       imgvw_pizza1_ing2,
+       imgvw_pizza1_ing3,
+       imgvw_pizza1_ing4))
+    val pizzaList2 =  (
+     imgvw_pizza2,
+      List (
+       imgvw_pizza2_ing1,
+       imgvw_pizza2_ing2,
+       imgvw_pizza2_ing3,
+       imgvw_pizza2_ing4))
+    val pizzaList3=  (
+     imgvw_pizza3,
+      List (
+       imgvw_pizza3_ing1,
+       imgvw_pizza3_ing2,
+       imgvw_pizza3_ing3,
+       imgvw_pizza3_ing4))
+    val pizzaList4 = (
+     imgvw_pizza4,
+      List (
+       imgvw_pizza4_ing1,
+       imgvw_pizza4_ing2,
+       imgvw_pizza4_ing3,
+       imgvw_pizza4_ing4
+    ))
+
+    val cashier = imgvw_cashier
+
+
+    val customersList = List (
+     imgvw_customer1,
+     imgvw_customer2,
+     imgvw_customer3,
+     imgvw_customer4
+    )
+
+    val speachbubble1 = (
+     imgvw_speechbubble1,
+    List(
+     imgvw_speechbubble1_ing1,
+     imgvw_speechbubble1_ing2,
+     imgvw_speechbubble1_ing3,
+     imgvw_speechbubble1_ing4
+    ))
+    val speachbubble2 = (
+     imgvw_speechbubble2,
+    List(
+     imgvw_speechbubble2_ing1,
+     imgvw_speechbubble2_ing2,
+     imgvw_speechbubble2_ing3,
+     imgvw_speechbubble2_ing4
+    ))
+    val speachbubble3 = (
+     imgvw_speechbubble3,
+    List(
+     imgvw_speechbubble3_ing1,
+     imgvw_speechbubble3_ing2,
+     imgvw_speechbubble3_ing3,
+     imgvw_speechbubble3_ing4
+    ))
+    val speachbubble4 = (
+     imgvw_speechbubble4,
+    List(
+     imgvw_speechbubble4_ing1,
+     imgvw_speechbubble4_ing2,
+     imgvw_speechbubble4_ing3,
+     imgvw_speechbubble4_ing4
+    ))
+
+    val ingrediants = List(
+     imgvw_salami,
+     imgvw_paprika,
+     imgvw_champignon,
+     imgvw_cheese,
+     imgvw_onion,
+     imgvw_tomato,
+     imgvw_ham,
+     imgvw_tuna
+    )
+
+    val progressBar =  progressBar_game
+    val highscore =  lbl_highscore
+    val playername = this.playerName
+
+    GameLoop.set(pizzaList1,pizzaList2,pizzaList3,pizzaList4,cashier,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,progressBar,highscore,playername)
+    GameLoop
+  }
+
+
 
   def exit(): Unit = {
-    logoAnim.set(logoAnimationImageView)
+    lazy val gameloop = GameLoop
     progressBarTest.setProgress(progressBarTest.getProgress + 0.1)
     if (progressBarTest.getProgress > 1) System.exit(1)
-    else if (progressBarTest.getProgress % 0.2 < 0.1) logoAnim.stop()
-    else  logoAnim.start()
+    else if (progressBarTest.getProgress % 0.2 < 0.1) gameloop.stop()
+    else  gameloop.start()
     print(progressBarTest.getProgress % 0.2 + "\n")
   }
 }

@@ -2,6 +2,7 @@ package fhj.swengb.pizza
 
 
 import javafx.animation.AnimationTimer
+import javafx.scene.control.ProgressBar
 import javafx.scene.image.ImageView
 
 import fhj.swengb.pizza.PizzaDealer.{CraftingBench, Customer}
@@ -9,7 +10,7 @@ import fhj.swengb.pizza.PizzaDealer.{CraftingBench, Customer}
 import scala.util.Random.nextInt
 
 
-case class GameLoop() extends AnimationTimer {
+object GameLoop extends AnimationTimer {
 
   //nur als beispiel wie man einen Customer erstellt
   //var customer = new CustomerAnim()
@@ -27,6 +28,7 @@ case class GameLoop() extends AnimationTimer {
   var i: Int = 1
   // falls maxlevel erreicht ist wird die übrige Zeit ZUSÄTZLICH noch um diesen wert verringert     der wert erhöht sich dannach
   var score: Long = 0
+  var selectedCustomer:Int = 1
   var cus1: Customer = _
   var cus2: Customer = _
   var cus3: Customer = _
@@ -41,16 +43,31 @@ case class GameLoop() extends AnimationTimer {
   var fps = 100
   var lastFrame = System.nanoTime
   var lastLogicFrame = 0
+  var progressbar:ProgressBar = _
+  var playerName:String = ""
+  var firstRun:Int = 0
 
-  def set(obj: ImageView, fps: Int = 100) {
-    this.obj = obj
+  /*
+  alle speachbubbles
+   */
+
+  def set(cash: ImageView, fps: Int = 100) {
+    this.obj = cash
     this.fps = fps
-    CashierAnim.set(obj)
+    CashierAnim.set(cash)
   }
 
 
+  def setEverything(pb:ProgressBar): Unit = {
+    progressbar = pb
 
 
+  }
+
+  createCustomers(level)
+  def editProgressbar() = {
+    progressbar.setProgress(progressbar.getProgress+calcPorgressbar())
+  }
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
     if (frameJump > 1) {
@@ -58,28 +75,56 @@ case class GameLoop() extends AnimationTimer {
       //sind customers erstellt
 
       if(checkCustomersExist()==false){
-        createCustomers(this.level)
+        //createCustomers(this.level)
       }
 
 
-      if (checkIfGameover == true) {
+      if (checkIfGameover == true) { //spiel vorbei?
+        //in datenbank speichern
+        ScalaJdbcSQL.setHighscoreList(playerName,score.toInt)
         stop()
       }
+
       //überprüfen ob alle customers bedient worden sind
+      //einen customer auf happy setzen
+
+      if(firstRun == 0) {
+        firstRun = 1
+        createCustomers(level)
+        //CustomerSpeechBubbleAnim.setOrder
+
+
+      }
+
 
       if (checkIfCustomersServed == true) {
-        createCustomers(level + 1)
+
         score = 4 + level * (System.nanoTime() / 1000000000 - timer) // 4 für customers + level*timeleft
         //reset timer
+        level = level + 1
+        createCustomers(level)
+        //speechbubble neu setzten
+
+        setTimer()
       }
+
+      //
+
+
 
       if (checkTimer == true) {  //timer setzen
         setTimer()
         lives = lives - 1
       } else {
-
+        editProgressbar()
         //setprogressbar
       }
+
+
+
+
+
+
 
 
 
@@ -112,7 +157,7 @@ case class GameLoop() extends AnimationTimer {
     x   erstellen der 4 Kunden (<- jeweils eine Pizza)
     x   kunden werden abhängig von level erstellt
     x Kunden müssen bestimmten platz bekommen position 1-4
-        x positon in Imageview zuweisen (animation) -> Container den man auffüllt
+        - positon in Imageview zuweisen (animation) -> Container den man auffüllt
     - Customer number = aussehen zuweisen randomizen //warten auf FXML
     - setzen der cUSTOMERSPEECHBALLONANIM -> sprechblase
     - Timer start
@@ -138,7 +183,21 @@ case class GameLoop() extends AnimationTimer {
     */
   }
 
-  def checkIfGameover: Boolean = {
+
+
+  //allgemeine setter funktion für alle objekte
+
+
+
+
+
+
+
+
+
+
+
+  private def checkIfGameover: Boolean = {
     if (this.lives == 0) {
       true
     }
@@ -147,7 +206,7 @@ case class GameLoop() extends AnimationTimer {
     }
   }
 
-  def checkIfCustomersServed(): Boolean = {
+  private def checkIfCustomersServed(): Boolean = {
     if (cus1.getOrder() == craB1.getAddedIngridients && cus2.getOrder() == craB2.getAddedIngridients && cus3.getOrder() == craB3.getAddedIngridients && cus4.getOrder() == craB4.getAddedIngridients) {
       true
     }
@@ -156,12 +215,12 @@ case class GameLoop() extends AnimationTimer {
     }
   }
 
-  def setTimer() {
+  private def setTimer() {
     timer = System.nanoTime() / 1000000000
 
   }
 
-  def checkTimer(): Boolean = {
+  private def checkTimer(): Boolean = {
     //abgelaufen?  ja?
     if (timer > 0) {
       if (System.nanoTime() / 1000000000 > timer + timeAndLevel()) true
@@ -171,12 +230,12 @@ case class GameLoop() extends AnimationTimer {
     }
   }
 
-  def timeLeft():Int = {
+  private def timeLeft():Int = {
     val i = timer - System.nanoTime()/1000000000
     i.toInt
   }
 
-  def calcPorgressbar():Float = {
+  private def calcPorgressbar():Double = {
     val x = timeAndLevel()
 
     val y:Float = x/100 // dann haben wir 1 %
@@ -184,16 +243,9 @@ case class GameLoop() extends AnimationTimer {
     val progressbarChange = y*timeLeft
 
     progressbarChange
-
-    /*
-    *
-    *
-    *
-    *
-    * */
   }
 
-  def timeAndLevel(): Int = {
+  private def timeAndLevel(): Int = {
     //returns time for timer
     var x = 0
     if (level == levelMax) {
@@ -208,51 +260,63 @@ case class GameLoop() extends AnimationTimer {
     x
   }
 
-  def checkCustomersExist(): Boolean = {
+  private def checkCustomersExist(): Boolean = {
     try {
       cus1.getOrder()
       true
     }
     catch {
-      case e =>
-        false
+      case e => false
     }
-
   }
 
-  def ingridientsButton(i:Int,craB:CraftingBench) = {
+
+
+  def ingridientsButton(i:Int,selectedCustomer:Int) = {//add ingridient to working bench
     i match {
-      case 1 => craB.addIngridientToCraftingBench("salami"); CashierAnim.setGoTo("salami") //salami
-      case 2 => craB.addIngridientToCraftingBench("paprika"); CashierAnim.setGoTo("paprika")//paprika
-      case 3 => craB.addIngridientToCraftingBench("champignon"); CashierAnim.setGoTo("champignon")
-      case 4 => craB.addIngridientToCraftingBench("cheese"); CashierAnim.setGoTo("cheese") //cheese
-      case 5 => craB.addIngridientToCraftingBench("onion"); CashierAnim.setGoTo("onion") //onion
-      case 6 => craB.addIngridientToCraftingBench("tomato"); CashierAnim.setGoTo("tomato")//tomato
-      case 7 => craB.addIngridientToCraftingBench("ham"); CashierAnim.setGoTo("ham") //ham
-      case 8 => craB.addIngridientToCraftingBench("tuna"); CashierAnim.setGoTo("tuna") //tuna
+      case 1 => {getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("salami")
+        CashierAnim.setGoTo("salami")} //salami
+      case 2 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("paprika"); CashierAnim.setGoTo("paprika")//paprika
+      case 3 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("champignon"); CashierAnim.setGoTo("champignon")
+      case 4 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("cheese"); CashierAnim.setGoTo("cheese") //cheese
+      case 5 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("onion"); CashierAnim.setGoTo("onion") //onion
+      case 6 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tomato"); CashierAnim.setGoTo("tomato")//tomato
+      case 7 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("ham"); CashierAnim.setGoTo("ham") //ham
+      case 8 => getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna"); CashierAnim.setGoTo("tuna") //tuna
       case _ => CashierAnim.setGoTo("standard") //back to standardposition
     }
 
     //set animation cashier??!?!?!?!
-    //add ingridient to working bench
+
 
   }
 
-  def customerSelected(customer:Int) : Customer = {
-    customer match {
-      case 1 => cus1
-      case 2 => cus2
-      case 3 => cus3
-      case 4 => cus4
-
+  def getCraftingBenchForCustomer(selectedCustomer:Int): CraftingBench = {
+    selectedCustomer match {
+      case 1 => craB1
+      case 2 => craB2
+      case 3 => craB3
+      case 4 => craB4
     }
   }
 
+  def customerSelected(customer:Int): Unit = {
+    customer match {
+      case 1 => selectedCustomer=1
+      case 2 => selectedCustomer=2
+      case 3 => selectedCustomer=3
+      case 4 => selectedCustomer=4
+    }
+  }
+
+
   def createCustomers(level: Int) = {
-    val positionAnimation: List[Int] = util.Random.shuffle((0 to 3).toSeq.toList)
+    //val positionAnimation: List[Int] = util.Random.shuffle((1 to 4).toSeq.toList)
     cus1 = new Customer(level)
+    println("CUSTOMER 1 FAGGOT"+cus1.getOrder())
     craB1 = new CraftingBench(cus1.getOrder())
     cus2 = new Customer(level)
+    println("CUSTOMER 2 DU NUTTE"+cus2.getOrder())
     craB2 = new CraftingBench(cus2.getOrder())
     cus3 = new Customer(level)
     craB3 = new CraftingBench(cus3.getOrder())
@@ -279,46 +343,37 @@ object PizzaDealer {
     var finalIngridients = List[String]()
 
     def setPizzaObject(): List[String] = {
-      val intList = getRandomNumbers(n, 4)
-      for (i <- 0 to intList.length - 1) {
-        finalIngridients ::= ingridients(intList(i))
+      if(n >= 4){
+        for(n <- 1 to 4){
+          finalIngridients ::= ingridients.toList((math.random*ingridients.size).toInt)
+        }
+      }else {
+        for(n <- 1 to n){
+          finalIngridients ::= ingridients.toList((math.random*ingridients.size).toInt)
+        }
       }
-      finalIngridients ::= "dough"
       finalIngridients
     }
-
-    def getRandomNumbers(n: Int, maxIng: Int): List[Int] = {
-      var intList = List[Int]()
-      if (n > 4) {
-        intList = Stream.continually(nextInt(4)).take(n).toList
-      }
-      else {
-        intList = Stream.continually(nextInt(n)).take(n).toList
-      }
-      intList
-    }
-
     def getIngridients(): List[String] = finalIngridients
-
-
   }
 
 
   class Customer(level: Int) {
-    val order = new Pizza(level).setPizzaObject()
-
+    val order = new Pizza(GameLoop.level).setPizzaObject()
+    println("IM CUSTOMER"+order)
     //+sprechblase setzen
     def getOrder(): List[String] = order.sorted
   }
 
 
   class CraftingBench(order: List[String]) {
-    var ingridientsAdded = List[String]("dough")
+    var ingridientsAdded = List[String]()
 
     def addIngridientToCraftingBench(ingridient: String): List[String] = {
       if (order.contains(ingridient)) {
         ingridientsAdded ::= ingridient
         ingridientsAdded
+        //if abfrage ob customer served -> customer auf happy setzen
       }
       else {
         println("Nope war net in der Order")
@@ -337,10 +392,7 @@ object PizzaDealer {
   }
 
   class Player(name: String) {
-    def setPlayer = ???
-
-    def getLevel = ???
-
+    def setName = ???
     def getName = ???
 
   }
