@@ -12,6 +12,72 @@ import javafx.util.Duration
 
 import fhj.swengb.pizza.PizzaDealer.Pizza
 
+
+/** Pizza erstellen und belegen
+  *
+  * set: ImageViews setzen
+  * showPizza: Pizza anzeigen
+  *
+  * addIngredient Neuen Belag hinzufügen
+  *
+  * reset: alles ausblenden
+  */
+
+case class PizzaAnim(){
+  var obj:ImageView = _
+  var ingredientsAdded: Int = 0
+  var ingredientsObj:List[ImageView] = List()
+
+  def set (pizzaObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
+    this.obj = pizzaObj
+    this.obj.setImage(new Image("/fhj/swengb/pizza/images/gamePane_pizza.png"))
+    this.obj.setVisible(false)
+
+    this.ingredientsObj = ingredientsObj
+    ingredientsObj.foreach( ing => ing.setVisible(false))
+    reset()
+  }
+
+  def showPizza(): Unit ={
+    if(!ingredientsObj(ingredientsAdded).isVisible) ingredientsObj(ingredientsAdded).setVisible(true)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    fadetransition.setFromValue(0)
+    fadetransition.setToValue(1)
+    fadetransition.playFromStart()
+  }
+
+  def addIngredient(ingredient:String): Unit ={
+    if(!ingredientsObj(ingredientsAdded).isVisible) ingredientsObj(ingredientsAdded).setVisible(true)
+
+    ingredientsObj(ingredientsAdded).setImage(new Image("/fhj/swengb/pizza/images/ingredients/" + ingredient + ".png"))
+
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(ingredientsAdded))
+    fadetransition.setFromValue(0)
+    fadetransition.setToValue(1)
+    fadetransition.playFromStart()
+
+    ingredientsAdded+=1
+  }
+
+  def reset(): Unit ={
+    ingredientsObj.indices.foreach(index => {
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(index))
+      fadetransition.setFromValue(1)
+      fadetransition.setToValue(0)
+      fadetransition.playFromStart()
+  })
+    ingredientsAdded = 0
+
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    fadetransition.setFromValue(1)
+    fadetransition.setToValue(0)
+    fadetransition.playFromStart()
+  }
+
+
+
+}
+
 /** Sprechblasen animieren
   *
   * Setzt die Ingredients, des Orders, in die Sprechblase des Customers
@@ -24,9 +90,9 @@ case class CustomerSpeechBubbleAnim(){
   var ingredientsObj:List[ImageView] = List()
   //val centerOfIngredients = (100,100)
 
-  def set(bubbleObj:ImageView,ingredientsObj:List[ImageView],customerPos:(Int,Int)): Unit = {
+  def set(bubbleObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
     this.obj=bubbleObj
-    this.obj.setImage(new Image("/fhj/swengb/pizza/customer/bubble.png"))
+    this.obj.setImage(new Image("/fhj/swengb/pizza/images/speechbubble.png"))
     val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
@@ -40,7 +106,7 @@ case class CustomerSpeechBubbleAnim(){
     ingredients.indices.foreach(index => {
       ingredientsObj(index).setImage(new Image("/fhj/swengb/pizza/images/ingredients/" + ingredients(index) + ".png"))
 
-      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(index))
       fadetransition.setFromValue(0)
       fadetransition.setToValue(1)
       fadetransition.playFromStart()
@@ -62,7 +128,7 @@ case class CustomerPersonAnim(){
   var customerImageList = List("")
   var customerAnim:ImageViewSprite = _
 
-  def set(obj:ImageView, customerPos:(Int,Int), customerNr:Int) {
+  def set(obj:ImageView, customerNr:Int) {
     this.obj = obj
     this.customerNr = customerNr
     this.customerImageList = List("/fhj/swengb/pizza/customer/customer"+customerNr+"_angry.png",
@@ -72,8 +138,7 @@ case class CustomerPersonAnim(){
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral_glow.png")
 
     this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)),1, 1, 1, 100, 200, 1)
-    this.obj.setTranslateX(customerPos._1)
-    this.obj.setTranslateY(customerPos._2)
+
     val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)

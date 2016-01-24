@@ -210,7 +210,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   def startHighscoresPane(): Boolean = {
     animMenuPanes(highscoresPane, false, 1280/2+5)
     animMenuPanes(highscoresMenu, true)
-  true
+    true
   }
 
 
@@ -236,7 +236,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   }
 
   def gameStart(): Unit = {
-     startSinglePlayer(playerName.getText)
+    startSinglePlayer(playerName.getText)
   }
 
   def backToMainMenu(): Unit = ???
@@ -246,7 +246,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   }
 
 
-//Test um bei begin Animation auszuführen-> FAIL .. reality hits you hard bro!
+  //Test um bei begin Animation auszuführen-> FAIL .. reality hits you hard bro!
   //lazy val logoAnim = menuDealerLogoAnim.set(logoAnimationImageView)
   //lazy val logoAnim = new GameLoop(logoAnimationImageView)
   //lazy val logoAnim = CashierAnim
@@ -268,92 +268,92 @@ class PizzaDealerAppController extends PizzaDealerApp {
     val pizzaList1 = (
       imgvw_pizza1,
       List (
-       imgvw_pizza1_ing1,
-       imgvw_pizza1_ing2,
-       imgvw_pizza1_ing3,
-       imgvw_pizza1_ing4))
+        imgvw_pizza1_ing1,
+        imgvw_pizza1_ing2,
+        imgvw_pizza1_ing3,
+        imgvw_pizza1_ing4))
     val pizzaList2 =  (
-     imgvw_pizza2,
+      imgvw_pizza2,
       List (
-       imgvw_pizza2_ing1,
-       imgvw_pizza2_ing2,
-       imgvw_pizza2_ing3,
-       imgvw_pizza2_ing4))
+        imgvw_pizza2_ing1,
+        imgvw_pizza2_ing2,
+        imgvw_pizza2_ing3,
+        imgvw_pizza2_ing4))
     val pizzaList3=  (
-     imgvw_pizza3,
+      imgvw_pizza3,
       List (
-       imgvw_pizza3_ing1,
-       imgvw_pizza3_ing2,
-       imgvw_pizza3_ing3,
-       imgvw_pizza3_ing4))
+        imgvw_pizza3_ing1,
+        imgvw_pizza3_ing2,
+        imgvw_pizza3_ing3,
+        imgvw_pizza3_ing4))
     val pizzaList4 = (
-     imgvw_pizza4,
+      imgvw_pizza4,
       List (
-       imgvw_pizza4_ing1,
-       imgvw_pizza4_ing2,
-       imgvw_pizza4_ing3,
-       imgvw_pizza4_ing4
-    ))
+        imgvw_pizza4_ing1,
+        imgvw_pizza4_ing2,
+        imgvw_pizza4_ing3,
+        imgvw_pizza4_ing4
+      ))
 
     val cashier = imgvw_cashier
 
 
     val customersList = List (
-     imgvw_customer1,
-     imgvw_customer2,
-     imgvw_customer3,
-     imgvw_customer4
+      imgvw_customer1,
+      imgvw_customer2,
+      imgvw_customer3,
+      imgvw_customer4
     )
 
     val speachbubble1 = (
-     imgvw_speechbubble1,
-    List(
-     imgvw_speechbubble1_ing1,
-     imgvw_speechbubble1_ing2,
-     imgvw_speechbubble1_ing3,
-     imgvw_speechbubble1_ing4
-    ))
+      imgvw_speechbubble1,
+      List(
+        imgvw_speechbubble1_ing1,
+        imgvw_speechbubble1_ing2,
+        imgvw_speechbubble1_ing3,
+        imgvw_speechbubble1_ing4
+      ))
     val speachbubble2 = (
-     imgvw_speechbubble2,
-    List(
-     imgvw_speechbubble2_ing1,
-     imgvw_speechbubble2_ing2,
-     imgvw_speechbubble2_ing3,
-     imgvw_speechbubble2_ing4
-    ))
+      imgvw_speechbubble2,
+      List(
+        imgvw_speechbubble2_ing1,
+        imgvw_speechbubble2_ing2,
+        imgvw_speechbubble2_ing3,
+        imgvw_speechbubble2_ing4
+      ))
     val speachbubble3 = (
-     imgvw_speechbubble3,
-    List(
-     imgvw_speechbubble3_ing1,
-     imgvw_speechbubble3_ing2,
-     imgvw_speechbubble3_ing3,
-     imgvw_speechbubble3_ing4
-    ))
+      imgvw_speechbubble3,
+      List(
+        imgvw_speechbubble3_ing1,
+        imgvw_speechbubble3_ing2,
+        imgvw_speechbubble3_ing3,
+        imgvw_speechbubble3_ing4
+      ))
     val speachbubble4 = (
-     imgvw_speechbubble4,
-    List(
-     imgvw_speechbubble4_ing1,
-     imgvw_speechbubble4_ing2,
-     imgvw_speechbubble4_ing3,
-     imgvw_speechbubble4_ing4
-    ))
+      imgvw_speechbubble4,
+      List(
+        imgvw_speechbubble4_ing1,
+        imgvw_speechbubble4_ing2,
+        imgvw_speechbubble4_ing3,
+        imgvw_speechbubble4_ing4
+      ))
 
     val ingrediants = List(
-     imgvw_salami,
-     imgvw_paprika,
-     imgvw_champignon,
-     imgvw_cheese,
-     imgvw_onion,
-     imgvw_tomato,
-     imgvw_ham,
-     imgvw_tuna
+      imgvw_salami,
+      imgvw_paprika,
+      imgvw_champignon,
+      imgvw_cheese,
+      imgvw_onion,
+      imgvw_tomato,
+      imgvw_ham,
+      imgvw_tuna
     )
 
     val progressBar =  progressBar_game
     val highscore =  lbl_highscore
     val playername = this.playerName
 
-    GameLoop.set(pizzaList1,pizzaList2,pizzaList3,pizzaList4,cashier,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,progressBar,highscore,playername)
+    GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername)
     GameLoop
   }
 
