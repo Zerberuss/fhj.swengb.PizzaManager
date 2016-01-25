@@ -218,6 +218,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
     status.setText("Play a little game:")
     animMenuPanes(gameMenu, true)
     animMenuPanes(gamePane, false, 1280/2+5)
+    setNewGame()
     true
   }
 
@@ -246,25 +247,14 @@ class PizzaDealerAppController extends PizzaDealerApp {
   }
 
 
-  //Test um bei begin Animation auszuführen-> FAIL .. reality hits you hard bro!
-  //lazy val logoAnim = menuDealerLogoAnim.set(logoAnimationImageView)
-  //lazy val logoAnim = new GameLoop(logoAnimationImageView)
-  //lazy val logoAnim = CashierAnim
-  //lazy val logoAnim = menuDealerLogoAnim
-  //lazy val logoAnim = logoSet
-
 
   /** Erstellt ein neues Game und setzt die Variablen der FXML Datei
     *
-    *gesetzt wird:
+    *gesetzt wird: alles!
     *
-    *
-    *
-    * @return  neues Gameloop object
+    * @return
     */
-  def setNewGame():Unit = {
-
-
+  def setNewGame() {
     val pizzaList1 = (
       imgvw_pizza1,
       List (
@@ -354,17 +344,12 @@ class PizzaDealerAppController extends PizzaDealerApp {
     val playername = this.playerName
 
     GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername)
-    GameLoop
+    GameLoop.start()
   }
 
 
 
   def exit(): Unit = {
-    lazy val gameloop = GameLoop
-    progressBarTest.setProgress(progressBarTest.getProgress + 0.1)
-    if (progressBarTest.getProgress > 1) System.exit(1)
-    else if (progressBarTest.getProgress % 0.2 < 0.1) gameloop.stop()
-    else  gameloop.start()
-    print(progressBarTest.getProgress % 0.2 + "\n")
+     System.exit(1)
   }
 }

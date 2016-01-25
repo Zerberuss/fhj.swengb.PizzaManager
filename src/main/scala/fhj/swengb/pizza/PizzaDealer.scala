@@ -1,5 +1,21 @@
 package fhj.swengb.pizza
 
+/*
+TO-DO
+
+Speach Bubble setzen
+CustomerAnim setzen in allen Fällen
+Highscore setzen
+in DB schreiben
+Overlay für Game Over
+
+checkCustomerSelected function OPTIMIEREN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+FOR JOE
+HappyCustomer ohne Glowing
+Overlay 4 Gameover
+
+ */
 
 import javafx.animation.AnimationTimer
 import javafx.scene.control
@@ -7,8 +23,6 @@ import javafx.scene.control.{Label, ProgressBar}
 import javafx.scene.image.ImageView
 
 import fhj.swengb.pizza.PizzaDealer.{CraftingBench, Customer}
-
-import scala.util.Random.nextInt
 
 
 object GameLoop extends AnimationTimer {
@@ -42,65 +56,38 @@ object GameLoop extends AnimationTimer {
   var fps = 100
   var lastFrame = System.nanoTime
   var lastLogicFrame = 0
-
+  var name: String = ""
+  var customer1Served: Boolean = false
+  var customer2Served: Boolean = false
+  var customer3Served: Boolean = false
+  var customer4Served: Boolean = false
 
   //STUFF TO SET
   var progressbar: ProgressBar = _
   var cashier1: ImageView = _
   var cashier = CashierAnim
   //pizza1
-  var imgvw_pizza1: ImageView = _
-  var imgvw_pizza1_ing1: ImageView = _
-  var imgvw_pizza1_ing2: ImageView = _
-  var imgvw_pizza1_ing3: ImageView = _
-  var imgvw_pizza1_ing4: ImageView = _
+  var imgvw_pizza1: (ImageView, List[ImageView]) = _
   //pizza2
-  var imgvw_pizza2: ImageView = _
-  var imgvw_pizza2_ing1: ImageView = _
-  var imgvw_pizza2_ing2: ImageView = _
-  var imgvw_pizza2_ing3: ImageView = _
-  var imgvw_pizza2_ing4: ImageView = _
+  var imgvw_pizza2: (ImageView, List[ImageView]) = _
   //pizza3
-  var imgvw_pizza3: ImageView = _
-  var imgvw_pizza3_ing1: ImageView = _
-  var imgvw_pizza3_ing2: ImageView = _
-  var imgvw_pizza3_ing3: ImageView = _
-  var imgvw_pizza3_ing4: ImageView = _
+  var imgvw_pizza3: (ImageView, List[ImageView]) = _
   //pizza4
-  var imgvw_pizza4: ImageView = _
-  var imgvw_pizza4_ing1: ImageView = _
-  var imgvw_pizza4_ing2: ImageView = _
-  var imgvw_pizza4_ing3: ImageView = _
-  var imgvw_pizza4_ing4: ImageView = _
+  var imgvw_pizza4: (ImageView, List[ImageView]) = _
   //Customer 1-4
   var imgvw_customer1: ImageView = _
   var imgvw_customer2: ImageView = _
   var imgvw_customer3: ImageView = _
   var imgvw_customer4: ImageView = _
-  //speachbubble1
-  var imgvw_speachbubble1: ImageView = _
-  var imgvw_speachbubble1_ing1: ImageView = _
-  var imgvw_speachbubble1_ing2: ImageView = _
-  var imgvw_speachbubble1_ing3: ImageView = _
-  var imgvw_speachbubble1_ing4: ImageView = _
+  //speachbubble1+
+  var imgvw_speachbubble1: (ImageView, List[ImageView]) = _
   //speachbubble2
-  var imgvw_speachbubble2: ImageView = _
-  var imgvw_speachbubble2_ing1: ImageView = _
-  var imgvw_speachbubble2_ing2: ImageView = _
-  var imgvw_speachbubble2_ing3: ImageView = _
-  var imgvw_speachbubble2_ing4: ImageView = _
+  var imgvw_speachbubble2: (ImageView, List[ImageView]) = _
   //speachbubble3
-  var imgvw_speachbubble3: ImageView = _
-  var imgvw_speachbubble3_ing1: ImageView = _
-  var imgvw_speachbubble3_ing2: ImageView = _
-  var imgvw_speachbubble3_ing3: ImageView = _
-  var imgvw_speachbubble3_ing4: ImageView = _
+  var imgvw_speachbubble3: (ImageView, List[ImageView]) = _
   //speachbubble4
-  var imgvw_speachbubble4: ImageView = _
-  var imgvw_speachbubble4_ing1: ImageView = _
-  var imgvw_speachbubble4_ing2: ImageView = _
-  var imgvw_speachbubble4_ing3: ImageView = _
-  var imgvw_speachbubble4_ing4: ImageView = _
+  var imgvw_speachbubble4: (ImageView, List[ImageView]) = _
+
   //ingrediants
   var imgvw_salami: ImageView = _
   var imgvw_paprika: ImageView = _
@@ -110,6 +97,7 @@ object GameLoop extends AnimationTimer {
   var imgvw_tomato: ImageView = _
   var imgvw_ham: ImageView = _
   var imgvw_tuna: ImageView = _
+
   //highscore && playername
   var highscore: Label = _
   var playerName: control.TextField = _
@@ -128,58 +116,27 @@ object GameLoop extends AnimationTimer {
     //progressbar
     progressbar = pb
     //set pizza1
-    imgvw_pizza1 = pizzaList1._1
-    imgvw_pizza1_ing1 = pizzaList1._2(0)
-    imgvw_pizza1_ing2 = pizzaList1._2(1)
-    imgvw_pizza1_ing3 = pizzaList1._2(2)
-    imgvw_pizza1_ing4 = pizzaList1._2(3)
+    imgvw_pizza1 = pizzaList1
     //set pizza2
-    imgvw_pizza2 = pizzaList2._1
-    imgvw_pizza2_ing1 = pizzaList2._2(0)
-    imgvw_pizza2_ing2 = pizzaList2._2(1)
-    imgvw_pizza2_ing3 = pizzaList2._2(2)
-    imgvw_pizza2_ing4 = pizzaList2._2(3)
+    imgvw_pizza2 = pizzaList2
     //set pizza3
-    imgvw_pizza3 = pizzaList3._1
-    imgvw_pizza3_ing1 = pizzaList3._2(0)
-    imgvw_pizza3_ing2 = pizzaList3._2(1)
-    imgvw_pizza3_ing3 = pizzaList3._2(2)
-    imgvw_pizza3_ing4 = pizzaList3._2(3)
+    imgvw_pizza3 = pizzaList3
     //set pizza4
-    imgvw_pizza4 = pizzaList4._1
-    imgvw_pizza4_ing1 = pizzaList4._2(0)
-    imgvw_pizza4_ing2 = pizzaList4._2(1)
-    imgvw_pizza4_ing3 = pizzaList4._2(2)
-    imgvw_pizza4_ing4 = pizzaList4._2(3)
+    imgvw_pizza4 = pizzaList4
     //set customer
     imgvw_customer1 = customer(0)
     imgvw_customer2 = customer(1)
     imgvw_customer3 = customer(2)
     imgvw_customer4 = customer(3)
     //set speachbubble1
-    imgvw_speachbubble1 = speachbubble1._1
-    imgvw_speachbubble1_ing1 = speachbubble1._2(0)
-    imgvw_speachbubble1_ing2 = speachbubble1._2(1)
-    imgvw_speachbubble1_ing3 = speachbubble1._2(2)
-    imgvw_speachbubble1_ing4 = speachbubble1._2(3)
+    imgvw_speachbubble1 = speachbubble1
     //set speachbubble2
-    imgvw_speachbubble2 = speachbubble2._1
-    imgvw_speachbubble2_ing1 = speachbubble2._2(0)
-    imgvw_speachbubble2_ing2 = speachbubble2._2(1)
-    imgvw_speachbubble2_ing3 = speachbubble2._2(2)
-    imgvw_speachbubble2_ing4 = speachbubble2._2(3)
+    imgvw_speachbubble2 = speachbubble2
     //set speachbubble3
-    imgvw_speachbubble3 = speachbubble3._1
-    imgvw_speachbubble3_ing1 = speachbubble3._2(0)
-    imgvw_speachbubble3_ing2 = speachbubble3._2(1)
-    imgvw_speachbubble3_ing3 = speachbubble3._2(2)
-    imgvw_speachbubble3_ing4 = speachbubble3._2(3)
+    imgvw_speachbubble3 = speachbubble3
     //set speachbubble4
-    imgvw_speachbubble4 = speachbubble4._1
-    imgvw_speachbubble4_ing1 = speachbubble4._2(0)
-    imgvw_speachbubble4_ing2 = speachbubble4._2(1)
-    imgvw_speachbubble4_ing3 = speachbubble4._2(2)
-    imgvw_speachbubble4_ing4 = speachbubble4._2(3)
+    imgvw_speachbubble4 = speachbubble4
+
     //set ingrediants
     imgvw_salami = ingrediants(0)
     imgvw_paprika = ingrediants(1)
@@ -196,15 +153,7 @@ object GameLoop extends AnimationTimer {
   }
 
 
-  createCustomers(level)
-
-  def editProgressbar() = {
-    progressbar.setProgress(progressbar.getProgress + calcPorgressbar())
-  }
-
-  def resetProgressbar() = {
-    progressbar.setProgress(1.0)
-  }
+  //createCustomers(level)
 
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
@@ -213,17 +162,19 @@ object GameLoop extends AnimationTimer {
       //sind customers erstellt
 
       if (checkCustomersExist() == false) {
+
         createCustomers(level)
         //CustomerSpeechBubbleAnim.setOrder
+
       }
 
 
-      if (checkIfGameover == true) {
+      /*if (checkIfGameover == true) {
         //spiel vorbei?
         //in datenbank speichern
-        //ScalaJdbcSQL.setHighscoreList(playerName,score.toInt)
+        ScalaJdbcSQL.setHighscoreList(playerName.getText, score.toInt)
         stop()
-      }
+      }*/
 
       //überprüfen ob alle customers bedient worden sind
       //einen customer auf happy setzen
@@ -273,13 +224,6 @@ object GameLoop extends AnimationTimer {
 
     //Nur zum testen des Cashiers:
     if (lastLogicFrame == 50) {
-      cashier.setGoTo("Customer1")
-
-    } else if (lastLogicFrame == 100) {
-      cashier.setGoTo("Customer4")
-
-    } else if (lastLogicFrame > 150) {
-      cashier.setGoTo("Käse")
 
       lastLogicFrame = 0
     }
@@ -352,18 +296,6 @@ object GameLoop extends AnimationTimer {
     }
   }
 
-  private def timeLeft(): Int = {
-    val i = timer - System.nanoTime() / 1000000000
-    i.toInt
-  }
-
-  private def calcPorgressbar(): Double = {
-    val x = timeAndLevel()
-    val y: Float = x / 100 // dann haben wir 1 %
-    val progressbarChange = y * timeLeft
-    progressbarChange
-  }
-
   private def timeAndLevel(): Int = {
     //returns time for timer
     var x = 0
@@ -388,40 +320,92 @@ object GameLoop extends AnimationTimer {
     }
   }
 
+  private def editProgressbar() = {
+    progressbar.setProgress(progressbar.getProgress + calcPorgressbar())
+  }
+
+  private def calcPorgressbar(): Double = {
+    val x = timeAndLevel()
+    val y: Float = x / 100 // dann haben wir 1 %
+    val progressbarChange = y * timeLeft
+    progressbarChange
+  }
+
+  private def timeLeft(): Int = {
+    val i = timer - System.nanoTime() / 1000000000
+    i.toInt
+  }
+
+  private def resetProgressbar() = {
+    progressbar.setProgress(1.0)
+  }
+
+  def createCustomers(level: Int) = {
+
+    cus1 = new Customer(level)
+    craB1 = new CraftingBench(cus1.getOrder())
+    cus2 = new Customer(level)
+    craB2 = new CraftingBench(cus2.getOrder())
+    cus3 = new Customer(level)
+    craB3 = new CraftingBench(cus3.getOrder())
+    cus4 = new Customer(level)
+    craB4 = new CraftingBench(cus4.getOrder())
+
+
+
+    cus1.setSpeachBubble(1)
+    cus2.setSpeachBubble(2)
+    cus3.setSpeachBubble(3)
+    cus4.setSpeachBubble(4)
+
+    cus1.setCustomerAppearence(1)
+    cus2.setCustomerAppearence(2)
+    cus3.setCustomerAppearence(3)
+    cus4.setCustomerAppearence(4)
+
+    customer1Served = false
+    customer2Served = false
+    customer3Served = false
+    customer4Served = false
+  }
 
   def ingridientsButton(i: Int, selectedCustomer: Int) = {
     //add ingridient to working bench
     i match {
       case 1 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("salami")
-        CashierAnim.setGoTo("salami")} //salami
+        cashier.setGoTo("salami")
+      } //salami
       case 2 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("paprika")
-        CashierAnim.setGoTo("paprika")} //paprika
+        cashier.setGoTo("paprika")
+      } //paprika
       case 3 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("champignon")
-        CashierAnim.setGoTo("champignon")}
+        cashier.setGoTo("champignon")
+      }
       case 4 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("cheese")
-        CashierAnim.setGoTo("cheese")} //cheese
+        cashier.setGoTo("cheese")
+      } //cheese
       case 5 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("onion")
-        CashierAnim.setGoTo("onion")} //onion
+        cashier.setGoTo("onion")
+      } //onion
       case 6 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tomato")
-        CashierAnim.setGoTo("tomato")} //tomato
+        cashier.setGoTo("tomato")
+      } //tomato
       case 7 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("ham")
-        CashierAnim.setGoTo("ham")} //ham
+        cashier.setGoTo("ham")
+      } //ham
       case 8 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna")
-        CashierAnim.setGoTo("tuna")} //tuna
-      case _ => CashierAnim.setGoTo("standard") //back to standardposition
+        cashier.setGoTo("tuna")
+      } //tuna
+      case _ => cashier.setGoTo("standard") //back to standardposition
     }
-
-    //set animation cashier??!?!?!?!
-
-
   }
 
   def getCraftingBenchForCustomer(selectedCustomer: Int): CraftingBench = {
@@ -433,36 +417,132 @@ object GameLoop extends AnimationTimer {
     }
   }
 
-  def customerSelected(customer: Int): Unit = {
+  def customerSelected(customer: Int): Customer = {
     customer match {
-      case 1 => selectedCustomer = 1
-      case 2 => selectedCustomer = 2
-      case 3 => selectedCustomer = 3
-      case 4 => selectedCustomer = 4
+      case 1 => {
+        if (customer1Served) {
+          cus1.setGlowing(false)
+          cus2.setGlowing(false)
+          cus3.setGlowing(false)
+          cus4.setGlowing(false)
+          cus2.setNeutral()
+          cus3.setNeutral()
+          cus4.setNeutral()
+        } else {
+          cus1.setGlowing(true)
+          cus2.setGlowing(false)
+          cus3.setGlowing(false)
+          cus4.setGlowing(false)
+          cus2.setNeutral()
+          cus3.setNeutral()
+          cus4.setNeutral()
+        }
+        selectedCustomer = 1
+        cus1.setHappy()
+
+        cus1
+      }
+      case 2 => {
+        if (customer2Served) {
+          cus1.setGlowing(false)
+          cus2.setGlowing(false)
+          cus3.setGlowing(false)
+          cus4.setGlowing(false)
+          cus1.setNeutral()
+          cus3.setNeutral()
+          cus4.setNeutral()
+        } else {
+          cus1.setGlowing(false)
+          cus2.setGlowing(true)
+          cus3.setGlowing(false)
+          cus4.setGlowing(false)
+          cus1.setNeutral()
+          cus3.setNeutral()
+          cus4.setNeutral()
+        }
+        selectedCustomer = 2
+        cus2.setHappy()
+        cus2
+      }
+      case 3 => {
+        if (customer3Served) {
+          cus1.setGlowing(false)
+          cus2.setGlowing(false)
+          cus3.setGlowing(false)
+          cus4.setGlowing(false)
+          cus2.setNeutral()
+          cus1.setNeutral()
+          cus4.setNeutral()
+        } else {
+          cus1.setGlowing(false)
+          cus2.setGlowing(false)
+          cus3.setGlowing(true)
+          cus4.setGlowing(false)
+          cus2.setNeutral()
+          cus1.setNeutral()
+          cus4.setNeutral()
+        }
+        selectedCustomer = 3
+        cus3.setHappy()
+        cus3
+      }
+      case 4 => {
+        if (customer4Served) {
+          cus1.setGlowing(false)
+          cus2.setGlowing(false)
+          cus3.setGlowing(false)
+          cus4.setGlowing(false)
+          cus2.setNeutral()
+          cus3.setNeutral()
+          cus1.setNeutral()
+        } else {
+          cus1.setGlowing(false)
+          cus2.setGlowing(false)
+          cus3.setGlowing(false)
+          cus4.setGlowing(true)
+          cus2.setNeutral()
+          cus3.setNeutral()
+          cus1.setNeutral()
+        }
+        selectedCustomer = 4
+        cus4.setHappy()
+        cus4
+      }
     }
   }
 
-
-  def createCustomers(level: Int) = {
-    //val positionAnimation: List[Int] = util.Random.shuffle((1 to 4).toSeq.toList)
-    cus1 = new Customer(level)
-    //println("CUSTOMER 1 FAGGOT" + cus1.getOrder())
-    craB1 = new CraftingBench(cus1.getOrder())
-    cus2 = new Customer(level)
-    //println("CUSTOMER 2 DU NUTTE" + cus2.getOrder())
-    craB2 = new CraftingBench(cus2.getOrder())
-    cus3 = new Customer(level)
-    craB3 = new CraftingBench(cus3.getOrder())
-    cus4 = new Customer(level)
-    craB4 = new CraftingBench(cus4.getOrder())
-
-    /*
-    cus1.set(???) //updaten ausehen randomzien
-    cus2.set(???) //updaten
-    cus3.set(???) //updaten
-    cus4.set(???) //updaten
-    */
-
+  def checkIfSelectedCustomerServed(): Boolean = {
+    selectedCustomer match {
+      case 1 => {
+        if (cus1.getOrder() == craB1.getAddedIngridients){
+          customer1Served = true
+          cus1.setGlowing(false)
+          true}
+        else false
+      }
+      case 2 => {
+        if (cus2.getOrder() == craB2.getAddedIngridients) {
+          customer2Served = true
+          cus3.setGlowing(false)
+          true}
+        else false
+      }
+      case 3 => {
+        if (cus3.getOrder() == craB3.getAddedIngridients) {
+          customer3Served = true
+          cus3.setGlowing(false)
+          true
+        }
+        else false
+      }
+      case 4 => {
+        if (cus4.getOrder() == craB4.getAddedIngridients) {
+          customer4Served = true
+          cus4.setGlowing(false)
+          true}
+        else false
+      }
+    }
   }
 }
 
@@ -494,10 +574,64 @@ object PizzaDealer {
 
   class Customer(level: Int) {
     val order = new Pizza(GameLoop.level).setPizzaObject()
-    println("IM CUSTOMER" + order)
+    val bubble = new CustomerSpeechBubbleAnim
+    val appearence = new CustomerPersonAnim
+    //println("IM CUSTOMER" + order)
 
-    //+sprechblase setzen
     def getOrder(): List[String] = order.sorted
+
+    def setSpeachBubble(i: Int): Unit = {
+      i match {
+        case 1 => {
+          this.bubble.set(GameLoop.imgvw_speachbubble1._1, GameLoop.imgvw_speachbubble1._2)
+          this.bubble.setOrder(order)
+        }
+        case 2 => {
+          this.bubble.set(GameLoop.imgvw_speachbubble2._1, GameLoop.imgvw_speachbubble2._2)
+          this.bubble.setOrder(order)
+        }
+        case 3 => {
+          this.bubble.set(GameLoop.imgvw_speachbubble3._1, GameLoop.imgvw_speachbubble3._2)
+          this.bubble.setOrder(order)
+        }
+        case 4 => {
+          this.bubble.set(GameLoop.imgvw_speachbubble4._1, GameLoop.imgvw_speachbubble4._2)
+          this.bubble.setOrder(order)
+        }
+      }
+    }
+
+    def setCustomerAppearence(i: Int): Unit = {
+      //i ist der customer        zufallszahl
+      val positionAnimation: List[Int] = util.Random.shuffle((1 to 4).toSeq.toList)
+      i match {
+        case 1 => {
+          this.appearence.set(GameLoop.imgvw_customer1, positionAnimation(0))
+          this.appearence.setNeutral()
+        }
+        case 2 => {
+          this.appearence.set(GameLoop.imgvw_customer2, positionAnimation(1))
+          this.appearence.setNeutral()
+        }
+        case 3 => {
+          this.appearence.set(GameLoop.imgvw_customer3, positionAnimation(2))
+          this.appearence.setNeutral()
+        }
+        case 4 => {
+          this.appearence.set(GameLoop.imgvw_customer4, positionAnimation(3))
+          this.appearence.setNeutral()
+        }
+      }
+    }
+
+    def setAngry() = this.appearence.setAngry()
+
+    def setHappy() = this.appearence.setHappy()
+
+    def setGlowing(bool: Boolean) = this.appearence.setGlowing(bool)
+
+    def setNeutral() = this.appearence.setNeutral()
+
   }
 
 
@@ -506,32 +640,19 @@ object PizzaDealer {
 
     def addIngridientToCraftingBench(ingridient: String): List[String] = {
       if (order.contains(ingridient)) {
+        //wird auf Happy gesetzt
+        GameLoop.customerSelected(GameLoop.selectedCustomer).setHappy()
         ingridientsAdded ::= ingridient
         ingridientsAdded
-        //if abfrage ob customer served -> customer auf happy setzen
       }
       else {
-        println("Nope war net in der Order")
+        //Customer auf Angry
+        GameLoop.customerSelected(GameLoop.selectedCustomer).setAngry()
         ingridientsAdded
       }
     }
 
     def getAddedIngridients: List[String] = ingridientsAdded.sorted
   }
-
-  class CustomerDisplay {
-    //get Zutaten
-
-    //set display
-
-  }
-
-  class Player(name: String) {
-    def setName = ???
-
-    def getName = ???
-
-  }
-
 
 }

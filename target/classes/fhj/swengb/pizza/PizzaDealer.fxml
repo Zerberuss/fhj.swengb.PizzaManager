@@ -499,6 +499,10 @@
                   <Font name="Berlin Sans FB" size="38.0" />
                </font>
             </Label>
+            <Button fx:id="customer1" layoutX="248.0" layoutY="186.0" mnemonicParsing="false" onAction="#callCustomer1" opacity="0.0" prefHeight="226.0" prefWidth="160.0" />
+            <Button fx:id="customer2" layoutX="444.0" layoutY="181.0" mnemonicParsing="false" onAction="#callCustomer2" opacity="0.0" prefHeight="226.0" prefWidth="160.0" />
+            <Button fx:id="customer3" layoutX="646.0" layoutY="179.0" mnemonicParsing="false" onAction="#callCustomer3" opacity="0.0" prefHeight="233.0" prefWidth="160.0" />
+            <Button fx:id="customer4" layoutX="849.0" layoutY="170.0" mnemonicParsing="false" onAction="#callCustomer4" opacity="0.0" prefHeight="233.0" prefWidth="160.0" />
          </children>
       </AnchorPane>
    </children>

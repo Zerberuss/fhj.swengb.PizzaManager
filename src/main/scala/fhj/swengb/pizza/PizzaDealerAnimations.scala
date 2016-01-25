@@ -119,7 +119,6 @@ case class CustomerSpeechBubbleAnim(){
   *
   * set: Neuen Customer erstellen
   *       obj: ImageView aus der FXML
-  *       customerPos: (x,y) Koordinate des Customers
   *       customerNr: welches aussehen hat der Customer
   */
 case class CustomerPersonAnim(){
@@ -127,6 +126,8 @@ case class CustomerPersonAnim(){
   var obj:ImageView = _
   var customerImageList = List("")
   var customerAnim:ImageViewSprite = _
+  var status = "normal"
+  var isGlowing = false
 
   def set(obj:ImageView, customerNr:Int) {
     this.obj = obj
@@ -139,27 +140,59 @@ case class CustomerPersonAnim(){
 
     this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)),1, 1, 1, 100, 200, 1)
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), this.obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
   }
 
+  private def setStatus(): Unit ={
+    if (!isGlowing) {
+      status match {
+        case "normal" =>   customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
+        case "angry" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
+        case "happy" =>     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1) // noch falsch!
+      }
+    }
+    else{
+      status match {
+        case "normal" =>   customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)), 1, 1, 1, 100, 200, 1)
+        case "angry" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
+        case "happy" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
+      }
+    }
+  }
+
+  def setVisible(visible:Boolean) {
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), this.obj)
+    if (visible){
+      fadetransition.setFromValue(0)
+      fadetransition.setToValue(1)
+    }else{
+      fadetransition.setFromValue(1)
+      fadetransition.setToValue(0)
+    }
+    fadetransition.playFromStart()
+  }
+
+  def setGlowing(glow:Boolean){
+    isGlowing=glow
+    setStatus()
+  }
+
   def setAngry() {
-    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
+   status = "angry"
+    setStatus()
   }
-  def setAngryGlowing() {
-    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
-  }
-  def setHappyGlowing() {
-    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
+  def setHappy() {
+   status = "happy"
+    setStatus()
   }
   def setNeutral() {
-    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
+    status = "normal"
+    setStatus()
   }
-  def setNeutralGlowing() {
-    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)), 1, 1, 1, 100, 200, 1)
-  }
+
   def handle(now: Long) = {
     customerAnim.handle(now)
   }
@@ -214,20 +247,20 @@ object CashierAnim {
     if (GoToName!=lastGoTo) {   //Neue Pfad Animation nur dann ausführen, wenn sich das Ziel geändert hat
     var targetPos = (0,0)
       GoToName match {
-        case "Customer1"    => targetPos =(400,0)
-        case "Customer2"    => targetPos =(-400,0)
-        case "Customer3"    => targetPos =(500,300)
-        case "Customer4"    => targetPos =(-500,-300)
+        case "Customer1"    => targetPos =(-239,50)
+        case "Customer2"    => targetPos =(-37,50)
+        case "Customer3"    => targetPos =(155,50)
+        case "Customer4"    => targetPos =(360,50)
 
-        case "salami"       => targetPos =(100,200)
-        case "paprika"      => targetPos =(100,200)
-        case "champignon"   => targetPos =(100,200)
-        case "cheese"       => targetPos =(100,200)
-        case "onion"        => targetPos =(100,200)
-        case "tomato"       => targetPos =(100,200)
-        case "ham"          => targetPos =(100,200)
-        case "tuna"         => targetPos =(100,200)
-        case _              => targetPos =(570,360)
+        case "salami"       => targetPos =(-460,120)
+        case "paprika"      => targetPos =(-330,120)
+        case "champignon"   => targetPos =(-180,120)
+        case "cheese"       => targetPos =(-20,120)
+        case "onion"        => targetPos =(150,120)
+        case "tomato"       => targetPos =(300,120)
+        case "ham"          => targetPos =(450,120)
+        case "tuna"         => targetPos =(600,120) //600,120
+        case _              => targetPos =(60,100)
       }
       if(targetPos._2 >= lastPosition._2) { dealerSpriteAnim = getSpriteAnimation(true) }  //Sprite Animation ändern, falls sich die laufrichtung ändert -> isGoingDown true
       else{ dealerSpriteAnim = getSpriteAnimation(false)}
