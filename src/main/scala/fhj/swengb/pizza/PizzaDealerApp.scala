@@ -127,6 +127,8 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var btn_restartGame: Button = _
   @FXML var progressBar_game: ProgressBar = _
   @FXML var lbl_highscore: Label = _
+  @FXML var lbl_lives:Label = _
+
 
 
   //Buttons
@@ -163,7 +165,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
 
-
+  def logobtn():Unit = ???
 
   def callSalamibtn():Unit = GameLoop.ingridientsButton(1,GameLoop.selectedCustomer)
   def callPaprikabtn():Unit = GameLoop.ingridientsButton(2,GameLoop.selectedCustomer)
@@ -342,14 +344,15 @@ class PizzaDealerAppController extends PizzaDealerApp {
     val progressBar =  progressBar_game
     val highscore =  lbl_highscore
     val playername = this.playerName
+    val lives = lbl_lives
 
-    GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername)
+    GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername,lives)
     GameLoop.start()
   }
 
 
 
   def exit(): Unit = {
-     System.exit(1)
+    System.exit(1)
   }
 }

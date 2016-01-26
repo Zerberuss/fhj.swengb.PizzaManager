@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
+<AnchorPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fhj.swengb.pizza.PizzaDealerAppController">
    <children>
       <AnchorPane fx:id="menu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="root" stylesheets="@PizzaDealer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -47,6 +47,7 @@
                </font>
             </Label>
             <ProgressBar fx:id="progressBarTest" layoutX="920.0" layoutY="405.0" prefHeight="60.0" prefWidth="315.0" progress="0.0" />
+            <Button fx:id="logobtn" layoutX="517.0" layoutY="71.0" mnemonicParsing="false" onAction="#logobtn" opacity="0.0" prefHeight="294.0" prefWidth="232.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="highscoresMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="500.0" styleClass="userinfo" stylesheets="@PizzaDealer.css" translateX="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="70.0">
@@ -494,15 +495,20 @@
                </font>
             </Button>
             <ProgressBar fx:id="progressBar_game" layoutX="264.0" layoutY="10.0" prefHeight="50.0" prefWidth="665.0" progress="0.69" />
-            <Label fx:id="lbl_highscore" layoutX="968.0" layoutY="10.0" prefHeight="52.0" prefWidth="280.0" text="highscore: 0" textFill="WHITE">
+            <Label fx:id="lbl_highscore" layoutX="986.0" layoutY="9.0" prefHeight="52.0" prefWidth="280.0" text="highscore: 0" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="38.0" />
                </font>
             </Label>
-            <Button fx:id="customer1" layoutX="248.0" layoutY="186.0" mnemonicParsing="false" onAction="#callCustomer1" opacity="0.0" prefHeight="226.0" prefWidth="160.0" />
-            <Button fx:id="customer2" layoutX="444.0" layoutY="181.0" mnemonicParsing="false" onAction="#callCustomer2" opacity="0.0" prefHeight="226.0" prefWidth="160.0" />
-            <Button fx:id="customer3" layoutX="646.0" layoutY="179.0" mnemonicParsing="false" onAction="#callCustomer3" opacity="0.0" prefHeight="233.0" prefWidth="160.0" />
-            <Button fx:id="customer4" layoutX="849.0" layoutY="170.0" mnemonicParsing="false" onAction="#callCustomer4" opacity="0.0" prefHeight="233.0" prefWidth="160.0" />
+            <Button fx:id="customer1" layoutX="248.0" layoutY="85.0" mnemonicParsing="false" onAction="#callCustomer1" opacity="0.0" prefHeight="327.0" prefWidth="160.0" />
+            <Button fx:id="customer2" layoutX="444.0" layoutY="86.0" mnemonicParsing="false" onAction="#callCustomer2" opacity="0.0" prefHeight="321.0" prefWidth="160.0" />
+            <Button fx:id="customer3" layoutX="646.0" layoutY="85.0" mnemonicParsing="false" onAction="#callCustomer3" opacity="0.0" prefHeight="327.0" prefWidth="160.0" />
+            <Button fx:id="customer4" layoutX="849.0" layoutY="76.0" mnemonicParsing="false" onAction="#callCustomer4" opacity="0.0" prefHeight="327.0" prefWidth="160.0" />
+            <Label fx:id="lbl_lives" layoutX="1051.0" layoutY="60.0" prefHeight="84.0" prefWidth="200.0" text="lives: 0" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="38.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

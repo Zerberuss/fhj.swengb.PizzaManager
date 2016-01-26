@@ -18,8 +18,6 @@ Overlay 4 Gameover
  */
 
 
-
-
 import javafx.animation.AnimationTimer
 import javafx.scene.control
 import javafx.scene.control.{Label, ProgressBar}
@@ -34,11 +32,11 @@ object GameLoop extends AnimationTimer {
   //var customer = new CustomerAnim()
   //customer.set(obj,2)
   //cashier erzeugen
-  var myNow:Long = _
+  var myNow: Long = _
   //wird nach Bedienung der 4 Kunden um 1 erhöht
   lazy val levelMax: Int = 4
   //wird um 1 verringert falls Zeit abgelaufen
-  lazy val timeStatisch: Int = 16
+  lazy val timeStatisch: Int = 32
   var level: Int = 1
   //max level
   var lives: Int = 4
@@ -64,7 +62,7 @@ object GameLoop extends AnimationTimer {
   var customer2Served: Boolean = false
   var customer3Served: Boolean = false
   var customer4Served: Boolean = false
-  var timer:Long = _
+  var timer: Long = _
   //STUFF TO SET
   var progressbar: ProgressBar = _
   var cashier1: ImageView = _
@@ -104,15 +102,12 @@ object GameLoop extends AnimationTimer {
   //highscore && playername
   var highscore: Label = _
   var playerName: control.TextField = _
-
-  /*
-  alle speachbubbles
-   */
+  var lbl_lives: Label = _
 
   def set(cash: ImageView, pb: ProgressBar, pizzaList1: (ImageView, List[ImageView]), pizzaList2: (ImageView, List[ImageView]),
           pizzaList3: (ImageView, List[ImageView]), pizzaList4: (ImageView, List[ImageView]), customer: List[ImageView],
           speachbubble1: (ImageView, List[ImageView]), speachbubble2: (ImageView, List[ImageView]), speachbubble3: (ImageView, List[ImageView]),
-          speachbubble4: (ImageView, List[ImageView]), ingrediants: List[ImageView], highscore: Label, playername: control.TextField) {
+          speachbubble4: (ImageView, List[ImageView]), ingrediants: List[ImageView], highscore: Label, playername: control.TextField, lives: Label) {
     //cashier
     this.cashier1 = cash
     CashierAnim.set(cash)
@@ -153,15 +148,12 @@ object GameLoop extends AnimationTimer {
     this.highscore = highscore
     //setzen des namen des spielers
     this.playerName = playerName
+    this.lbl_lives = lives
   }
-
-
 
 
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
-
-
 
 
     if (frameJump > 1) {
@@ -170,10 +162,8 @@ object GameLoop extends AnimationTimer {
 
       if (checkCustomersExist() == false) {
         setTimer()
-        //println("set timer")
         createCustomers(level)
-        //CustomerSpeechBubbleAnim.setOrder
-
+        lbl_lives.setText(lives.toString)
       }
 
 
@@ -197,45 +187,32 @@ object GameLoop extends AnimationTimer {
       //überprüfen ob alle customers bedient worden sind
       //einen customer auf happy setzen
 
-
+      checkIfSelectedCustomerServed()
       if (checkIfCustomersServed == true) {
 
-        score = score + 4 * level  // 4 für customers + level*timeleft
+        score = score + 4 * level // 4 für customers + level*timeleft
         //println("in der if   ---- "+level)
 
-        highscore.setText("Highscore: "+score.toString)
+        highscore.setText("Highscore: " + score.toString)
         //reset timer
-        level = level +1
+        level = level + 1
         createCustomers(this.level)
         setTimer()
       }
 
-      myNow = myNow + math.floor(now/1E9/1000).toInt
-      println("this is now: "+ myNow) // ausgabe in milisek
-      if(myNow > timeAndLevel() ||myNow<=0) //timer läuft noch
+      myNow = myNow + math.floor(now / 1E9 / 1000).toInt
+      println("this is now: " + myNow) // ausgabe in milisek
+      if (myNow > timeAndLevel() || myNow <= 0) //timer läuft noch
       {
-        setTimer()//Timer neu setzen
+        setTimer() //Timer neu setzen
         this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
+        lbl_lives.setText(this.lives.toString)
+        createCustomers(this.level)
         resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
 
       } else {
         editProgressbar(myNow)
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       lastFrame = now
       lastLogicFrame += 1
@@ -258,34 +235,9 @@ object GameLoop extends AnimationTimer {
     }
 
 
-    /*
-    x   erstellen der 4 Kunden (<- jeweils eine Pizza)
-    x   kunden werden abhängig von level erstellt
-    x Kunden müssen bestimmten platz bekommen position 1-4
-        - positon in Imageview zuweisen (animation) -> Container den man auffüllt
-    - Customer number = aussehen zuweisen randomizen //warten auf FXML
-    - setzen der cUSTOMERSPEECHBALLONANIM -> sprechblase
-    - Timer start
-      - falls timer 0   -1 leben  und in das nächste level
-      ingridients button
-      customer button
-      zeit umrechnen 0 - 1 mit timeandlevel function
 
-     */
-    /*
-    //Nur zum testen des Customers:
-    if (lastLogicFrame == 50) {
-      customer.setAngry()
 
-    }else  if (lastLogicFrame == 100) {
-      customer.setHappy()
 
-    }else if (lastLogicFrame > 150){
-      customer.setNeutral()
-
-      lastLogicFrame=0
-    }
-    */
   }
 
 
@@ -312,7 +264,6 @@ object GameLoop extends AnimationTimer {
   }
 
 
-
   private def timeAndLevel(): Long = {
     //returns time for timer
     var x = 0
@@ -325,7 +276,7 @@ object GameLoop extends AnimationTimer {
       x = timeStatisch - level
 
     }
-    x*1000 //in milisec
+    x * 1000 //in milisec
   }
 
   private def checkCustomersExist(): Boolean = {
@@ -337,16 +288,16 @@ object GameLoop extends AnimationTimer {
     }
   }
 
-  private def editProgressbar(myNow:Double) = {
+  private def editProgressbar(myNow: Double) = {
 
-    progressbar.setProgress(1-calcPorgressbar(myNow))
+    progressbar.setProgress(1 - calcPorgressbar(myNow))
 
 
   }
 
-  private def calcPorgressbar(myNow:Double): Double = {
+  private def calcPorgressbar(myNow: Double): Double = {
 
-    myNow/timeAndLevel()
+    myNow / timeAndLevel()
 
   }
 
@@ -354,6 +305,7 @@ object GameLoop extends AnimationTimer {
   private def setTimer() {
     myNow = 0
   }
+
   /*
     private def timeWentBy(): Int = {
       val start = (this.timer/10E6).toInt
@@ -405,7 +357,7 @@ object GameLoop extends AnimationTimer {
     i match {
       case 1 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("salami")
-        cashier.setGoTo("salami" , "customer" + selectedCustomer)
+        cashier.setGoTo("salami", "customer" + selectedCustomer)
       } //salami
       case 2 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("paprika")
@@ -417,25 +369,25 @@ object GameLoop extends AnimationTimer {
       }
       case 4 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("cheese")
-        cashier.setGoTo("cheese" , "customer" + selectedCustomer)
+        cashier.setGoTo("cheese", "customer" + selectedCustomer)
       } //cheese
       case 5 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("onion")
-        cashier.setGoTo("onion" , "customer" + selectedCustomer)
+        cashier.setGoTo("onion", "customer" + selectedCustomer)
       } //onion
       case 6 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tomato")
-        cashier.setGoTo("tomato" , "customer" + selectedCustomer)
+        cashier.setGoTo("tomato", "customer" + selectedCustomer)
       } //tomato
       case 7 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("ham")
-        cashier.setGoTo("ham" , "customer" + selectedCustomer)
+        cashier.setGoTo("ham", "customer" + selectedCustomer)
       } //ham
       case 8 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna")
-        cashier.setGoTo("tuna" , "customer" + selectedCustomer)
+        cashier.setGoTo("tuna", "customer" + selectedCustomer)
       } //tuna
-      case _ => cashier.setGoTo("standard" , "customer" + selectedCustomer) //back to standardposition
+      case _ => cashier.setGoTo("standard", "customer" + selectedCustomer) //back to standardposition
     }
   }
 
@@ -453,21 +405,17 @@ object GameLoop extends AnimationTimer {
       case 1 => {
         if (customer1Served) {
           cus1.setGlowing(false)
-          cus2.setGlowing(false)
-          cus3.setGlowing(false)
-          cus4.setGlowing(false)
-          cus2.setNeutral()
-          cus3.setNeutral()
-          cus4.setNeutral()
+          cus1.setHappy()
         } else {
           cus1.setGlowing(true)
-          cus2.setGlowing(false)
-          cus3.setGlowing(false)
-          cus4.setGlowing(false)
-          cus2.setNeutral()
-          cus3.setNeutral()
-          cus4.setNeutral()
+
         }
+        cus2.setGlowing(false)
+        cus3.setGlowing(false)
+        cus4.setGlowing(false)
+        cus2.setNeutral()
+        cus3.setNeutral()
+        cus4.setNeutral()
         selectedCustomer = 1
         cus1.setHappy()
 
@@ -475,66 +423,59 @@ object GameLoop extends AnimationTimer {
       }
       case 2 => {
         if (customer2Served) {
-          cus1.setGlowing(false)
+
           cus2.setGlowing(false)
-          cus3.setGlowing(false)
-          cus4.setGlowing(false)
-          cus1.setNeutral()
-          cus3.setNeutral()
-          cus4.setNeutral()
+          cus2.setHappy()
         } else {
-          cus1.setGlowing(false)
+
           cus2.setGlowing(true)
-          cus3.setGlowing(false)
-          cus4.setGlowing(false)
-          cus1.setNeutral()
-          cus3.setNeutral()
-          cus4.setNeutral()
         }
+        cus1.setGlowing(false)
+        cus3.setGlowing(false)
+        cus4.setGlowing(false)
+        cus1.setNeutral()
+        cus3.setNeutral()
+        cus4.setNeutral()
         selectedCustomer = 2
         cus2.setHappy()
         cus2
       }
       case 3 => {
         if (customer3Served) {
-          cus1.setGlowing(false)
-          cus2.setGlowing(false)
+
           cus3.setGlowing(false)
-          cus4.setGlowing(false)
-          cus2.setNeutral()
-          cus1.setNeutral()
-          cus4.setNeutral()
+          cus3.setHappy()
         } else {
-          cus1.setGlowing(false)
-          cus2.setGlowing(false)
+
           cus3.setGlowing(true)
-          cus4.setGlowing(false)
-          cus2.setNeutral()
-          cus1.setNeutral()
-          cus4.setNeutral()
+
         }
+        cus1.setGlowing(false)
+        cus2.setGlowing(false)
+        cus4.setGlowing(false)
+        cus2.setNeutral()
+        cus1.setNeutral()
+        cus4.setNeutral()
         selectedCustomer = 3
         cus3.setHappy()
         cus3
       }
       case 4 => {
         if (customer4Served) {
-          cus1.setGlowing(false)
-          cus2.setGlowing(false)
-          cus3.setGlowing(false)
+
           cus4.setGlowing(false)
-          cus2.setNeutral()
-          cus3.setNeutral()
-          cus1.setNeutral()
+          cus4.setHappy()
         } else {
-          cus1.setGlowing(false)
-          cus2.setGlowing(false)
-          cus3.setGlowing(false)
+
           cus4.setGlowing(true)
-          cus2.setNeutral()
-          cus3.setNeutral()
-          cus1.setNeutral()
+
         }
+        cus1.setGlowing(false)
+        cus2.setGlowing(false)
+        cus3.setGlowing(false)
+        cus1.setNeutral()
+        cus2.setNeutral()
+        cus3.setNeutral()
         selectedCustomer = 4
         cus4.setHappy()
         cus4
@@ -545,17 +486,19 @@ object GameLoop extends AnimationTimer {
   def checkIfSelectedCustomerServed(): Boolean = {
     selectedCustomer match {
       case 1 => {
-        if (cus1.getOrder() == craB1.getAddedIngridients){
+        if (cus1.getOrder() == craB1.getAddedIngridients) {
           customer1Served = true
           cus1.setGlowing(false)
-          true}
+          true
+        }
         else false
       }
       case 2 => {
         if (cus2.getOrder() == craB2.getAddedIngridients) {
           customer2Served = true
           cus3.setGlowing(false)
-          true}
+          true
+        }
         else false
       }
       case 3 => {
@@ -570,7 +513,8 @@ object GameLoop extends AnimationTimer {
         if (cus4.getOrder() == craB4.getAddedIngridients) {
           customer4Served = true
           cus4.setGlowing(false)
-          true}
+          true
+        }
         else false
       }
     }
@@ -607,6 +551,7 @@ object PizzaDealer {
     val order = new Pizza(GameLoop.level).setPizzaObject()
     val bubble = new CustomerSpeechBubbleAnim
     val appearence = new CustomerPersonAnim
+    val pizzaAnim = new PizzaAnim
     //println("IM CUSTOMER" + order)
 
     def getOrder(): List[String] = order.sorted
@@ -662,6 +607,7 @@ object PizzaDealer {
     def setGlowing(bool: Boolean) = this.appearence.setGlowing(bool)
 
     def setNeutral() = this.appearence.setNeutral()
+
 
   }
 

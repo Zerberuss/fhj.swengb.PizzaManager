@@ -38,7 +38,7 @@ case class PizzaAnim(){
 
   def showPizza(): Unit ={
     if(!ingredientsObj(ingredientsAdded).isVisible) ingredientsObj(ingredientsAdded).setVisible(true)
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
@@ -49,7 +49,7 @@ case class PizzaAnim(){
 
     ingredientsObj(ingredientsAdded).setImage(new Image("/fhj/swengb/pizza/images/ingredients/" + ingredient + ".png"))
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(ingredientsAdded))
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), ingredientsObj(ingredientsAdded))
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
@@ -59,14 +59,14 @@ case class PizzaAnim(){
 
   def reset(): Unit ={
     ingredientsObj.indices.foreach(index => {
-      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(index))
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
       fadetransition.setFromValue(1)
       fadetransition.setToValue(0)
       fadetransition.playFromStart()
   })
     ingredientsAdded = 0
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), obj)
     fadetransition.setFromValue(1)
     fadetransition.setToValue(0)
     fadetransition.playFromStart()
@@ -91,7 +91,7 @@ case class CustomerSpeechBubbleAnim(){
   def set(bubbleObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
     this.obj=bubbleObj
     this.obj.setImage(new Image("/fhj/swengb/pizza/images/speechbubble.png"))
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
@@ -104,13 +104,27 @@ case class CustomerSpeechBubbleAnim(){
     ingredients.indices.foreach(index => {
       ingredientsObj(index).setImage(new Image("/fhj/swengb/pizza/images/ingredients/" + ingredients(index) + ".png"))
 
-      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(index))
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), ingredientsObj(index))
       fadetransition.setFromValue(0)
       fadetransition.setToValue(1)
       fadetransition.playFromStart()
       ingredientsObj(index).setVisible(true)
     })
   }
+
+  def goAway() {
+    ingredientsObj.indices.foreach(index => {
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
+      fadetransition.setFromValue(1)
+      fadetransition.setToValue(0)
+      fadetransition.playFromStart()
+    })
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), obj)
+    fadetransition.setFromValue(1)
+    fadetransition.setToValue(0)
+    fadetransition.playFromStart()
+    }
+
 }
 
 /**Animation der Customer
@@ -142,7 +156,7 @@ case class CustomerPersonAnim(){
 
     this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)),1, 1, 1, 100, 200, 1)
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), this.obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), this.obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
@@ -172,7 +186,7 @@ case class CustomerPersonAnim(){
   }
 
   def setVisible(visible:Boolean) {
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), this.obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), this.obj)
     if (visible){
       fadetransition.setFromValue(0)
       fadetransition.setToValue(1)
@@ -321,6 +335,8 @@ object CashierAnim {
 }
 
 
+
+
 /**Logo Animation
   *
   *
@@ -349,3 +365,11 @@ object menuDealerLogoAnim extends AnimationTimer{
     }
   }
 }
+
+  /*
+object soundEffect() {
+  MediaPlayer audio = new MediaPlayer (
+    new Media (
+      new File ("file.mp3").toURI ().toString () )
+  )
+}*/
