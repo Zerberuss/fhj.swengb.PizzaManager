@@ -603,7 +603,7 @@ object PizzaDealer {
 
     def setCustomerAppearence(i: Int): Unit = {
       //i ist der customer        zufallszahl
-      val positionAnimation: List[Int] = util.Random.shuffle((1 to 4).toSeq.toList)
+      val positionAnimation: List[Int] = util.Random.shuffle((1 to 3).toSeq.toList)
       i match {
         case 1 => {
           this.appearence.set(GameLoop.imgvw_customer1, positionAnimation(0))
@@ -618,7 +618,7 @@ object PizzaDealer {
           this.appearence.setNeutral()
         }
         case 4 => {
-          this.appearence.set(GameLoop.imgvw_customer4, positionAnimation(3))
+          this.appearence.set(GameLoop.imgvw_customer4, positionAnimation(0))
           this.appearence.setNeutral()
         }
       }

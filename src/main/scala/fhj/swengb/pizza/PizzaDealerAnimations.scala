@@ -5,12 +5,10 @@ package fhj.swengb.pizza
   * Created by Andreas on 23.01.2016.
   */
 
-import javafx.animation.{PathTransition, AnimationTimer, FadeTransition}
-import javafx.scene.image.{ImageView, Image}
+import javafx.animation.{AnimationTimer, FadeTransition, PathTransition}
+import javafx.scene.image.{Image, ImageView}
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.util.Duration
-
-import fhj.swengb.pizza.PizzaDealer.Pizza
 
 
 /** Pizza erstellen und belegen
@@ -136,7 +134,8 @@ case class CustomerPersonAnim(){
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_angry_glow.png",
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_happy_glow.png",
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral.png",
-      "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral_glow.png")
+      "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral_glow.png",
+      "/fhj/swengb/pizza/customer/customer"+customerNr+"_happy.png")
 
     this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)),1, 1, 1, 100, 200, 1)
 
@@ -151,7 +150,7 @@ case class CustomerPersonAnim(){
       status match {
         case "normal" =>   customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
         case "angry" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
-        case "happy" =>     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1) // noch falsch!
+        case "happy" =>     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(5)), 1, 1, 1, 100, 200, 1) // noch falsch!
       }
     }
     else{

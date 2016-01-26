@@ -13,7 +13,7 @@ import scala.collection.mutable.Map
   * A Scala JDBC connection example by Alvin Alexander,
   * <a href="http://alvinalexander.com" title="http://alvinalexander.com">http://alvinalexander.com</a>
   */
-object ScalaJdbcSQL extends PizzaDealerApp {
+object ScalaJdbcSQL {
 
   // connect to the database named "mysql" on port 8889 of localhost
   val url = "jdbc:mysql://socialproject.mynetgear.com:5474/db_pizzadealer"
