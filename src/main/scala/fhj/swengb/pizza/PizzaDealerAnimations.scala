@@ -5,8 +5,10 @@ package fhj.swengb.pizza
   * Created by Andreas on 23.01.2016.
   */
 
+import java.io.File
 import javafx.animation.{AnimationTimer, FadeTransition, PathTransition}
 import javafx.scene.image.{Image, ImageView}
+import javafx.scene.media.{Media, MediaPlayer}
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.util.Duration
 
@@ -170,7 +172,6 @@ case class CustomerPersonAnim(){
           case "angry" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
           case "happy" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(5)), 1, 1, 1, 100, 200, 1)
           case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, 12)
-            frameCounter = 0;
         }
       }
       else {
@@ -179,7 +180,6 @@ case class CustomerPersonAnim(){
           case "angry" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
           case "happy" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
           case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, 12)
-            frameCounter = 0;
         }
       }
     }
@@ -366,10 +366,16 @@ object menuDealerLogoAnim extends AnimationTimer{
   }
 }
 
-  /*
-object soundEffect() {
-  MediaPlayer audio = new MediaPlayer (
-    new Media (
-      new File ("file.mp3").toURI ().toString () )
-  )
-}*/
+
+object soundEffect {
+  var player:MediaPlayer = _
+  def set() {
+    player = new MediaPlayer(
+      new Media(
+        new File("/fhj/swengb/pizza/audio/Randomize9.wav").toURI().toString())
+    )
+  }
+  def play() {
+    player.play()
+  }
+}
