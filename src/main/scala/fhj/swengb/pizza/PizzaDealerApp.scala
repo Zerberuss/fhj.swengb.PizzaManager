@@ -4,10 +4,10 @@ import javafx.animation._
 import javafx.application.Application
 import javafx.fxml.{FXML, FXMLLoader}
 import javafx.scene._
-import javafx.scene.control.{Label, Button, ProgressBar}
-import javafx.scene.image.{Image, ImageView}
+import javafx.scene.control.{Button, Label, ProgressBar}
+import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
-import javafx.scene.shape.{Circle, CubicCurveTo, MoveTo, Path}
+import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.stage.Stage
 import javafx.util.Duration
 

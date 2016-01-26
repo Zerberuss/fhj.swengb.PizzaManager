@@ -127,6 +127,8 @@ case class CustomerPersonAnim(){
   var status = "normal"
   var isGlowing = false
 
+  var frameCounter = 0;
+
   def set(obj:ImageView, customerNr:Int) {
     this.obj = obj
     this.customerNr = customerNr
@@ -135,7 +137,8 @@ case class CustomerPersonAnim(){
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_happy_glow.png",
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral.png",
       "/fhj/swengb/pizza/customer/customer"+customerNr+"_neutral_glow.png",
-      "/fhj/swengb/pizza/customer/customer"+customerNr+"_happy.png")
+      "/fhj/swengb/pizza/customer/customer"+customerNr+"_happy.png",
+      "/fhj/swengb/pizza/customer/customer"+customerNr+"_puff.png")
 
     this.customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)),1, 1, 1, 100, 200, 1)
 
@@ -145,19 +148,25 @@ case class CustomerPersonAnim(){
     fadetransition.playFromStart()
   }
 
-  private def setStatus(): Unit ={
-    if (!isGlowing) {
-      status match {
-        case "normal" =>   customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
-        case "angry" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
-        case "happy" =>     customerAnim = new ImageViewSprite(obj, new Image(customerImageList(5)), 1, 1, 1, 100, 200, 1) // noch falsch!
+  private def setStatus(): Unit = {
+    if (frameCounter ==0) {
+      if (!isGlowing) {
+        status match {
+          case "normal" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
+          case "angry" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
+          case "happy" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(5)), 1, 1, 1, 100, 200, 1)
+          case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, 12)
+            frameCounter = 0;
+        }
       }
-    }
-    else{
-      status match {
-        case "normal" =>   customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)), 1, 1, 1, 100, 200, 1)
-        case "angry" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
-        case "happy" =>    customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
+      else {
+        status match {
+          case "normal" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)), 1, 1, 1, 100, 200, 1)
+          case "angry" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
+          case "happy" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
+          case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, 12)
+            frameCounter = 0;
+        }
       }
     }
   }
@@ -191,9 +200,19 @@ case class CustomerPersonAnim(){
     status = "normal"
     setStatus()
   }
+  def setGone() {
+    status = "puff"
+    setStatus()
+  }
 
   def handle(now: Long) = {
-    customerAnim.handle(now)
+    if(frameCounter>30){customerAnim.stop()}
+    else if(status=="puff"){
+      frameCounter+=1
+      customerAnim.handle(now)
+    }
+
+
   }
 }
 
@@ -214,7 +233,10 @@ object CashierAnim {
   var dealerSpriteAnim:ImageViewSprite = _
   var pathTrans: PathTransition = _
   var lastPosition = (1:Double,1:Double)
+  var lastIngredientPos = (0,0)
+  var lastCustomerPos = (0,0)
   var lastGoTo = ""
+  var lastGoingDown = false
   var isStanding=false
   var speed = 1000
 
@@ -230,48 +252,62 @@ object CashierAnim {
   }
 
   private def getSpriteAnimation(goingDown:Boolean):ImageViewSprite  = {
-    if(goingDown)  new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_down.png"), 3, 1, 3, frameWidth, frameHeight, 6)
-    else new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_up.png"), 3, 1, 3, frameWidth, frameHeight, 6)
+      if(goingDown)  new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_down.png"), 3, 1, 3, frameWidth, frameHeight, 6)
+      else new ImageViewSprite(dealer, new Image("/fhj/swengb/pizza/sprites/cashier_up.png"), 3, 1, 3, frameWidth, frameHeight, 6)
   }
 
-  private def createPath(pathToTarget: (Int,Int)): Path ={
+  private def createPath(pathToTargetIng: (Int,Int), pathToCustomer:(Int,Int)): Path ={
     var path: Path = new Path()
     path.getElements.add(new MoveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2))
-    path.getElements.add(new CubicCurveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2, pathToTarget._1, pathToTarget._2, pathToTarget._1, pathToTarget._2))
+    path.getElements.add(new CubicCurveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2, pathToTargetIng._1, pathToTargetIng._2, pathToTargetIng._1, pathToTargetIng._2))
+    path.getElements.add(new CubicCurveTo(pathToTargetIng._1, pathToTargetIng._2, pathToCustomer._1, pathToCustomer._2, pathToCustomer._1, pathToCustomer._2))
     path
   }
 
-  def setGoTo(GoToName:String){
-
-    if (GoToName!=lastGoTo) {   //Neue Pfad Animation nur dann ausführen, wenn sich das Ziel geändert hat
+  def getPosition(GoToName:String): (Int,Int) ={
     var targetPos = (0,0)
-      GoToName match {
-        case "Customer1"    => targetPos =(-239,50)
-        case "Customer2"    => targetPos =(-37,50)
-        case "Customer3"    => targetPos =(155,50)
-        case "Customer4"    => targetPos =(360,50)
+    GoToName match {
+      case "customer1"    => targetPos =(-239,50)
+      case "customer2"    => targetPos =(-37,50)
+      case "customer3"    => targetPos =(155,50)
+      case "customer4"    => targetPos =(360,50)
 
-        case "salami"       => targetPos =(-460,120)
-        case "paprika"      => targetPos =(-330,120)
-        case "champignon"   => targetPos =(-180,120)
-        case "cheese"       => targetPos =(-20,120)
-        case "onion"        => targetPos =(150,120)
-        case "tomato"       => targetPos =(300,120)
-        case "ham"          => targetPos =(450,120)
-        case "tuna"         => targetPos =(600,120) //600,120
-        case _              => targetPos =(60,100)
-      }
-      if(targetPos._2 >= lastPosition._2) { dealerSpriteAnim = getSpriteAnimation(true) }  //Sprite Animation ändern, falls sich die laufrichtung ändert -> isGoingDown true
-      else{ dealerSpriteAnim = getSpriteAnimation(false)}
-      pathTrans.setPath(createPath(targetPos))
-      pathTrans.playFromStart()
-      lastGoTo=GoToName
+      case "salami"       => targetPos =(-460,120)
+      case "paprika"      => targetPos =(-330,120)
+      case "champignon"   => targetPos =(-180,120)
+      case "cheese"       => targetPos =(-20,120)
+      case "onion"        => targetPos =(150,120)
+      case "tomato"       => targetPos =(300,120)
+      case "ham"          => targetPos =(450,120)
+      case "tuna"         => targetPos =(600,120) //600,120
+      case _              => targetPos =(60,100)
     }
+    targetPos
+  }
+
+  def setGoTo(ingredient:String,customer:String){
+    val ingredientPos = getPosition(ingredient)
+    val customerPos = getPosition(customer)
+    //if (ingredientPos!=lastIngredientPos && customerPos!=lastCustomerPos ) {//Neue Pfad Animation nur dann ausführen, wenn sich das Ziel geändert hat
+
+      pathTrans.setPath(createPath(ingredientPos,customerPos))
+      pathTrans.playFromStart()
+      lastIngredientPos=ingredientPos
+      lastCustomerPos=customerPos
+    //}
   }
 
 
   def handle(now: Long): Unit = {
-    if(lastPosition != (dealer.getTranslateX,dealer.getTranslateY)){
+    if(lastPosition != (dealer.getTranslateX,dealer.getTranslateY)){ //falls sich player bewegt hat Sprite Animation auführen
+      if        ((dealer.getTranslateY >= lastPosition._2) && (lastGoingDown != true)) { //Sprite Animation ändern, falls sich die laufrichtung ändert -> isGoingDown true
+        dealerSpriteAnim = getSpriteAnimation(true)
+        lastGoingDown = true
+      }else if  ((dealer.getTranslateY < lastPosition._2) && (lastGoingDown != false)){
+        dealerSpriteAnim = getSpriteAnimation(false)
+        lastGoingDown = false
+      }
+
       this.dealerSpriteAnim.handle(now)
       lastPosition = (dealer.getTranslateX,dealer.getTranslateY)
       isStanding=false

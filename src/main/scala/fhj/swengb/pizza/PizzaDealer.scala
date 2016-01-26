@@ -17,6 +17,9 @@ Overlay 4 Gameover
 
  */
 
+
+
+
 import javafx.animation.AnimationTimer
 import javafx.scene.control
 import javafx.scene.control.{Label, ProgressBar}
@@ -31,7 +34,7 @@ object GameLoop extends AnimationTimer {
   //var customer = new CustomerAnim()
   //customer.set(obj,2)
   //cashier erzeugen
-
+  var myNow:Long = _
   //wird nach Bedienung der 4 Kunden um 1 erhöht
   lazy val levelMax: Int = 4
   //wird um 1 verringert falls Zeit abgelaufen
@@ -52,7 +55,7 @@ object GameLoop extends AnimationTimer {
   var craB2: CraftingBench = _
   var craB3: CraftingBench = _
   var craB4: CraftingBench = _
-  var timer: Long = _
+  //var timer = Null
   var fps = 100
   var lastFrame = System.nanoTime
   var lastLogicFrame = 0
@@ -61,7 +64,7 @@ object GameLoop extends AnimationTimer {
   var customer2Served: Boolean = false
   var customer3Served: Boolean = false
   var customer4Served: Boolean = false
-
+  var timer:Long = _
   //STUFF TO SET
   var progressbar: ProgressBar = _
   var cashier1: ImageView = _
@@ -153,28 +156,43 @@ object GameLoop extends AnimationTimer {
   }
 
 
-  //createCustomers(level)
+
 
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
+
+
+
+
     if (frameJump > 1) {
       //neuen Frame berechnen
       //sind customers erstellt
 
       if (checkCustomersExist() == false) {
-
+        setTimer()
+        //println("set timer")
         createCustomers(level)
         //CustomerSpeechBubbleAnim.setOrder
 
       }
 
 
-      /*if (checkIfGameover == true) {
+
+
+      if (checkIfGameover == true) {
         //spiel vorbei?
         //in datenbank speichern
-        ScalaJdbcSQL.setHighscoreList(playerName.getText, score.toInt)
+        try {
+          ScalaJdbcSQL.connectToDatabase
+          ScalaJdbcSQL.setHighscoreList(playerName.getText, score.toInt)
+          ScalaJdbcSQL.closeConnection
+        }
+        catch {
+          case noConnection => println("Could not connect to Database")
+        }
+
         stop()
-      }*/
+      }
 
       //überprüfen ob alle customers bedient worden sind
       //einen customer auf happy setzen
@@ -182,26 +200,32 @@ object GameLoop extends AnimationTimer {
 
       if (checkIfCustomersServed == true) {
 
-        score = 4 + level * (System.nanoTime() / 1000000000 - timer) // 4 für customers + level*timeleft
+        score = score + 4 * level  // 4 für customers + level*timeleft
+        //println("in der if   ---- "+level)
+
+        highscore.setText("Highscore: "+score.toString)
         //reset timer
-        level = level + 1
-        createCustomers(level)
-        //speechbubble neu setzten
-
+        level = level +1
+        createCustomers(this.level)
         setTimer()
       }
 
+      myNow = myNow + math.floor(now/1E9/1000).toInt
+      println("this is now: "+ myNow) // ausgabe in milisek
+      if(myNow > timeAndLevel() ||myNow<=0) //timer läuft noch
+      {
+        setTimer()//Timer neu setzen
+        this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
+        resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
 
-
-
-      if (checkTimer == true) {
-        //timer setzen
-        setTimer()
-        lives = lives - 1
-        resetProgressbar()
       } else {
-        editProgressbar()
+        editProgressbar(myNow)
       }
+
+
+
+
+
 
 
 
@@ -215,7 +239,12 @@ object GameLoop extends AnimationTimer {
 
       lastFrame = now
       lastLogicFrame += 1
-      //customer.handle(now)
+
+
+      cus1.appearence.handle(now)
+      cus2.appearence.handle(now)
+      cus3.appearence.handle(now)
+      cus4.appearence.handle(now)
 
       cashier.handle(now)
     }
@@ -274,6 +303,7 @@ object GameLoop extends AnimationTimer {
 
   private def checkIfCustomersServed(): Boolean = {
     if (cus1.getOrder() == craB1.getAddedIngridients && cus2.getOrder() == craB2.getAddedIngridients && cus3.getOrder() == craB3.getAddedIngridients && cus4.getOrder() == craB4.getAddedIngridients) {
+
       true
     }
     else {
@@ -281,22 +311,9 @@ object GameLoop extends AnimationTimer {
     }
   }
 
-  private def setTimer() {
-    timer = System.nanoTime() / 1000000000
 
-  }
 
-  private def checkTimer(): Boolean = {
-    //abgelaufen?  ja?
-    if (timer > 0) {
-      if (System.nanoTime() / 1000000000 > timer + timeAndLevel()) true
-      else false
-    } else {
-      true
-    }
-  }
-
-  private def timeAndLevel(): Int = {
+  private def timeAndLevel(): Long = {
     //returns time for timer
     var x = 0
     if (level == levelMax) {
@@ -306,9 +323,9 @@ object GameLoop extends AnimationTimer {
     }
     else {
       x = timeStatisch - level
-      level = level + 1
+
     }
-    x
+    x*1000 //in milisec
   }
 
   private def checkCustomersExist(): Boolean = {
@@ -320,21 +337,35 @@ object GameLoop extends AnimationTimer {
     }
   }
 
-  private def editProgressbar() = {
-    progressbar.setProgress(progressbar.getProgress + calcPorgressbar())
+  private def editProgressbar(myNow:Double) = {
+
+    progressbar.setProgress(1-calcPorgressbar(myNow))
+
+
   }
 
-  private def calcPorgressbar(): Double = {
-    val x = timeAndLevel()
-    val y: Float = x / 100 // dann haben wir 1 %
-    val progressbarChange = y * timeLeft
-    progressbarChange
+  private def calcPorgressbar(myNow:Double): Double = {
+
+    myNow/timeAndLevel()
+
   }
 
-  private def timeLeft(): Int = {
-    val i = timer - System.nanoTime() / 1000000000
-    i.toInt
+
+  private def setTimer() {
+    myNow = 0
   }
+  /*
+    private def timeWentBy(): Int = {
+      val start = (this.timer/10E6).toInt
+      //println("Das ist der start wert: "+start)
+      val end:Int = (start + timeAndLevel()).toInt
+      //println("Das ist der end wert: "+end)
+      val now:Int = (System.nanoTime()/10E6).toInt
+      //println("Das ist der now wert: "+now)
+      val x:Int = end - now
+      //println("Time went by: "+x)
+      x
+    }*/
 
   private def resetProgressbar() = {
     progressbar.setProgress(1.0)
@@ -374,37 +405,37 @@ object GameLoop extends AnimationTimer {
     i match {
       case 1 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("salami")
-        cashier.setGoTo("salami")
+        cashier.setGoTo("salami" , "customer" + selectedCustomer)
       } //salami
       case 2 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("paprika")
-        cashier.setGoTo("paprika")
+        cashier.setGoTo("paprika", "customer" + selectedCustomer)
       } //paprika
       case 3 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("champignon")
-        cashier.setGoTo("champignon")
+        cashier.setGoTo("champignon", "customer" + selectedCustomer)
       }
       case 4 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("cheese")
-        cashier.setGoTo("cheese")
+        cashier.setGoTo("cheese" , "customer" + selectedCustomer)
       } //cheese
       case 5 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("onion")
-        cashier.setGoTo("onion")
+        cashier.setGoTo("onion" , "customer" + selectedCustomer)
       } //onion
       case 6 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tomato")
-        cashier.setGoTo("tomato")
+        cashier.setGoTo("tomato" , "customer" + selectedCustomer)
       } //tomato
       case 7 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("ham")
-        cashier.setGoTo("ham")
+        cashier.setGoTo("ham" , "customer" + selectedCustomer)
       } //ham
       case 8 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna")
-        cashier.setGoTo("tuna")
+        cashier.setGoTo("tuna" , "customer" + selectedCustomer)
       } //tuna
-      case _ => cashier.setGoTo("standard") //back to standardposition
+      case _ => cashier.setGoTo("standard" , "customer" + selectedCustomer) //back to standardposition
     }
   }
 
