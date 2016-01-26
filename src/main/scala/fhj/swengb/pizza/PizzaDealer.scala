@@ -32,7 +32,7 @@ object GameLoop extends AnimationTimer {
   //var customer = new CustomerAnim()
   //customer.set(obj,2)
   //cashier erzeugen
-  var myNow: Long = _
+  var myNow: Int = 0
   //wird nach Bedienung der 4 Kunden um 1 erhöht
   lazy val levelMax: Int = 4
   //wird um 1 verringert falls Zeit abgelaufen
@@ -54,9 +54,9 @@ object GameLoop extends AnimationTimer {
   var craB3: CraftingBench = _
   var craB4: CraftingBench = _
   //var timer = Null
-  var fps = 100
+  var fps = 30
   var lastFrame = System.nanoTime
-  var lastLogicFrame = 0
+  var lastLogicFrame:Long = System.nanoTime()
   var name: String = ""
   var customer1Served: Boolean = false
   var customer2Served: Boolean = false
@@ -155,8 +155,29 @@ object GameLoop extends AnimationTimer {
   override def handle(now: Long): Unit = {
     val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt //berechne ob genug Zeit vergangen ist um einen neuen Frame anzuzeigen
 
+    if (frameJump >= 1) {
+      lastFrame = now
 
-    if (frameJump > 1) {
+
+      var nowTemp:Long = System.nanoTime()
+      myNow = myNow + math.floor(((System.nanoTime()-lastLogicFrame) / 1E6 )%1000).toInt
+      lastLogicFrame = nowTemp
+
+      println("this is now: " + myNow) // ausgabe in milisek
+      if (myNow > timeAndLevel() || myNow <= 0) //timer läuft noch
+      {
+        setTimer() //Timer neu setzen
+        this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
+        lbl_lives.setText(this.lives.toString)
+        createCustomers(this.level)
+        resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
+
+      } else {
+        editProgressbar(myNow)
+      }
+
+
+
       //neuen Frame berechnen
       //sind customers erstellt
 
@@ -200,21 +221,6 @@ object GameLoop extends AnimationTimer {
         setTimer()
       }
 
-      myNow = myNow + math.floor(now / 1E9 / 1000).toInt
-      println("this is now: " + myNow) // ausgabe in milisek
-      if (myNow > timeAndLevel() || myNow <= 0) //timer läuft noch
-      {
-        setTimer() //Timer neu setzen
-        this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
-        lbl_lives.setText(this.lives.toString)
-        createCustomers(this.level)
-        resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
-
-      } else {
-        editProgressbar(myNow)
-      }
-
-      lastFrame = now
       lastLogicFrame += 1
 
 
@@ -328,12 +334,12 @@ object GameLoop extends AnimationTimer {
     cus2.setSpeachBubble(2)
     cus3.setSpeachBubble(3)
     cus4.setSpeachBubble(4)
-    /*
-        cus1.showPizza()
-        cus2.showPizza()
-        cus3.showPizza()
-        cus4.showPizza()*/
-
+/*
+    cus1.showPizza()
+    cus2.showPizza()
+    cus3.showPizza()
+    cus4.showPizza()
+*/
     cus1.setCustomerAppearence(1)
     cus2.setCustomerAppearence(2)
     cus3.setCustomerAppearence(3)

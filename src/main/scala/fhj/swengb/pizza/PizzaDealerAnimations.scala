@@ -26,7 +26,7 @@ import javafx.util.Duration
 case class PizzaAnim(){
   var obj:ImageView = _
   var ingredientsAdded: Int = 0
-  var ingredientsObj:List[ImageView] = List()
+  var ingredientsObj:List[ImageView] = _
 
   def set (pizzaObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
     this.obj = pizzaObj
@@ -36,6 +36,7 @@ case class PizzaAnim(){
     this.ingredientsObj = ingredientsObj
     ingredientsObj.foreach( ing => ing.setVisible(false))
     reset()
+    print("Pizza-set")
   }
 
   def showPizza(): Unit ={
