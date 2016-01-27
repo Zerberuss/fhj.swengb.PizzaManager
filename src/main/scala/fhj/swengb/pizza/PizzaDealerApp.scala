@@ -178,10 +178,14 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var highscore_nameTextFlow: TextFlow = _
 
 
+
+
+
   def logobtn():Unit = {
     menuDealerLogoAnim.set(logoAnimationImageView)
     menuDealerLogoAnim.start()
   }
+
 
   def callSalamibtn():Unit = GameLoop.ingridientsButton(1,GameLoop.selectedCustomer)
   def callPaprikabtn():Unit = GameLoop.ingridientsButton(2,GameLoop.selectedCustomer)

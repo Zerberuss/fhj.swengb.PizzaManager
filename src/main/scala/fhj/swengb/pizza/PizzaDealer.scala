@@ -1,29 +1,5 @@
 package fhj.swengb.pizza
 
-/*
-TO-DO
-
-in DB schreiben
-Overlay für Game Over
-
-checkCustomerSelected function OPTIMIEREN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-BUGS
-
-#1
-
-Wenn man ins nöchste level kommt verschwindet die Speachbubble vom selectedCustomer -> poof effekt falsch gesetzt?
-
-
-#2
-Es lass sich grafisch mehrere Ingredients auf zur Pizza hinzufügen obwohl!!! die Zutat schon oben liegt.
-Iwie überprüfen welche Zutaten oben sind?  Get Funktion?
-
-
-
- */
-
 
 import javafx.animation.AnimationTimer
 import javafx.scene.control
@@ -288,6 +264,8 @@ object GameLoop extends AnimationTimer {
       cus2.customerServed = false
       cus3.customerServed = false
       cus4.customerServed = false
+      pizzaEffect.player.stop()
+      pizzaEffect.player.play()
       true
     }
     else {
@@ -444,7 +422,11 @@ object GameLoop extends AnimationTimer {
           customerServed+=1
           cus1.setGlowing(false)
           cus1.poof()
-          if(customerServed!=4)cus1.removeSpeachBubble(1)
+          cus1.resetPizza()
+          if(customerServed!=4){
+            cus1.removeSpeachBubble(1)
+            cus1.resetPizza()
+          }
           cus1.resetOrder()
         } else {
           cus1.customerServed = false
@@ -465,7 +447,11 @@ object GameLoop extends AnimationTimer {
           customerServed+=1
           cus2.setGlowing(false)
           cus2.poof()
-          if(customerServed!=4) cus2.removeSpeachBubble(2)
+          cus2.resetPizza()
+          if(customerServed!=4) {
+            cus2.removeSpeachBubble(2)
+            cus2.resetPizza()
+          }
           cus2.resetOrder()
         } else {
           cus2.customerServed = false
@@ -486,7 +472,11 @@ object GameLoop extends AnimationTimer {
           customerServed+=1
           cus3.setGlowing(false)
           cus3.poof()
-          if(customerServed!=4) cus3.removeSpeachBubble(3)
+          cus3.resetPizza()
+          if(customerServed!=4){
+            cus3.removeSpeachBubble(3)
+            cus3.resetPizza()
+          }
           cus3.resetOrder()
         } else {
           cus3.customerServed = false
@@ -507,7 +497,10 @@ object GameLoop extends AnimationTimer {
           customerServed+=1
           cus4.setGlowing(false)
           cus4.poof()
-          if(customerServed!=4)cus4.removeSpeachBubble(4)
+          if(customerServed!=4){
+            cus4.removeSpeachBubble(4)
+            cus4.resetPizza()
+          }
           cus4.resetOrder()
         } else {
           cus4.customerServed = false

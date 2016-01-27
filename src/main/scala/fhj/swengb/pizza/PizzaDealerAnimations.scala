@@ -52,7 +52,7 @@ case class PizzaAnim(){
 
     ingredientsObj(ingredientsAdded).setImage(new Image("/fhj/swengb/pizza/images/ingredients/" + ingredient + ".png"))
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), ingredientsObj(ingredientsAdded))
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(50), ingredientsObj(ingredientsAdded))
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
     fadetransition.playFromStart()
@@ -62,14 +62,14 @@ case class PizzaAnim(){
 
   def reset(): Unit ={
     ingredientsObj.indices.foreach(index => {
-      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), ingredientsObj(index))
       fadetransition.setFromValue(1)
       fadetransition.setToValue(0)
       fadetransition.playFromStart()
   })
     ingredientsAdded = 0
 
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), obj)
+    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), obj)
     fadetransition.setFromValue(1)
     fadetransition.setToValue(0)
     fadetransition.playFromStart()
