@@ -400,9 +400,8 @@ object menuLoop {
   var player:MediaPlayer = _
   def set() {
     player = new MediaPlayer(
-      new Media(
-        new File("MenuLoop.wav").toURI.toString
-    ))
+      new Media(getClass.getResource("/fhj/swengb/pizza/audio/MenuLoop.wav").toString)
+    )
     player.setCycleCount(Int.MaxValue)
   }
 }
@@ -411,9 +410,8 @@ object mainLoop {
   var player:MediaPlayer = _
   def set() {
     player = new MediaPlayer(
-      new Media(
-        new File("GameMusic.m4a").toURI.toString
-      ))
+        new Media(getClass.getResource("/fhj/swengb/pizza/audio/GameMusic.m4a").toString)
+      )
     player.setCycleCount(Int.MaxValue)
   }
 }
@@ -423,9 +421,8 @@ object pizzaEffect {
   var player:MediaPlayer = _
   def set() {
     player = new MediaPlayer(
-      new Media(
-        new File("Select.wav").toURI.toString
-      ))
+        new Media(getClass.getResource("/fhj/swengb/pizza/audio/Select.wav").toString)
+      )
     player.setCycleCount(1)
   }
 }
@@ -434,9 +431,8 @@ object buttonEffect {
   var player:MediaPlayer = _
   def set() {
     player = new MediaPlayer(
-      new Media(
-        new File("Button.wav").toURI.toString
-      ))
+        new Media(getClass.getResource("/fhj/swengb/pizza/audio/Button.wav").toString)
+      )
     player.setCycleCount(1)
   }
 }
@@ -445,9 +441,8 @@ object puffEffect {
   var player:MediaPlayer = _
   def set() {
     player = new MediaPlayer(
-      new Media(
-        new File("puff.wav").toURI.toString
-      ))
+      new Media(getClass.getResource("/fhj/swengb/pizza/audio/puff.wav").toString)
+      )
     player.setCycleCount(1)
   }
 }

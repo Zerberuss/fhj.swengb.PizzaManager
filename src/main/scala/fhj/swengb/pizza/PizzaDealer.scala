@@ -217,10 +217,10 @@ object GameLoop extends AnimationTimer {
 
       if (checkIfCustomersServed == true) {
 
-        score = score + 4 * level * 2 // 4 für customers + level*timeleft
+        score = score + 4 * level * 2 + ((progressbar.getProgress)*30).toInt // 4 für customers + level*timeleft
         //println("in der if   ---- "+level)
 
-        highscore.setText("Score: " + score.toString)
+        highscore.setText("highscore: " + score.toString)
         //reset timer
         level = level + 1
         print(level)
@@ -524,12 +524,6 @@ object GameLoop extends AnimationTimer {
       }
     }
   }
-
-
-
-
-
-
 }
 
 
@@ -680,6 +674,8 @@ object PizzaDealer {
         else {
           //Customer auf Angry
           if (!customerServed){
+            GameLoop.score-=5
+            GameLoop.highscore.setText("highscore: " + GameLoop.score.toString)
             setAngry()
           }
           false
