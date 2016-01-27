@@ -31,7 +31,7 @@ import javafx.scene.control.{Label, ProgressBar}
 import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
 
-import fhj.swengb.pizza.PizzaDealer.{CraftingBench, Customer}
+import fhj.swengb.pizza.PizzaDealer.{Customer}
 
 
 object GameLoop extends AnimationTimer {
@@ -57,10 +57,7 @@ object GameLoop extends AnimationTimer {
   var cus2: Customer = _
   var cus3: Customer = _
   var cus4: Customer = _
-  var craB1: CraftingBench = _
-  var craB2: CraftingBench = _
-  var craB3: CraftingBench = _
-  var craB4: CraftingBench = _
+
 
 
 
@@ -68,10 +65,6 @@ object GameLoop extends AnimationTimer {
   var lastFrame = System.nanoTime
   var lastLogicFrame: Long = System.nanoTime()
   var name: String = ""
-  var customer1Served: Boolean = false
-  var customer2Served: Boolean = false
-  var customer3Served: Boolean = false
-  var customer4Served: Boolean = false
 
   var customerServed=0
 
@@ -163,7 +156,7 @@ object GameLoop extends AnimationTimer {
     //highscore setzen
     this.highscore = highscore
     //setzen des namen des spielers
-    this.playerName = playerName
+    this.playerName = playername
     this.lbl_lives = lives
     this.gameoverScore = gameOver_score
     this.gameoverError = gameOver_error
@@ -192,6 +185,7 @@ object GameLoop extends AnimationTimer {
         resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
 
       } else {
+
         editProgressbar(myNow)
       }
 
@@ -226,7 +220,7 @@ object GameLoop extends AnimationTimer {
         score = score + 4 * level * 2 // 4 für customers + level*timeleft
         //println("in der if   ---- "+level)
 
-        highscore.setText("Highscore: " + score.toString)
+        highscore.setText("Score: " + score.toString)
         //reset timer
         level = level + 1
         print(level)
@@ -259,13 +253,21 @@ object GameLoop extends AnimationTimer {
   //allgemeine setter funktion für alle objekte
 
   private def writeToDatabase(): Unit = {
+
     try {
+      stop()
+      println("handle sollte auf stop sein")
+      animMenuPanes.play(gameOverpane,false,1280/2-187)
+      this.gameoverScore.setText(this.score.toString)
       ScalaJdbcSQL.connectToDatabase
-      ScalaJdbcSQL.setHighscoreList(this.playerName.getText, this.score.toInt)
+      ScalaJdbcSQL.addToHighscoreList(playerName.getText, score.toInt)
       ScalaJdbcSQL.closeConnection
     }
     catch {
-      case noConnection => println("Could not connect to Database")
+      case noConnection => {
+        animMenuPanes.play(gameOverpane,false,1280/2-187)
+        this.gameoverError.setText("Couldn't connect!")}
+        noConnection.printStackTrace()
     }
 
   }
@@ -281,12 +283,11 @@ object GameLoop extends AnimationTimer {
   }
 
   private def checkIfCustomersServed(): Boolean = {
-    if (customer1Served && customer2Served && customer3Served && customer4Served) {
-
-      customer1Served = false
-      customer2Served = false
-      customer3Served = false
-      customer4Served = false
+    if (cus1.customerServed && cus2.customerServed && cus3.customerServed && cus4.customerServed) {
+      cus1.customerServed = false
+      cus2.customerServed = false
+      cus3.customerServed = false
+      cus4.customerServed = false
       true
     }
     else {
@@ -313,14 +314,12 @@ object GameLoop extends AnimationTimer {
   private def editProgressbar(myNow: Double) = {
 
     progressbar.setProgress(1 - calcPorgressbar(myNow))
-    if(progressbar.getProgress < 0.5){
-      if(!customer1Served)cus1.setAngry()
-      if(!customer2Served)cus2.setAngry()
-      if(!customer3Served)cus3.setAngry()
-      if(!customer4Served)cus4.setAngry()
+    if(progressbar.getProgress < 0.3){
+      if(!cus1.customerServed)cus1.setAngry()
+      if(!cus2.customerServed)cus2.setAngry()
+      if(!cus3.customerServed)cus3.setAngry()
+      if(!cus4.customerServed)cus4.setAngry()
     }
-
-
   }
 
   private def calcPorgressbar(myNow: Double): Double = {
@@ -344,13 +343,9 @@ object GameLoop extends AnimationTimer {
     customerServed=0
 
     cus1 = new Customer(level)
-    craB1 = new CraftingBench(cus1.getOrder())
     cus2 = new Customer(level)
-    craB2 = new CraftingBench(cus2.getOrder())
     cus3 = new Customer(level)
-    craB3 = new CraftingBench(cus3.getOrder())
     cus4 = new Customer(level)
-    craB4 = new CraftingBench(cus4.getOrder())
 
     cus1.setPizza(1)
     cus2.setPizza(2)
@@ -372,56 +367,58 @@ object GameLoop extends AnimationTimer {
     cus2.setCustomerAppearence(2)
     cus3.setCustomerAppearence(3)
     cus4.setCustomerAppearence(4)
-
-    customer1Served = false
-    customer2Served = false
-    customer3Served = false
-    customer4Served = false
   }
 
   def ingridientsButton(i: Int, selectedCustomer: Int) = {
     //add ingridient to working bench
     i match {
       case 1 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("salami")
-        cashier.setGoTo("salami", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("salami")
-
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("salami"))
+          {
+            cashier.setGoTo("salami", "customer" + selectedCustomer)
+            customerSelected(selectedCustomer).addIngridedientsToPizza("salami")
+          }
       } //salami
       case 2 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("paprika")
-        cashier.setGoTo("paprika", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("paprika")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("paprika")) {
+          cashier.setGoTo("paprika", "customer" + selectedCustomer)
+          customerSelected(selectedCustomer).addIngridedientsToPizza("paprika")
+        }
       } //paprika
       case 3 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("champignon")
-        cashier.setGoTo("champignon", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("champignon")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("champignon")) {
+          cashier.setGoTo("champignon", "customer" + selectedCustomer)
+          customerSelected(selectedCustomer).addIngridedientsToPizza("champignon")
+        }
       }
       case 4 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("cheese")
-        cashier.setGoTo("cheese", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("cheese")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("cheese")) {
+          cashier.setGoTo("cheese", "customer" + selectedCustomer)
+          customerSelected(selectedCustomer).addIngridedientsToPizza("cheese")
+        }
       } //cheese
       case 5 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("onion")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("onion")){
         cashier.setGoTo("onion", "customer" + selectedCustomer)
         customerSelected(selectedCustomer).addIngridedientsToPizza("onion")
+        }
       } //onion
       case 6 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tomato")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("tomato")){
         cashier.setGoTo("tomato", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("tomato")
+        customerSelected(selectedCustomer).addIngridedientsToPizza("tomato")}
       } //tomato
       case 7 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("ham")
-        cashier.setGoTo("ham", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("ham")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("ham")) {
+          cashier.setGoTo("ham", "customer" + selectedCustomer)
+          customerSelected(selectedCustomer).addIngridedientsToPizza("ham")
+        }
       } //ham
       case 8 => {
-        getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna")
-        cashier.setGoTo("tuna", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("tuna")
+        if(getCustomer(selectedCustomer).craftingBench.addIngridientToCraftingBench("tuna")) {
+          cashier.setGoTo("tuna", "customer" + selectedCustomer)
+          customerSelected(selectedCustomer).addIngridedientsToPizza("tuna")
+        }
       } //tuna
       case _ => {
         cashier.setGoTo("standard", "customer" + selectedCustomer)
@@ -429,12 +426,12 @@ object GameLoop extends AnimationTimer {
     }
   }
 
-  def getCraftingBenchForCustomer(selectedCustomer: Int): CraftingBench = {
+  def getCustomer(selectedCustomer: Int): Customer = {
     selectedCustomer match {
-      case 1 => craB1
-      case 2 => craB2
-      case 3 => craB3
-      case 4 => craB4
+      case 1 => cus1
+      case 2 => cus2
+      case 3 => cus3
+      case 4 => cus4
     }
   }
 
@@ -442,15 +439,15 @@ object GameLoop extends AnimationTimer {
     println(customerServed)
     customer match {
       case 1 => {
-        if (cus1.getOrder() == craB1.getAddedIngridients) {//served
-          customer1Served = true
+        if (cus1.getOrder() == cus1.craftingBench.getAddedIngridients) {//served
+          cus1.customerServed = true
           customerServed+=1
           cus1.setGlowing(false)
           cus1.poof()
           if(customerServed!=4)cus1.removeSpeachBubble(1)
           cus1.resetOrder()
         } else {
-          customer1Served = false
+          cus1.customerServed = false
           cus1.setGlowing(true)
           cus1.setHappy()
         }
@@ -463,15 +460,15 @@ object GameLoop extends AnimationTimer {
         cus1
       }
       case 2 => {
-        if (cus2.getOrder() == craB2.getAddedIngridients) {//served
-          customer2Served = true
+        if (cus2.getOrder() == cus2.craftingBench.getAddedIngridients) {//served
+          cus2.customerServed = true
           customerServed+=1
           cus2.setGlowing(false)
           cus2.poof()
           if(customerServed!=4) cus2.removeSpeachBubble(2)
           cus2.resetOrder()
         } else {
-          customer2Served = false
+          cus2.customerServed = false
           cus2.setGlowing(true)
           cus2.setHappy()
         }
@@ -484,15 +481,15 @@ object GameLoop extends AnimationTimer {
         cus2
       }
       case 3 => {
-        if (cus3.getOrder() == craB3.getAddedIngridients) {//served
-          customer3Served = true
+        if (cus3.getOrder() == cus3.craftingBench.getAddedIngridients) {//served
+          cus3.customerServed = true
           customerServed+=1
           cus3.setGlowing(false)
           cus3.poof()
           if(customerServed!=4) cus3.removeSpeachBubble(3)
           cus3.resetOrder()
         } else {
-          customer3Served = false
+          cus3.customerServed = false
           cus3.setGlowing(true)
           cus3.setHappy()
         }
@@ -505,15 +502,15 @@ object GameLoop extends AnimationTimer {
         cus3
       }
       case 4 => {
-        if (cus4.getOrder() == craB4.getAddedIngridients) {
-          customer4Served = true
+        if (cus4.getOrder() == cus4.craftingBench.getAddedIngridients) {
+          cus4.customerServed = true
           customerServed+=1
           cus4.setGlowing(false)
           cus4.poof()
           if(customerServed!=4)cus4.removeSpeachBubble(4)
           cus4.resetOrder()
         } else {
-          customer4Served = false
+          cus4.customerServed = false
           cus4.setGlowing(true)
           cus4.setHappy()
         }
@@ -563,17 +560,11 @@ object PizzaDealer {
 
 
   class Customer(level: Int) {
+    var customerServed: Boolean = false
     var order = new Pizza(GameLoop.level).setPizzaObject()
     val bubble = new CustomerSpeechBubbleAnim
     val appearence = new CustomerPersonAnim
     val pizzaAnim = new PizzaAnim
-    //val orderOnPizze:List[String] = ()
-    var listcus1 = 0
-    var listcus2 = 0
-    var listcus3 = 0
-    var listcus4 = 0
-    var cuslevel = 0
-    //println("IM CUSTOMER" + order)
 
     def getOrder(): List[String] = order.sorted
 
@@ -656,63 +647,53 @@ object PizzaDealer {
     def showPizza() = this.pizzaAnim.showPizza()
 
     def addIngridedientsToPizza(ingredient: String) = {
-      if(GameLoop.level <= 4)
-      {
-        cuslevel= GameLoop.level
-      }else {
-        cuslevel = 4
-      }
       GameLoop.selectedCustomer match {
         case 1 =>{
-          if(listcus1 < cuslevel && GameLoop.getCraftingBenchForCustomer(GameLoop.selectedCustomer).getAddedIngridients.contains(ingredient) ){
             this.pizzaAnim.addIngredient(ingredient)
-            listcus1 += 1
-          }
         }
         case 2 =>{
-          if(listcus2 < cuslevel && GameLoop.getCraftingBenchForCustomer(GameLoop.selectedCustomer).getAddedIngridients.contains(ingredient)){
             this.pizzaAnim.addIngredient(ingredient)
-            listcus2 += 1
-          }
+
         }
         case 3 =>{
-          if(listcus3 < cuslevel && GameLoop.getCraftingBenchForCustomer(GameLoop.selectedCustomer).getAddedIngridients.contains(ingredient)){
             this.pizzaAnim.addIngredient(ingredient)
-            listcus3 += 1
-          }
+
         }
         case 4 =>{
-          if(listcus4 < cuslevel  && GameLoop.getCraftingBenchForCustomer(GameLoop.selectedCustomer).getAddedIngridients.contains(ingredient)){
             this.pizzaAnim.addIngredient(ingredient)
-            listcus4 += 1
-          }
         }
       }
 
 
     }
 
-  }
+    object craftingBench {
+      var ingridientsAdded = List[String]()
 
-
-  class CraftingBench(order: List[String]) {
-    var ingridientsAdded = List[String]()
-
-    def addIngridientToCraftingBench(ingredient: String): List[String] = {
-      if (order.contains(ingredient)) {
-        //wird auf Happy gesetzt
-        GameLoop.customerSelected(GameLoop.selectedCustomer).setHappy()
-        ingridientsAdded ::= ingredient
-        ingridientsAdded
+      def addIngridientToCraftingBench(ingredient: String): Boolean = {
+        if (order.contains(ingredient)&&(!ingridientsAdded.contains(ingredient))) {
+          //wird auf Happy gesetzt
+          setHappy()
+          ingridientsAdded ::= ingredient
+          true
+        }
+        else {
+          //Customer auf Angry
+          if (!customerServed){
+            setAngry()
+          }
+          false
+        }
       }
-      else {
-        //Customer auf Angry
-        GameLoop.customerSelected(GameLoop.selectedCustomer).setAngry()
-        ingridientsAdded
-      }
+
+      def getAddedIngridients: List[String] = ingridientsAdded.sorted
     }
 
-    def getAddedIngridients: List[String] = ingridientsAdded.sorted
   }
+
+
+
+
+
 
 }

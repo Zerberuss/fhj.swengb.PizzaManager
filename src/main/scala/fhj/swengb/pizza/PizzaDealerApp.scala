@@ -7,7 +7,9 @@ import javafx.scene._
 import javafx.scene.control.{Button, Label, ProgressBar}
 import javafx.scene.image.ImageView
 import javafx.scene.layout.AnchorPane
+import javafx.scene.paint.Color
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
+import javafx.scene.text.{Text, TextFlow}
 import javafx.stage.Stage
 import javafx.util.Duration
 
@@ -171,6 +173,10 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var gameOver_score: control.Label = _
   @FXML var gameOver_error: control.Label = _
 
+  @FXML var highscore_error: control.Label = _
+  @FXML var highscore_scoreTextFlow: TextFlow = _
+  @FXML var highscore_nameTextFlow: TextFlow = _
+
 
   def logobtn():Unit = {
     menuDealerLogoAnim.set(logoAnimationImageView)
@@ -201,16 +207,15 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
 
   def startHighscoresPane(): Boolean = {
-    animMenuPanes.play(highscoresPane, false, 1280/2+5)
+    animMenuPanes.play(highscoresPane, false, 1280/2+8)
     animMenuPanes.play(highscoresMenu, true)
     true
   }
 
 
   def startSinglePlayer(playerName: String): Boolean = {
-    status.setText("Play a little game:")
     animMenuPanes.play(gameMenu, true)
-    animMenuPanes.play(gamePane, false, 1280/2+5)
+    animMenuPanes.play(gamePane, false, 1280/2+8)
     setNewGame()
     true
   }
@@ -221,7 +226,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
   def gameMenuBack(): Unit = animMenuPanes.play(gameMenu, true)
 
-  def highscoresMenuStart(): Unit = animMenuPanes.play(highscoresMenu, false)
+
 
   def gameMenuStart(): Unit = animMenuPanes.play(gameMenu, false)
 
@@ -233,16 +238,15 @@ class PizzaDealerAppController extends PizzaDealerApp {
     startSinglePlayer(playerName.getText)
   }
 
-  def backToMainMenu(): Unit = ???
+  def backToMainMenu(): Unit = animMenuPanes.play(highscoresPane, true, 1300)
 
   def restart(): Unit = {
-    animMenuPanes.play(gameOverPane,true) //1280/2-187)
-    println(gameOverPane.getTranslateX + ",  y: " + gameOverPane.getTranslateY)
-
+    animMenuPanes.play(gameOverPane,true) //1280/2-187
     mainLoop.player.stop()
     menuLoop.player.stop()
     menu.getScene().getWindow().hide(); start(new Stage)
   }
+
 
 
 
@@ -347,8 +351,25 @@ class PizzaDealerAppController extends PizzaDealerApp {
 
     GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername,lives,gameOverPane,gameOver_score,gameOver_error)
     GameLoop.start()
+  }
+
+
+  def highscoresMenuStart(): Unit = {
+    highscore_nameTextFlow.getChildren().clear()
+    highscore_scoreTextFlow.getChildren().clear()
+    
+    animMenuPanes.play(highscoresPane, false, 1280/2+8)
+    highscore_error.setText(ScalaJdbcSQL.connectToDatabase)
+    var highscoreNameList = new Text(ScalaJdbcSQL.getHighscores._1)
+    highscoreNameList.setFill(Color.ORANGE)
+    highscore_nameTextFlow.getChildren().add(highscoreNameList)  //ScalaJdbcSQL.getHighscores
+    var highscoreScoreList = new Text(ScalaJdbcSQL.getHighscores._2)
+    highscoreScoreList.setFill(Color.ORANGE)
+    highscore_scoreTextFlow.getChildren().add(highscoreScoreList)
+
 
   }
+
 
   def exit(): Unit = {
     System.exit(1)

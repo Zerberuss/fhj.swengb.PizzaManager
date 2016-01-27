@@ -25,61 +25,62 @@ object ScalaJdbcSQL {
 
   def closeConnection = connection.close
 
-  def connectToDatabase = {
+  def connectToDatabase: String = {
     try {
       Class.forName(driver)
       connection = DriverManager.getConnection(url, username, password)
-      println("i think its working")
+      ""
     } catch {
-      case e: Exception => e.printStackTrace
+      case e: Exception => e.printStackTrace.toString
     }
   }
 
   def getHighscoresForUser(username: String): (String,Int) = {
     val highscoresMap = getHighscores
     try {
+      println("hey")
+      ("User requested was not found",0)
       //falls user nicht gefunden wurde
-      val valueFromUser:Int = highscoresMap(username.trim)
-      (username,valueFromUser)
+      //val valueFromUser:Int = highscoresMap(username.trim)
+      //(username,valueFromUser)
     } catch {
       case e:Exception => e.printStackTrace
         ("User requested was not found",0)
     }
   }
 
-  def getHighscores: Map[String, Int] = {
-    val highscoresMap = Map[String, Int]()
+  def getHighscores: (String,String) = {
+    var nameString:String = ""
+    var highscoresString:String = ""
     try {
       val statement = connection.createStatement
-      val rs = statement.executeQuery("SELECT * FROM highscore")
+      val rs = statement.executeQuery("SELECT * FROM highscore ORDER BY highscore_number DESC LIMIT 0,20")
       while (rs.next) {
         val username = rs.getString("username")
         val highscore_number = rs.getInt("highscore_number")
-        println("Username = %s, Highscore = %s".format(username, highscore_number))
-        highscoresMap += username -> highscore_number
+        nameString =nameString + username +  " : " + " \n"
+        highscoresString =highscoresString + highscore_number + " \n"
       }
-      //mutable.LinkedHashMap(highscoresMap.toSeq.sortBy(_._1):_*) Sort  geht nicht  furz kack scheiß
-      highscoresMap
+      //println(highscoresString)
+      (nameString,highscoresString)
     }
     catch {
       case e => e.printStackTrace
-        highscoresMap
+        (nameString,highscoresString)
     }
 
   }
 
-  def setHighscoreList(username: String, score: Int) = {
+  def addToHighscoreList(username: String, score: Int) = {
     try {
       val statement = connection.prepareStatement("INSERT INTO highscore (username,highscore_number) VALUES(?,?)") //insert befehl
-      println("bis daher gehts")
       statement.setString(1, username)
       statement.setInt(2, score)
-      println("do gehts a no\n")
       statement.executeUpdate()
-      print("HEYYYYYYYYYYYYYYYYYY BROTHER")
+
     }
     catch {
-      case x:Exception => x.printStackTrace
+      case x:Exception => x.printStackTrace()
     }
   }
 
