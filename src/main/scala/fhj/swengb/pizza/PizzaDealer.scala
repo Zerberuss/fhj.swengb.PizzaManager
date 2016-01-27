@@ -65,12 +65,15 @@ object GameLoop extends AnimationTimer {
   //var timer = Null
   var fps = 30
   var lastFrame = System.nanoTime
-  var lastLogicFrame:Long = System.nanoTime()
+  var lastLogicFrame: Long = System.nanoTime()
   var name: String = ""
   var customer1Served: Boolean = false
   var customer2Served: Boolean = false
   var customer3Served: Boolean = false
   var customer4Served: Boolean = false
+
+  var customerServed=0;
+
   var timer: Long = _
   //STUFF TO SET
   var progressbar: ProgressBar = _
@@ -168,8 +171,8 @@ object GameLoop extends AnimationTimer {
       lastFrame = now
 
 
-      var nowTemp:Long = System.nanoTime()
-      myNow = myNow + math.floor(((System.nanoTime()-lastLogicFrame) / 1E6 )%1000).toInt
+      var nowTemp: Long = System.nanoTime()
+      myNow = myNow + math.floor(((System.nanoTime() - lastLogicFrame) / 1E6) % 1000).toInt
       lastLogicFrame = nowTemp
 
       //println("this is now: " + myNow) // ausgabe in milisek
@@ -177,7 +180,7 @@ object GameLoop extends AnimationTimer {
       {
         setTimer() //Timer neu setzen
         this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
-        lbl_lives.setText("lives: "+this.lives.toString)
+        lbl_lives.setText("lives: " + this.lives.toString)
         createCustomers(this.level)
         resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
 
@@ -193,7 +196,7 @@ object GameLoop extends AnimationTimer {
       if (checkCustomersExist() == false) {
         setTimer()
         createCustomers(level)
-        lbl_lives.setText("lives: "+lives.toString)
+        lbl_lives.setText("lives: " + lives.toString)
       }
 
 
@@ -210,10 +213,10 @@ object GameLoop extends AnimationTimer {
       //überprüfen ob alle customers bedient worden sind
       //einen customer auf happy setzen
 
-      checkIfSelectedCustomerServed()
+
       if (checkIfCustomersServed == true) {
 
-        score = score + 4 * level*2 // 4 für customers + level*timeleft
+        score = score + 4 * level * 2 // 4 für customers + level*timeleft
         //println("in der if   ---- "+level)
 
         highscore.setText("Highscore: " + score.toString)
@@ -239,7 +242,6 @@ object GameLoop extends AnimationTimer {
 
     //Nur zum testen des Cashiers:
     if (lastLogicFrame == 50) {
-
       lastLogicFrame = 0
     }
 
@@ -249,7 +251,7 @@ object GameLoop extends AnimationTimer {
 
   //allgemeine setter funktion für alle objekte
 
-  private def writeToDatabase():Unit = {
+  private def writeToDatabase(): Unit = {
     try {
       ScalaJdbcSQL.connectToDatabase
       ScalaJdbcSQL.setHighscoreList(this.playerName.getText, this.score.toInt)
@@ -272,11 +274,12 @@ object GameLoop extends AnimationTimer {
   }
 
   private def checkIfCustomersServed(): Boolean = {
-    if (cus1.getOrder() == craB1.getAddedIngridients && cus2.getOrder() == craB2.getAddedIngridients && cus3.getOrder() == craB3.getAddedIngridients && cus4.getOrder() == craB4.getAddedIngridients) {
-      cus1.poof()
-      cus2.poof()
-      cus3.poof()
-      cus4.poof()
+    if (customer1Served && customer2Served && customer3Served && customer4Served) {
+
+      customer1Served = false
+      customer2Served = false
+      customer3Served = false
+      customer4Served = false
       true
     }
     else {
@@ -287,7 +290,7 @@ object GameLoop extends AnimationTimer {
 
   private def timeAndLevel(): Long = {
     //returns time for timer
-    val x= timeStatisch - level
+    val x = timeStatisch - level
     x * 1000 //in milisec
   }
 
@@ -324,6 +327,8 @@ object GameLoop extends AnimationTimer {
   }
 
   def createCustomers(level: Int) = {
+
+    customerServed=0
 
     cus1 = new Customer(level)
     craB1 = new CraftingBench(cus1.getOrder())
@@ -401,7 +406,7 @@ object GameLoop extends AnimationTimer {
       case 8 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna")
         cashier.setGoTo("tuna", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("tuna")/*FOR JOE
+        customerSelected(selectedCustomer).addIngridedientsToPizza("tuna") /*FOR JOE
         HappyCustomer ohne Glowing
         Overlay 4 Gameover*/
       } //tuna
@@ -421,129 +426,91 @@ object GameLoop extends AnimationTimer {
   }
 
   def customerSelected(customer: Int): Customer = {
+    println(customerServed)
     customer match {
       case 1 => {
-        if (customer1Served) {
+        if (cus1.getOrder() == craB1.getAddedIngridients) {//served
+          customer1Served = true
+          customerServed+=1
           cus1.setGlowing(false)
-          cus1.setHappy()
+          cus1.poof()
+          if(customerServed!=4)cus1.removeSpeachBubble(1)
+          cus1.resetOrder()
         } else {
+          customer1Served = false
           cus1.setGlowing(true)
-
+          cus1.setHappy()
         }
+        cus4.setGlowing(false)
         cus2.setGlowing(false)
         cus3.setGlowing(false)
-        cus4.setGlowing(false)
-        cus2.setNeutral()
-        cus3.setNeutral()
-        cus4.setNeutral()
-        selectedCustomer = 1
-        cus1.setHappy()
+
+        selectedCustomer =1
 
         cus1
       }
       case 2 => {
-        if (customer2Served) {
-
+        if (cus2.getOrder() == craB2.getAddedIngridients) {//served
+          customer2Served = true
+          customerServed+=1
           cus2.setGlowing(false)
-          cus2.setHappy()
+          cus2.poof()
+          if(customerServed!=4) cus2.removeSpeachBubble(2)
+          cus2.resetOrder()
         } else {
-
+          customer2Served = false
           cus2.setGlowing(true)
+          cus2.setHappy()
         }
         cus1.setGlowing(false)
-        cus3.setGlowing(false)
         cus4.setGlowing(false)
-        cus1.setNeutral()
-        cus3.setNeutral()
-        cus4.setNeutral()
+        cus3.setGlowing(false)
+
         selectedCustomer = 2
-        cus2.setHappy()
+
         cus2
       }
       case 3 => {
-        if (customer3Served) {
-
+        if (cus3.getOrder() == craB3.getAddedIngridients) {//served
+          customer3Served = true
+          customerServed+=1
           cus3.setGlowing(false)
-          cus3.setHappy()
+          cus3.poof()
+          if(customerServed!=4) cus3.removeSpeachBubble(3)
+          cus3.resetOrder()
         } else {
-
+          customer3Served = false
           cus3.setGlowing(true)
-
+          cus3.setHappy()
         }
         cus1.setGlowing(false)
         cus2.setGlowing(false)
         cus4.setGlowing(false)
-        cus2.setNeutral()
-        cus1.setNeutral()
-        cus4.setNeutral()
+
         selectedCustomer = 3
-        cus3.setHappy()
+
         cus3
-      }
-      case 4 => {
-        if (customer4Served) {
-
-          cus4.setGlowing(false)
-          cus4.setHappy()
-        } else {
-
-          cus4.setGlowing(true)
-
-        }
-        cus1.setGlowing(false)
-        cus2.setGlowing(false)
-        cus3.setGlowing(false)
-        cus1.setNeutral()
-        cus2.setNeutral()
-        cus3.setNeutral()
-        selectedCustomer = 4
-        cus4.setHappy()
-        cus4
-      }
-    }
-  }
-
-  def checkIfSelectedCustomerServed(): Boolean = {
-    selectedCustomer match {
-      case 1 => {
-        if (cus1.getOrder() == craB1.getAddedIngridients) {
-          customer1Served = true
-          cus1.setGlowing(false)
-          cus1.poof()
-          cus1.removeSpeachBubble(1)
-          true
-        }
-        else false
-      }
-      case 2 => {
-        if (cus2.getOrder() == craB2.getAddedIngridients) {
-          customer2Served = true
-          cus2.setGlowing(false)
-          cus2.poof()
-          cus2.removeSpeachBubble(2)
-          true
-        }
-        else false
-      }
-      case 3 => {
-        if (cus3.getOrder() == craB3.getAddedIngridients) {
-          customer3Served = true
-          cus3.setGlowing(false)
-          cus3.poof()
-          cus3.removeSpeachBubble(3)
-          true
-        }
-        else false
       }
       case 4 => {
         if (cus4.getOrder() == craB4.getAddedIngridients) {
           customer4Served = true
+          customerServed+=1
           cus4.setGlowing(false)
           cus4.poof()
-          cus4.removeSpeachBubble(4)
-          true
+          if(customerServed!=4)cus4.removeSpeachBubble(4)
+          cus4.resetOrder()
+        } else {
+          customer4Served = false
+          cus4.setGlowing(true)
+          cus4.setHappy()
         }
-        else false
+        cus1.setGlowing(false)
+        cus2.setGlowing(false)
+        cus3.setGlowing(false)
+
+        selectedCustomer = 4
+
+        cus4
       }
     }
   }
@@ -562,11 +529,11 @@ object PizzaDealer {
       val shuffeld = scala.util.Random.shuffle(ingredients)
       if (n >= 4) {
         for (n <- 1 to 4) {
-          finalIngredients ::= shuffeld(n-1)
+          finalIngredients ::= shuffeld(n - 1)
         }
       } else {
         for (n <- 1 to n) {
-          finalIngredients ::= shuffeld(n-1)
+          finalIngredients ::= shuffeld(n - 1)
         }
       }
       finalIngredients
@@ -577,13 +544,22 @@ object PizzaDealer {
 
 
   class Customer(level: Int) {
-    val order = new Pizza(GameLoop.level).setPizzaObject()
+    var order = new Pizza(GameLoop.level).setPizzaObject()
     val bubble = new CustomerSpeechBubbleAnim
     val appearence = new CustomerPersonAnim
     val pizzaAnim = new PizzaAnim
+    var listcus1 = List()
+    var listcus2 = List()
+    var listcus3 = List()
+    var listcus4 = List()
     //println("IM CUSTOMER" + order)
 
     def getOrder(): List[String] = order.sorted
+
+    def resetOrder():List[String] = {
+      order = List[String]()
+      order
+    }
 
     def setSpeachBubble(i: Int): Unit = {
       i match {
@@ -606,7 +582,7 @@ object PizzaDealer {
       }
     }
 
-    def removeSpeachBubble(i:Int):Unit ={
+    def removeSpeachBubble(i: Int): Unit = {
       this.bubble.goAway()
     }
 
@@ -659,10 +635,56 @@ object PizzaDealer {
     def showPizza() = this.pizzaAnim.showPizza()
 
     def addIngridedientsToPizza(ingredient: String) = {
-      if (order.contains(ingredient)) {
 
-        this.pizzaAnim.addIngredient(ingredient)
+
+      GameLoop.selectedCustomer match {
+        case 1 => {
+          if (!listcus1.contains(ingredient) && GameLoop.customer1Served == false) {
+            listcus1 +ingredient
+            if (this.order.contains(ingredient)) {
+              this.pizzaAnim.addIngredient(ingredient)
+            } else {
+              GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)      }
+          } else {
+            GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)
+          }
+        }
+        case 2 =>{
+          if (!listcus2.contains(ingredient) && GameLoop.customer2Served == false) {
+            listcus2 +ingredient
+            if (this.order.contains(ingredient)) {
+              this.pizzaAnim.addIngredient(ingredient)
+            } else {
+              GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)      }
+          } else {
+            GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)
+          }
+        }
+        case 3 =>{
+          if (!listcus3.contains(ingredient) && GameLoop.customer3Served == false) {
+            listcus3 +ingredient
+            if (this.order.contains(ingredient)) {
+              this.pizzaAnim.addIngredient(ingredient)
+            } else {
+              GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)      }
+          } else {
+            GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)
+          }
+        }
+        case 4 =>{
+          if (!listcus4.contains(ingredient) && GameLoop.customer4Served == false) {
+            listcus4 + ingredient
+            if (this.order.contains(ingredient)) {
+              this.pizzaAnim.addIngredient(ingredient)
+            } else {
+              GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)      }
+          } else {
+            GameLoop.cashier.setGoTo(" ", "customer" + GameLoop.selectedCustomer)
+          }
+        }
       }
+
+
     }
 
   }

@@ -117,6 +117,7 @@ case class CustomerSpeechBubbleAnim(){
   }
 
   def goAway() {
+    println("GO AWAYY")
     if(!gone){
       ingredientsObj.indices.foreach(index => {
         val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
@@ -142,7 +143,9 @@ case class CustomerSpeechBubbleAnim(){
   *
   * set: Neuen Customer erstellen
   *       obj: ImageView aus der FXML
-  *       customerNr: welches aussehen hat der Customer
+  *       customerNr: welches Aussehen hat der Customer hat
+  *
+  *
   */
 case class CustomerPersonAnim(){
   var customerNr = 1
@@ -198,7 +201,7 @@ case class CustomerPersonAnim(){
     }
   }
 
-  def setVisible(visible:Boolean) {
+  private def setVisible(visible:Boolean) {
     val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), this.obj)
     if (visible){
       fadetransition.setFromValue(0)
@@ -227,13 +230,13 @@ case class CustomerPersonAnim(){
     status = "normal"
     setStatus()
   }
-  def setGone() {
+  def setGone() {       //Customer verschwinden lassen
     status = "puff"
     setStatus()
   }
 
   def handle(now: Long) = {
-    if(frameCounter>=fps-1 && gone != true)
+    if(frameCounter>=fps-1 && gone != true)     //Falls ein bestimmter Frame erreicht wurde in der puff Animation -> animation stoppen und Fade out
       {
         customerAnim.stop()
         val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), this.obj)
@@ -242,7 +245,7 @@ case class CustomerPersonAnim(){
         fadetransition.play()
         gone = true
       }
-    else if(status=="puff"){
+    else if(status=="puff"){                  //Falls der Customer verschwinden soll -> handler ausführen und dessen Frames zählen
       val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt
       if(frameJump>=1){
         lastFrame = now
@@ -298,6 +301,7 @@ object CashierAnim {
     path.getElements.add(new MoveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2))
     path.getElements.add(new CubicCurveTo(this.lastPosition._1+frameWidth/2, this.lastPosition._2+frameHeight/2, pathToTargetIng._1, pathToTargetIng._2, pathToTargetIng._1, pathToTargetIng._2))
     path.getElements.add(new CubicCurveTo(pathToTargetIng._1, pathToTargetIng._2, pathToCustomer._1, pathToCustomer._2, pathToCustomer._1, pathToCustomer._2))
+    path.getElements.add(new CubicCurveTo(pathToCustomer._1, pathToCustomer._2, 58, 95, 58, 95))
     path
   }
 
