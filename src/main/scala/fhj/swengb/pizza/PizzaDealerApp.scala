@@ -192,6 +192,9 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //animation for Menue slide ins and outs
   def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 400, yMitte: Int = 720/2): Unit = {  //1280/2
 
+    buttonEffect.player.stop()
+    buttonEffect.player.play()
+
     var xEnde = 1300
     var path: Path = new Path()
 
@@ -349,13 +352,25 @@ class PizzaDealerAppController extends PizzaDealerApp {
     val playername = this.playerName
     val lives = lbl_lives
 
+    menuLoop.player.stop()
+    mainLoop.player.play()
+
     GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername,lives)
     GameLoop.start()
+
   }
-
-
 
   def exit(): Unit = {
     System.exit(1)
   }
+
+  menuLoop.set()
+  menuLoop.player.setVolume(0.5)
+  mainLoop.set()
+  mainLoop.player.setVolume(0.5)
+  buttonEffect.set()
+  pizzaEffect.set()
+
+  menuLoop.player.play()
+
 }

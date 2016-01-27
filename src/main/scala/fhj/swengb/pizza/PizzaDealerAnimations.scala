@@ -6,11 +6,13 @@ package fhj.swengb.pizza
   */
 
 import java.io.File
-import javafx.animation.{AnimationTimer, FadeTransition, PathTransition}
+import javafx.animation.{Animation, AnimationTimer, FadeTransition, PathTransition}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.media.{Media, MediaPlayer}
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.util.Duration
+
+import sun.awt.SunToolkit.InfiniteLoop
 
 
 /** Pizza erstellen und belegen
@@ -29,15 +31,12 @@ case class PizzaAnim(){
   var ingredientsObj:List[ImageView] = _
 
   def set (pizzaObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
-    println("Pizza-set")
     this.obj = pizzaObj
     this.obj.setImage(new Image("/fhj/swengb/pizza/images/gamePane_pizza.png"))
     this.obj.setVisible(false)
 
     this.ingredientsObj = ingredientsObj
     ingredientsObj.foreach( ing => ing.setVisible(false))
-    //reset()
-
   }
 
   def showPizza(): Unit ={
@@ -90,6 +89,7 @@ case class PizzaAnim(){
 case class CustomerSpeechBubbleAnim(){
   var obj:ImageView = _
   var ingredientsObj:List[ImageView] = List()
+  private var gone = false
   //val centerOfIngredients = (100,100)
 
   def set(bubbleObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
@@ -117,19 +117,26 @@ case class CustomerSpeechBubbleAnim(){
   }
 
   def goAway() {
-    ingredientsObj.indices.foreach(index => {
-      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
+    if(!gone){
+      ingredientsObj.indices.foreach(index => {
+        val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
+        fadetransition.setFromValue(1)
+        fadetransition.setToValue(0)
+        fadetransition.playFromStart()
+      })
+      val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), obj)
       fadetransition.setFromValue(1)
       fadetransition.setToValue(0)
       fadetransition.playFromStart()
-    })
-    val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), obj)
-    fadetransition.setFromValue(1)
-    fadetransition.setToValue(0)
-    fadetransition.playFromStart()
+      gone = true
     }
-
+  }
 }
+
+
+
+
+
 
 /**Animation der Customer
   *
@@ -141,11 +148,15 @@ case class CustomerPersonAnim(){
   var customerNr = 1
   var obj:ImageView = _
   var customerImageList = List("")
-  var customerAnim:ImageViewSprite = _
+  var customerAnim: ImageViewSprite = _
+  //var spriteAnimation: SpriteAnimation = _
   var status = "normal"
   var isGlowing = false
+  var lastFrame:Long = 0
+  val fps = 11
+  private var gone :Boolean = false
 
-  var frameCounter = 0;
+  var frameCounter = 0
 
   def set(obj:ImageView, customerNr:Int) {
     this.obj = obj
@@ -173,7 +184,7 @@ case class CustomerPersonAnim(){
           case "normal" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(3)), 1, 1, 1, 100, 200, 1)
           case "angry" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(0)), 1, 1, 1, 100, 200, 1)
           case "happy" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(5)), 1, 1, 1, 100, 200, 1)
-          case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, 12)
+          case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, fps)
         }
       }
       else {
@@ -181,7 +192,7 @@ case class CustomerPersonAnim(){
           case "normal" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(4)), 1, 1, 1, 100, 200, 1)
           case "angry" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(1)), 1, 1, 1, 100, 200, 1)
           case "happy" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(2)), 1, 1, 1, 100, 200, 1)
-          case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, 12)
+          case "puff" => customerAnim = new ImageViewSprite(obj, new Image(customerImageList(6)), 11, 1, 11, 100, 200, fps)
         }
       }
     }
@@ -222,13 +233,23 @@ case class CustomerPersonAnim(){
   }
 
   def handle(now: Long) = {
-    if(frameCounter>30){customerAnim.stop()}
+    if(frameCounter>=fps-1 && gone != true)
+      {
+        customerAnim.stop()
+        val fadetransition: FadeTransition = new FadeTransition(Duration.millis(100), this.obj)
+        fadetransition.setFromValue(1)
+        fadetransition.setToValue(0)
+        fadetransition.play()
+        gone = true
+      }
     else if(status=="puff"){
-      frameCounter+=1
-      customerAnim.handle(now)
+      val frameJump: Int = Math.floor((now - lastFrame) / (1000000000 / fps)).toInt
+      if(frameJump>=1){
+        lastFrame = now
+        frameCounter+=1
+        customerAnim.handle(now)
+      }
     }
-
-
   }
 }
 
@@ -369,15 +390,51 @@ object menuDealerLogoAnim extends AnimationTimer{
 }
 
 
-object soundEffect {
+object menuLoop {
   var player:MediaPlayer = _
   def set() {
     player = new MediaPlayer(
       new Media(
-        new File("/fhj/swengb/pizza/audio/Randomize9.wav").toURI().toString())
-    )
-  }
-  def play() {
-    player.play()
+        new File("MenuLoop.wav").toURI.toString
+    ))
+    player.setCycleCount(Int.MaxValue)
   }
 }
+
+object mainLoop {
+  var player:MediaPlayer = _
+  def set() {
+    player = new MediaPlayer(
+      new Media(
+        new File("GameMusic.m4a").toURI.toString
+      ))
+    player.setCycleCount(Int.MaxValue)
+  }
+}
+
+
+object pizzaEffect {
+  var player:MediaPlayer = _
+  def set() {
+    player = new MediaPlayer(
+      new Media(
+        new File("Select.wav").toURI.toString
+      ))
+    player.setCycleCount(1)
+  }
+}
+
+object buttonEffect {
+  var player:MediaPlayer = _
+  def set() {
+    player = new MediaPlayer(
+      new Media(
+        new File("Button.wav").toURI.toString
+      ))
+    player.setCycleCount(1)
+  }
+}
+
+
+
+

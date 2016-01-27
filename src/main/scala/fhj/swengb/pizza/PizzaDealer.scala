@@ -3,17 +3,24 @@ package fhj.swengb.pizza
 /*
 TO-DO
 
-Speach Bubble setzen
-CustomerAnim setzen in allen Fällen
-Highscore setzen
 in DB schreiben
 Overlay für Game Over
 
 checkCustomerSelected function OPTIMIEREN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-FOR JOE
-HappyCustomer ohne Glowing
-Overlay 4 Gameover
+
+BUGS
+
+#1
+
+Wenn man ins nöchste level kommt verschwindet die Speachbubble vom selectedCustomer -> poof effekt falsch gesetzt?
+
+
+#2
+Es lass sich grafisch mehrere Ingredients auf zur Pizza hinzufügen obwohl!!! die Zutat schon oben liegt.
+Iwie überprüfen welche Zutaten oben sind?  Get Funktion?
+
+
 
  */
 
@@ -39,7 +46,7 @@ object GameLoop extends AnimationTimer {
   lazy val timeStatisch: Int = 32
   var level: Int = 1
   //max level
-  var lives: Int = 4
+  var lives: Int = 3
   // in sec
   var i: Int = 1
   // falls maxlevel erreicht ist wird die übrige Zeit ZUSÄTZLICH noch um diesen wert verringert     der wert erhöht sich dannach
@@ -53,6 +60,8 @@ object GameLoop extends AnimationTimer {
   var craB2: CraftingBench = _
   var craB3: CraftingBench = _
   var craB4: CraftingBench = _
+
+
   //var timer = Null
   var fps = 30
   var lastFrame = System.nanoTime
@@ -168,7 +177,7 @@ object GameLoop extends AnimationTimer {
       {
         setTimer() //Timer neu setzen
         this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
-        lbl_lives.setText(this.lives.toString)
+        lbl_lives.setText("lives: "+this.lives.toString)
         createCustomers(this.level)
         resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
 
@@ -193,14 +202,7 @@ object GameLoop extends AnimationTimer {
       if (checkIfGameover == true) {
         //spiel vorbei?
         //in datenbank speichern
-        try {
-          ScalaJdbcSQL.connectToDatabase
-          ScalaJdbcSQL.setHighscoreList(playerName.getText, score.toInt)
-          ScalaJdbcSQL.closeConnection
-        }
-        catch {
-          case noConnection => println("Could not connect to Database")
-        }
+        writeToDatabase()
 
         stop()
       }
@@ -211,12 +213,13 @@ object GameLoop extends AnimationTimer {
       checkIfSelectedCustomerServed()
       if (checkIfCustomersServed == true) {
 
-        score = score + 4 * level // 4 für customers + level*timeleft
+        score = score + 4 * level*2 // 4 für customers + level*timeleft
         //println("in der if   ---- "+level)
 
         highscore.setText("Highscore: " + score.toString)
         //reset timer
         level = level + 1
+        print(level)
         createCustomers(this.level)
         setTimer()
       }
@@ -246,6 +249,18 @@ object GameLoop extends AnimationTimer {
 
   //allgemeine setter funktion für alle objekte
 
+  private def writeToDatabase():Unit = {
+    try {
+      ScalaJdbcSQL.connectToDatabase
+      ScalaJdbcSQL.setHighscoreList(this.playerName.getText, this.score.toInt)
+      ScalaJdbcSQL.closeConnection
+    }
+    catch {
+      case noConnection => println("Could not connect to Database")
+    }
+
+  }
+
 
   private def checkIfGameover: Boolean = {
     if (this.lives == 0) {
@@ -272,16 +287,7 @@ object GameLoop extends AnimationTimer {
 
   private def timeAndLevel(): Long = {
     //returns time for timer
-    var x = 0
-    if (level == levelMax) {
-      x = timeStatisch - level - i
-      i = i + 1
-      if (x <= 0) return 1
-    }
-    else {
-      x = timeStatisch - level
-
-    }
+    val x= timeStatisch - level
     x * 1000 //in milisec
   }
 
@@ -395,7 +401,9 @@ object GameLoop extends AnimationTimer {
       case 8 => {
         getCraftingBenchForCustomer(selectedCustomer).addIngridientToCraftingBench("tuna")
         cashier.setGoTo("tuna", "customer" + selectedCustomer)
-        customerSelected(selectedCustomer).addIngridedientsToPizza("tuna")
+        customerSelected(selectedCustomer).addIngridedientsToPizza("tuna")/*FOR JOE
+        HappyCustomer ohne Glowing
+        Overlay 4 Gameover*/
       } //tuna
       case _ => {
         cashier.setGoTo("standard", "customer" + selectedCustomer)
@@ -501,7 +509,8 @@ object GameLoop extends AnimationTimer {
         if (cus1.getOrder() == craB1.getAddedIngridients) {
           customer1Served = true
           cus1.setGlowing(false)
-          cus1.setHappy()
+          cus1.poof()
+          cus1.removeSpeachBubble(1)
           true
         }
         else false
@@ -510,7 +519,8 @@ object GameLoop extends AnimationTimer {
         if (cus2.getOrder() == craB2.getAddedIngridients) {
           customer2Served = true
           cus2.setGlowing(false)
-          cus2.setHappy()
+          cus2.poof()
+          cus2.removeSpeachBubble(2)
           true
         }
         else false
@@ -519,7 +529,8 @@ object GameLoop extends AnimationTimer {
         if (cus3.getOrder() == craB3.getAddedIngridients) {
           customer3Served = true
           cus3.setGlowing(false)
-          cus3.setHappy()
+          cus3.poof()
+          cus3.removeSpeachBubble(3)
           true
         }
         else false
@@ -528,7 +539,8 @@ object GameLoop extends AnimationTimer {
         if (cus4.getOrder() == craB4.getAddedIngridients) {
           customer4Served = true
           cus4.setGlowing(false)
-          cus4.setHappy()
+          cus4.poof()
+          cus4.removeSpeachBubble(4)
           true
         }
         else false
@@ -543,23 +555,24 @@ object PizzaDealer {
 
   class Pizza(n: Int) {
     //n = number of ingridients
-    val ingridients = List("champignon", "cheese", "ham", "onion", "paprika", "salami", "tomato", "tuna")
-    var finalIngridients = List[String]()
+    val ingredients = List("champignon", "cheese", "ham", "onion", "paprika", "salami", "tomato", "tuna")
+    var finalIngredients = List[String]()
 
     def setPizzaObject(): List[String] = {
+      val shuffeld = scala.util.Random.shuffle(ingredients)
       if (n >= 4) {
         for (n <- 1 to 4) {
-          finalIngridients ::= ingridients.toList((math.random * ingridients.size).toInt)
+          finalIngredients ::= shuffeld(n-1)
         }
       } else {
         for (n <- 1 to n) {
-          finalIngridients ::= ingridients.toList((math.random * ingridients.size).toInt)
+          finalIngredients ::= shuffeld(n-1)
         }
       }
-      finalIngridients
+      finalIngredients
     }
 
-    def getIngridients(): List[String] = finalIngridients
+    def getIngridients(): List[String] = finalIngredients
   }
 
 
@@ -591,6 +604,10 @@ object PizzaDealer {
           this.bubble.setOrder(order)
         }
       }
+    }
+
+    def removeSpeachBubble(i:Int):Unit ={
+      this.bubble.goAway()
     }
 
 
@@ -641,7 +658,12 @@ object PizzaDealer {
 
     def showPizza() = this.pizzaAnim.showPizza()
 
-    def addIngridedientsToPizza(ingredient: String) = this.pizzaAnim.addIngredient(ingredient)
+    def addIngridedientsToPizza(ingredient: String) = {
+      if (order.contains(ingredient)) {
+
+        this.pizzaAnim.addIngredient(ingredient)
+      }
+    }
 
   }
 
@@ -649,11 +671,11 @@ object PizzaDealer {
   class CraftingBench(order: List[String]) {
     var ingridientsAdded = List[String]()
 
-    def addIngridientToCraftingBench(ingridient: String): List[String] = {
-      if (order.contains(ingridient)) {
+    def addIngridientToCraftingBench(ingredient: String): List[String] = {
+      if (order.contains(ingredient)) {
         //wird auf Happy gesetzt
         GameLoop.customerSelected(GameLoop.selectedCustomer).setHappy()
-        ingridientsAdded ::= ingridient
+        ingridientsAdded ::= ingredient
         ingridientsAdded
       }
       else {
