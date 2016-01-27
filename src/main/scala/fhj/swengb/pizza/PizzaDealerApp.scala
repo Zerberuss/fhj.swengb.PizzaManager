@@ -55,6 +55,9 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var gameMenu: AnchorPane = _
   //game Pane where the game is played (both mp and sp)
   @FXML var gamePane: AnchorPane = _
+  //Gameover Overlay
+  @FXML var gameOverPane: AnchorPane = _
+
 
   @FXML var imgvw_background: ImageView = _
   @FXML var customers: AnchorPane = _
@@ -165,6 +168,10 @@ class PizzaDealerAppController extends PizzaDealerApp {
   @FXML var progressBarTest: ProgressBar = _
   @FXML var logoAnimationImageView: ImageView = _
 
+  @FXML var gameOver_score: control.Label = _
+  @FXML var gameOver_error: control.Label = _
+
+
   def logobtn():Unit = {
     menuDealerLogoAnim.set(logoAnimationImageView)
     menuDealerLogoAnim.start()
@@ -190,55 +197,33 @@ class PizzaDealerAppController extends PizzaDealerApp {
   //initialize function executes the commands at startup for the main scene
 
   //animation for Menue slide ins and outs
-  def animMenuPanes(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 400, yMitte: Int = 720/2): Unit = {  //1280/2
 
-    buttonEffect.player.stop()
-    buttonEffect.player.play()
-
-    var xEnde = 1300
-    var path: Path = new Path()
-
-    if (slideRight) {
-      path.getElements.add(new MoveTo(xMitte, yMitte))
-      path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xEnde+xMitte, yMitte))
-    } else {
-      path.getElements.add(new MoveTo(xEnde+xMitte, yMitte))
-      path.getElements().add(new CubicCurveTo(xMitte + 200, yMitte, xMitte + 50, yMitte, xMitte, yMitte))
-    }
-
-    var pathTrans: PathTransition = new PathTransition()
-    pathTrans.setDuration(new Duration(200))
-    pathTrans.setNode(obj)
-    pathTrans.setPath(path)
-    pathTrans.setAutoReverse(false)
-    pathTrans.play()
-  }
 
 
   def startHighscoresPane(): Boolean = {
-    animMenuPanes(highscoresPane, false, 1280/2+5)
-    animMenuPanes(highscoresMenu, true)
+    animMenuPanes.play(highscoresPane, false, 1280/2+5)
+    animMenuPanes.play(highscoresMenu, true)
     true
   }
 
 
   def startSinglePlayer(playerName: String): Boolean = {
     status.setText("Play a little game:")
-    animMenuPanes(gameMenu, true)
-    animMenuPanes(gamePane, false, 1280/2+5)
+    animMenuPanes.play(gameMenu, true)
+    animMenuPanes.play(gamePane, false, 1280/2+5)
     setNewGame()
     true
   }
 
 
-  def highscoresMenuBack(): Unit = animMenuPanes(highscoresMenu, true)
+  def highscoresMenuBack(): Unit = animMenuPanes.play(highscoresMenu, true)
 
   //Hier die richtigen User Infos übergeben! -> aus tabelle oda ka wie ihr sie gespeichert habts
-  def gameMenuBack(): Unit = animMenuPanes(gameMenu, true)
+  def gameMenuBack(): Unit = animMenuPanes.play(gameMenu, true)
 
-  def highscoresMenuStart(): Unit = animMenuPanes(highscoresMenu, false)
+  def highscoresMenuStart(): Unit = animMenuPanes.play(highscoresMenu, false)
 
-  def gameMenuStart(): Unit = animMenuPanes(gameMenu, false)
+  def gameMenuStart(): Unit = animMenuPanes.play(gameMenu, false)
 
   def highscoresStart(): Unit = {
     startHighscoresPane()
@@ -251,6 +236,11 @@ class PizzaDealerAppController extends PizzaDealerApp {
   def backToMainMenu(): Unit = ???
 
   def restart(): Unit = {
+    animMenuPanes.play(gameOverPane,true) //1280/2-187)
+    println(gameOverPane.getTranslateX + ",  y: " + gameOverPane.getTranslateY)
+
+    mainLoop.player.stop()
+    menuLoop.player.stop()
     menu.getScene().getWindow().hide(); start(new Stage)
   }
 
@@ -355,7 +345,7 @@ class PizzaDealerAppController extends PizzaDealerApp {
     menuLoop.player.stop()
     mainLoop.player.play()
 
-    GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername,lives)
+    GameLoop.set(cashier,progressBar,pizzaList1,pizzaList2,pizzaList3,pizzaList4,customersList,speachbubble1,speachbubble2,speachbubble3,speachbubble4,ingrediants,highscore,playername,lives,gameOverPane,gameOver_score,gameOver_error)
     GameLoop.start()
 
   }
@@ -364,13 +354,43 @@ class PizzaDealerAppController extends PizzaDealerApp {
     System.exit(1)
   }
 
+
   menuLoop.set()
   menuLoop.player.setVolume(0.5)
   mainLoop.set()
-  mainLoop.player.setVolume(0.5)
+  mainLoop.player.setVolume(0.3)
   buttonEffect.set()
   pizzaEffect.set()
+  puffEffect.set()
 
   menuLoop.player.play()
 
+}
+
+
+object animMenuPanes {  //1280/2
+
+  def play(obj: AnchorPane, slideRight: Boolean, xMitte: Int = 400, yMitte: Int = 720/2): Unit ={
+
+    buttonEffect.player.stop()
+    buttonEffect.player.play()
+
+    var xEnde = 1300
+    var path: Path = new Path()
+
+    if (slideRight) {
+      path.getElements.add(new MoveTo(xMitte, yMitte))
+      path.getElements().add(new CubicCurveTo(xMitte + 50, yMitte, xMitte + 200, yMitte, xEnde+xMitte, yMitte))
+    } else {
+      path.getElements.add(new MoveTo(xEnde+xMitte, yMitte))
+      path.getElements().add(new CubicCurveTo(xMitte + 200, yMitte, xMitte + 50, yMitte, xMitte, yMitte))
+    }
+
+    var pathTrans: PathTransition = new PathTransition()
+    pathTrans.setDuration(new Duration(200))
+    pathTrans.setNode(obj)
+    pathTrans.setPath(path)
+    pathTrans.setAutoReverse(false)
+    pathTrans.play()
+  }
 }

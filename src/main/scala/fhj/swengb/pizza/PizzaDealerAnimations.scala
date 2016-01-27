@@ -232,6 +232,8 @@ case class CustomerPersonAnim(){
   }
   def setGone() {       //Customer verschwinden lassen
     status = "puff"
+    puffEffect.player.stop()
+    puffEffect.player.play()
     setStatus()
   }
 
@@ -434,6 +436,17 @@ object buttonEffect {
     player = new MediaPlayer(
       new Media(
         new File("Button.wav").toURI.toString
+      ))
+    player.setCycleCount(1)
+  }
+}
+
+object puffEffect {
+  var player:MediaPlayer = _
+  def set() {
+    player = new MediaPlayer(
+      new Media(
+        new File("puff.wav").toURI.toString
       ))
     player.setCycleCount(1)
   }
