@@ -163,7 +163,7 @@ object GameLoop extends AnimationTimer {
       myNow = myNow + math.floor(((System.nanoTime()-lastLogicFrame) / 1E6 )%1000).toInt
       lastLogicFrame = nowTemp
 
-      println("this is now: " + myNow) // ausgabe in milisek
+      //println("this is now: " + myNow) // ausgabe in milisek
       if (myNow > timeAndLevel() || myNow <= 0) //timer läuft noch
       {
         setTimer() //Timer neu setzen
@@ -328,18 +328,21 @@ object GameLoop extends AnimationTimer {
     cus4 = new Customer(level)
     craB4 = new CraftingBench(cus4.getOrder())
 
-
+    cus1.setPizza(1)
+    cus2.setPizza(2)
+    cus3.setPizza(3)
+    cus4.setPizza(4)
 
     cus1.setSpeachBubble(1)
     cus2.setSpeachBubble(2)
     cus3.setSpeachBubble(3)
     cus4.setSpeachBubble(4)
-/*
+
     cus1.showPizza()
     cus2.showPizza()
     cus3.showPizza()
     cus4.showPizza()
-*/
+
     cus1.setCustomerAppearence(1)
     cus2.setCustomerAppearence(2)
     cus3.setCustomerAppearence(3)

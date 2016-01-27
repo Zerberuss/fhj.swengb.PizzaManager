@@ -29,18 +29,19 @@ case class PizzaAnim(){
   var ingredientsObj:List[ImageView] = _
 
   def set (pizzaObj:ImageView,ingredientsObj:List[ImageView]): Unit = {
+    println("Pizza-set")
     this.obj = pizzaObj
     this.obj.setImage(new Image("/fhj/swengb/pizza/images/gamePane_pizza.png"))
     this.obj.setVisible(false)
 
     this.ingredientsObj = ingredientsObj
     ingredientsObj.foreach( ing => ing.setVisible(false))
-    reset()
-    print("Pizza-set")
+    //reset()
+
   }
 
   def showPizza(): Unit ={
-    if(!ingredientsObj(ingredientsAdded).isVisible) ingredientsObj(ingredientsAdded).setVisible(true)
+    if(!obj.isVisible) obj.setVisible(true)
     val fadetransition: FadeTransition = new FadeTransition(Duration.millis(200), obj)
     fadetransition.setFromValue(0)
     fadetransition.setToValue(1)
