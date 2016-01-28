@@ -4,7 +4,7 @@
 
 ## How to Play:
 All you have to do is, to click on the correct ingredients as shown in the
-speech.
+speech-bubble.
 
 
 
