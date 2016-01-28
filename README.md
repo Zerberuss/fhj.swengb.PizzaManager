@@ -14,6 +14,9 @@ If the game is over, you can see your final highscore, which is uploaded to glob
 To show the top 20 player worldwide, just click on "Highscores" on the main menu.
 
 
+##Workload
+
+Team: ~205h
 
 ## Contact
 ###### Andreas Schneider  [GitHub](https://github.com/Zerberuss)
@@ -26,12 +29,12 @@ To show the top 20 player worldwide, just click on "Highscores" on the main menu
 
 ##Screenshots
 
-[alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/menu.png "menu")
+![alt text]https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes/menu.png "menu")
 
-![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/logo.png "logo")
+![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes/logo.png "logo")
 
-![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/name.png "name")
+![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes/name.png "name")
 
-![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/highscore.png "highscore")
+![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes//highscore.png "highscore")
 
-![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/game.png "game")
+![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes//game.png "game")
