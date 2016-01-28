@@ -1,5 +1,5 @@
 # PizzaDealer
-#### bye Andreas Schneider, Timo Hasenbichler, Josip Blacevic
+#### by Andreas Schneider, Timo Hasenbichler, Josip Blacevic
 
 
 ## How to Play:
