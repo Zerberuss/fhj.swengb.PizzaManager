@@ -156,7 +156,7 @@ object GameLoop extends AnimationTimer {
       {
         setTimer() //Timer neu setzen
         this.lives = this.lives - 1 //leben um 1 verringern da Zeit abgelaufen
-        lbl_lives.setText("lives: " + this.lives.toString)
+        lbl_lives.setText("lifes: " + this.lives.toString)
         createCustomers(this.level)
         resetProgressbar() //Progressbar wird wieder auf den Standardwert gesetzt (1.0)
 
@@ -173,7 +173,7 @@ object GameLoop extends AnimationTimer {
       if (checkCustomersExist() == false) {
         setTimer()
         createCustomers(level)
-        lbl_lives.setText("lives: " + lives.toString)
+        lbl_lives.setText("lifes: " + lives.toString)
       }
 
 
