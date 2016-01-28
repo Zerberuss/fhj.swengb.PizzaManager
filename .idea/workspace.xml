@@ -2,18 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6df9ea5f-ee0f-47a4-bcad-0677cad15e0e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/GameLoop$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/GameLoop$.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaAnim.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaAnim.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Customer$craftingBench$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Customer$craftingBench$.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Customer.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Customer.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highscore.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/logo.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/menu.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/name.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Pizza.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealer$Pizza.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerAppController.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/PizzaDealerAppController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/animMenuPanes$.class" afterPath="$PROJECT_DIR$/target/classes/fhj/swengb/pizza/animMenuPanes$.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" />
     </list>
     <ignored path="pizza.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,36 +32,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="PizzaDealerApp.scala" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PizzaDealerApp.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="208" column="11" selection-start-line="208" selection-start-column="11" selection-end-line="208" selection-end-column="11" />
-              <folding>
-                <element signature="e#26#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Readme.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Readme.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.021276595">
+              <caret line="206" column="11" selection-start-line="206" selection-start-column="11" selection-end-line="206" selection-end-column="11" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PizzaDealerAnimations.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PizzaDealerAnimations.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="7.915464">
-              <caret line="370" column="3" selection-start-line="370" selection-start-column="3" selection-end-line="370" selection-end-column="3" />
-              <folding>
-                <element signature="e#75#94#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="115" column="16" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,11 +55,9 @@
       <file leaf-file-name="PizzaDealer.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="330.6111">
-              <caret line="91" column="9" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
-              <folding>
-                <element signature="e#27#65#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerJDBC.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -123,9 +104,10 @@
         <option value="$PROJECT_DIR$/Readme.md" />
         <option value="$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/PizzaDealer.fxml" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerJDBC.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -169,10 +151,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="2578" />
-    <option name="height" value="1408" />
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="2182" />
+    <option name="height" value="1402" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -221,8 +203,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -237,7 +217,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fhj.swengb.pizza" />
+              <option name="myItemId" value="fhj.sweng.pizza" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -247,7 +227,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fhj.swengb.pizza" />
+              <option name="myItemId" value="fhj.sweng.pizza" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -261,7 +241,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fhj.swengb.pizza" />
+              <option name="myItemId" value="fhj.sweng.pizza" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -287,7 +267,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fhj.swengb.pizza" />
+              <option name="myItemId" value="fhj.sweng.pizza" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -310,6 +290,8 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -319,16 +301,16 @@
     <property name="SearchEverywhereHistoryKey" value="customerSe&#9;null&#9;null&#10;sett&#9;ACTION&#9;WelcomeScreen.Settings&#10;papr&#9;null&#9;null&#10;paprika&#9;null&#9;null&#10;setCu&#9;null&#9;null&#10;setCustomerA&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\workspace\fhj.swengb.pizza" />
+      <recent name="C:\workspace\fhj.swengb.pizza\src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\workspace\fhj.sweng.pizza" />
       <recent name="C:\workspace\fhj.swengb.pizza\src\main\resources\fhj\swengb\pizza\sprites" />
       <recent name="C:\workspace\fhj.swengb.pizza\src\main\resources\fhj\swengb\pizza" />
       <recent name="C:\workspace\fhj.swengb.pizza\src\main\resources" />
       <recent name="C:\workspace\fhj.swengb.pizza" />
-      <recent name="C:\workspace\fhj.swengb.pizza\src\main\scala\fhj\swengb\pizza" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\workspace\fhj.swengb.pizza" />
-      <recent name="C:\workspace\fhj.swengb.pizza\src" />
     </key>
   </component>
   <component name="RunManager" selected="Application.PizzaDealerApp">
@@ -685,31 +667,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="2578" height="1408" extended-state="6" />
+    <frame x="-11" y="-11" width="2182" height="1402" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21972735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12177651" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1956696" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15083799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19054441" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17161188" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21947195" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.01734104" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14033681" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17161188" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -734,51 +716,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/images/concept.psd">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-          <folding>
-            <element signature="e#27#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#26#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#26#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#26#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/images/concept.psd">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1003,60 +940,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Readme.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/fhj/swengb/pizza/PizzaDealer.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.238806">
           <caret line="147" column="28" selection-start-line="147" selection-start-column="28" selection-end-line="147" selection-end-column="28" />
           <folding />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="115" column="16" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="16" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerJDBC.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/game.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/name.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/menu.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highscore.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7659575">
+          <caret line="36" column="67" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="208" column="11" selection-start-line="208" selection-start-column="11" selection-end-line="208" selection-end-column="11" />
-          <folding>
-            <element signature="e#26#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="330.6111">
-          <caret line="91" column="9" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
-          <folding>
-            <element signature="e#27#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.915464">
-          <caret line="370" column="3" selection-start-line="370" selection-start-column="3" selection-end-line="370" selection-end-column="3" />
-          <folding>
-            <element signature="e#75#94#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.021276595">
+          <caret line="206" column="11" selection-start-line="206" selection-start-column="11" selection-end-line="206" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>

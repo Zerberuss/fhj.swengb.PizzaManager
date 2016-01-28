@@ -5,14 +5,11 @@ package fhj.swengb.pizza
   * Created by Andreas on 23.01.2016.
   */
 
-import java.io.File
-import javafx.animation.{Animation, AnimationTimer, FadeTransition, PathTransition}
+import javafx.animation.{AnimationTimer, FadeTransition, PathTransition}
 import javafx.scene.image.{Image, ImageView}
 import javafx.scene.media.{Media, MediaPlayer}
 import javafx.scene.shape.{CubicCurveTo, MoveTo, Path}
 import javafx.util.Duration
-
-import sun.awt.SunToolkit.InfiniteLoop
 
 
 /** Pizza erstellen und belegen
@@ -117,7 +114,6 @@ case class CustomerSpeechBubbleAnim(){
   }
 
   def goAway() {
-    println("GO AWAYY")
     if(!gone){
       ingredientsObj.indices.foreach(index => {
         val fadetransition: FadeTransition = new FadeTransition(Duration.millis(300), ingredientsObj(index))
