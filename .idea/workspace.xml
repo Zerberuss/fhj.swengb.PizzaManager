@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6df9ea5f-ee0f-47a4-bcad-0677cad15e0e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" afterPath="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="pizza.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.375">
-              <caret line="39" column="93" selection-start-line="39" selection-start-column="93" selection-end-line="39" selection-end-column="93" />
+            <state vertical-scroll-proportion="0.22045855">
+              <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -54,10 +54,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PizzaDealer.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PizzaDealer.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40265486">
+            <state vertical-scroll-proportion="-10.340909">
               <caret line="664" column="14" selection-start-line="664" selection-start-column="14" selection-end-line="664" selection-end-column="14" />
               <folding />
             </state>
@@ -110,8 +110,8 @@
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerJDBC.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerApp.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -998,14 +998,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.375">
-          <caret line="39" column="93" selection-start-line="39" selection-start-column="93" selection-end-line="39" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealerAnimations.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1016,8 +1008,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/fhj/swengb/pizza/PizzaDealer.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40265486">
+        <state vertical-scroll-proportion="-10.340909">
           <caret line="664" column="14" selection-start-line="664" selection-start-column="14" selection-end-line="664" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22045855">
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
           <folding />
         </state>
       </provider>
