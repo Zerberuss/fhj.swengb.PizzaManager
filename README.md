@@ -8,7 +8,7 @@ Now the Game starts immediately!
 All you have to do is, choose one customer adn then click on the correct ingredients as shown in the
 speech bubbles.
 
-Be quick! You don't have much time! 
+Be quick! You don't have much time!
 If the timebar on the top is at 0% you lose one life!
 As soon as ou loose your last life, the game is over.
 Now you can see your final highscore, which is uploaded to global database on our servers.
@@ -32,7 +32,6 @@ Team: ~205h
 
 ##Screenshots
 
-![alt text]https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes/menu.png "menu")
 
 ![alt text](https://github.com/Zerberuss/fhj.swengb.PizzaManager/blob/altes/logo.png "logo")
 
